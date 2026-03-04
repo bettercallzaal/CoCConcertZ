@@ -4,8 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COC Concertz — Live Metaverse Concerts</title>
+    <meta name="description" content="COC Concertz hosts free live concerts inside the metaverse. Experience immersive music from anywhere — no tickets, no lines, just vibes.">
+    <link rel="canonical" href="https://cocconcertz.com">
+    <meta name="theme-color" content="#a855f7">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%23a855f7'/%3E%3Cstop offset='100%25' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='16' cy='16' r='16' fill='url(%23g)'/%3E%3Cpath d='M12 8v12.5a3.5 3.5 0 1 1-2-3.16V10l10-2v10.5a3.5 3.5 0 1 1-2-3.16V8L12 8z' fill='white' opacity='0.95'/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='40' fill='%23a855f7'/%3E%3Cpath d='M65 45v72a20 20 0 1 1-12-18.4V57l60-12v69a20 20 0 1 1-12-18.4V45L65 45z' fill='white' opacity='0.95'/%3E%3C/svg%3E">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="COC Concertz — Live Metaverse Concerts">
+    <meta property="og:description" content="Free live concerts inside the metaverse. Experience immersive music from anywhere — no tickets, no lines, just vibes.">
+    <meta property="og:url" content="https://cocconcertz.com">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="COC Concertz — Live Metaverse Concerts">
+    <meta name="twitter:description" content="Free live concerts inside the metaverse. No tickets, no lines, just vibes.">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": "+COC ConcertZ #3",
+      "startDate": "2026-03-07T21:00:00Z",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "eventAttendanceMode": "https://schema.org/OnlineEventAttendanceMode",
+      "location": {
+        "@type": "VirtualLocation",
+        "url": "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517"
+      },
+      "description": "Web3 metaverse music experience in StiloWorld. Free entry.",
+      "organizer": {
+        "@type": "Organization",
+        "name": "COC Concertz",
+        "url": "https://cocconcertz.com"
+      },
+      "url": "https://cocconcertz.com",
+      "isAccessibleForFree": true
+    }
+    </script>
+
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         * {
@@ -256,6 +302,99 @@
             white-space: nowrap;
         }
 
+        /* ---- Past Shows ---- */
+        .past-shows-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .past-show-card {
+            background: #0a0a0a;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 24px 28px;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .past-show-card:hover {
+            opacity: 0.9;
+        }
+
+        .past-show-card .event-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 6px;
+        }
+
+        .past-show-card .event-desc {
+            color: #555;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .past-show-card .event-date {
+            color: #666;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+
+        .past-show-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(168, 85, 247, 0.1);
+            color: #a855f7;
+            margin-bottom: 12px;
+        }
+
+        /* ---- How to Join ---- */
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 24px;
+            margin-top: 8px;
+        }
+
+        .step {
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+        }
+
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            font-weight: 800;
+            font-size: 1.1rem;
+            margin-bottom: 16px;
+        }
+
+        .step h3 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .step p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
         /* ---- Socials ---- */
         .socials {
             display: flex;
@@ -349,8 +488,10 @@
 </head>
 <body>
 
+    <main>
+
     <!-- Hero -->
-    <section class="hero">
+    <section class="hero" aria-label="Hero">
         <div class="hero-badge">Live in the Metaverse</div>
         <h1>COC Concertz</h1>
         <p>Step into immersive virtual venues and experience live music from anywhere in the world. No tickets. No lines. Just vibes.</p>
@@ -362,7 +503,7 @@
     </section>
 
     <!-- Next Show Countdown -->
-    <div class="next-show">
+    <section class="next-show" aria-label="Next show countdown">
         <div class="next-show-label">Next Show</div>
         <h2>+COC ConcertZ #3</h2>
         <p style="color:#999;">March 7, 2026 &middot; 4:00 PM EST</p>
@@ -384,17 +525,18 @@
                 <span class="label">Sec</span>
             </div>
         </div>
-    </div>
+    </section>
 
     <!-- Spatial Embed -->
-    <div class="spatial-section" id="venue">
+    <section class="spatial-section" id="venue" aria-label="Virtual venue">
         <iframe
             src="https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517"
             allow="camera; microphone; fullscreen"
             allowfullscreen
             loading="lazy"
+            title="COC Concertz virtual venue on Spatial"
         ></iframe>
-    </div>
+    </section>
 
     <!-- Content -->
     <div class="content">
@@ -403,6 +545,29 @@
         <section>
             <h2>About</h2>
             <p>COC Concertz hosts live performances inside the metaverse, giving fans a front-row experience from anywhere in the world. Our virtual stages feature live music, interactive crowds, and unforgettable vibes — no ticket lines, no boundaries. Jump in, explore, and feel the energy.</p>
+        </section>
+
+        <!-- How to Join -->
+        <section>
+            <h2>How to Join</h2>
+            <p style="margin-bottom: 24px;">Getting into the metaverse is easy — and completely free.</p>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Click "Enter the Venue"</h3>
+                    <p>Hit the button above or scroll to the embedded venue on this page.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Create a Spatial Account</h3>
+                    <p>Sign up for free on Spatial — takes less than a minute.</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Explore and Enjoy</h3>
+                    <p>Walk around the virtual venue, meet other fans, and vibe to the music.</p>
+                </div>
+            </div>
         </section>
 
         <!-- Schedule + Luma -->
@@ -426,34 +591,55 @@
             </div>
         </section>
 
+        <!-- Past Shows -->
+        <section>
+            <h2>Past Shows</h2>
+            <div class="past-shows-grid">
+                <div class="past-show-card">
+                    <span class="past-show-tag">Completed</span>
+                    <div class="event-name">+COC ConcertZ #1</div>
+                    <div class="event-desc">The first-ever COC Concertz metaverse show</div>
+                    <div class="event-date">2025</div>
+                </div>
+                <div class="past-show-card">
+                    <span class="past-show-tag">Completed</span>
+                    <div class="event-name">+COC ConcertZ #2</div>
+                    <div class="event-desc">Second installment — bigger crowd, bigger sound</div>
+                    <div class="event-date">2025</div>
+                </div>
+            </div>
+        </section>
+
         <!-- Socials -->
         <section>
             <h2>Connect</h2>
             <div class="socials">
-                <a href="#" target="_blank">Instagram</a>
-                <a href="#" target="_blank">TikTok</a>
-                <a href="#" target="_blank">YouTube</a>
-                <a href="#" target="_blank">X / Twitter</a>
+                <a href="#" target="_blank" rel="noopener" aria-label="Follow on Instagram">Instagram</a>
+                <a href="#" target="_blank" rel="noopener" aria-label="Follow on TikTok">TikTok</a>
+                <a href="#" target="_blank" rel="noopener" aria-label="Subscribe on YouTube">YouTube</a>
+                <a href="#" target="_blank" rel="noopener" aria-label="Follow on X / Twitter">X / Twitter</a>
             </div>
         </section>
 
     </div>
 
     <!-- Final CTA -->
-    <div class="final-cta">
+    <section class="final-cta" aria-label="Call to action">
         <h2>Ready to experience live music in the metaverse?</h2>
         <p>Jump in now — the stage is live.</p>
         <a class="hero-cta" href="https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517" target="_blank">
             Enter the Venue
         </a>
-    </div>
+    </section>
+
+    </main>
 
     <footer>
         &copy; 2026 COC Concertz. All rights reserved.
     </footer>
 
     <!-- Countdown Timer -->
-    <script>
+    <script defer>
         const eventDate = new Date('2026-03-07T21:00:00Z'); // 4PM EST = 9PM UTC
 
         function updateCountdown() {
