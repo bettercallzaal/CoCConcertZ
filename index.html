@@ -395,6 +395,94 @@
             line-height: 1.5;
         }
 
+        /* ---- Artists Tabs ---- */
+        .artists-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .artists-tab {
+            padding: 10px 20px;
+            border: 1px solid #1a1a1a;
+            border-radius: 50px;
+            background: transparent;
+            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .artists-tab:hover {
+            border-color: #a855f7;
+            color: #ccc;
+        }
+
+        .artists-tab.active {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border-color: transparent;
+            color: #fff;
+        }
+
+        .artists-panel {
+            display: none;
+        }
+
+        .artists-panel.active {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .artist-card {
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 24px;
+            transition: border-color 0.2s;
+        }
+
+        .artist-card:hover {
+            border-color: #a855f7;
+        }
+
+        .artist-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .artist-role {
+            color: #a855f7;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .artist-card p {
+            color: #555;
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .artist-host-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(236, 72, 153, 0.1);
+            color: #ec4899;
+            margin-bottom: 10px;
+        }
+
         /* ---- Socials ---- */
         .socials {
             display: flex;
@@ -599,14 +687,19 @@
                     <span class="past-show-tag">Completed</span>
                     <div class="event-name">+COC ConcertZ #1</div>
                     <div class="event-desc">The first-ever COC Concertz metaverse show</div>
-                    <div class="event-date">2025</div>
+                    <div class="event-date">March 29, 2025</div>
                 </div>
                 <div class="past-show-card">
                     <span class="past-show-tag">Completed</span>
                     <div class="event-name">+COC ConcertZ #2</div>
                     <div class="event-desc">Second installment — bigger crowd, bigger sound</div>
-                    <div class="event-date">2025</div>
+                    <div class="event-date">October 11, 2025</div>
                 </div>
+            </div>
+            <div style="margin-top: 20px;">
+                <a class="hero-cta" href="https://www.youtube.com/watch?v=-ggYAdu4KRE&list=PLAJfhSekeHMLPEd-PjFnuU_UZmXFR5kvA" target="_blank" rel="noopener" style="font-size: 0.9rem; padding: 12px 28px;">
+                    Watch Past Shows on YouTube
+                </a>
             </div>
         </section>
 
@@ -618,6 +711,97 @@
                 <a href="#" target="_blank" rel="noopener" aria-label="Follow on TikTok">TikTok</a>
                 <a href="#" target="_blank" rel="noopener" aria-label="Subscribe on YouTube">YouTube</a>
                 <a href="#" target="_blank" rel="noopener" aria-label="Follow on X / Twitter">X / Twitter</a>
+            </div>
+        </section>
+
+        <!-- Artists -->
+        <section>
+            <h2>Artists</h2>
+            <div class="artists-tabs">
+                <button class="artists-tab active" data-tab="concert1">ConcertZ #1</button>
+                <button class="artists-tab" data-tab="concert2">ConcertZ #2</button>
+                <button class="artists-tab" data-tab="concert3">ConcertZ #3</button>
+            </div>
+
+            <!-- ConcertZ #1 — March 29, 2025 -->
+            <div class="artists-panel active" id="concert1">
+                <div class="artist-card">
+                    <div class="artist-name">AttaBotty</div>
+                    <div class="artist-role">Performer</div>
+                    <p>Composer, multi-instrumentalist, and audiovisual storyteller. Fuses EDM, lo-fi, and cinematic orchestra with 2D/3D animation.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">Clejan</div>
+                    <div class="artist-role">Performer</div>
+                    <p>Rapper, singer, songwriter, and classically trained violinist from Atlanta. Creator of the signature "Trap Violin" sound.</p>
+                </div>
+            </div>
+
+            <!-- ConcertZ #2 — October 11, 2025 -->
+            <div class="artists-panel" id="concert2">
+                <div class="artist-card">
+                    <div class="artist-name">Fellenz</div>
+                    <div class="artist-role">Performer</div>
+                    <p>Opening act with a 30-minute live set in the SaltyVerse Auditorium.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">Stilo</div>
+                    <div class="artist-role">DJ &middot; WaveWarZ</div>
+                    <p>DJing WaveWarZ — an extended set blending beats and Web3 culture live on Spatial.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">AttaBotty</div>
+                    <div class="artist-role">Performer</div>
+                    <p>Returning with a 30-minute closing set of immersive audiovisual performance.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">Hurric4n3IKE</div>
+                    <div class="artist-role">Special Feature</div>
+                    <p>Featured during the WaveWarZ performance segment.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">@BetterCallZaal</div>
+                    <span class="artist-host-tag">Host</span>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">@ThyRevolution</div>
+                    <span class="artist-host-tag">Host</span>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">@TheBaconSandwich</div>
+                    <span class="artist-host-tag">Host</span>
+                </div>
+            </div>
+
+            <!-- ConcertZ #3 — March 7, 2026 -->
+            <div class="artists-panel" id="concert3">
+                <div class="artist-card">
+                    <div class="artist-name">DopeStilo</div>
+                    <div class="artist-role">Headline Act</div>
+                    <p>Live set from 5:15 – 5:45 PM EST in StiloWorld.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">D&uacute;o D&oslash; Musica</div>
+                    <div class="artist-role">Headline Act</div>
+                    <p>Opening live set from 4:15 – 4:45 PM EST.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">Jose Cabrera</div>
+                    <div class="artist-role">Headline Act</div>
+                    <p>Live set from 4:45 – 5:15 PM EST.</p>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">@BetterCallZaal</div>
+                    <span class="artist-host-tag">Host</span>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">@ThyRevolution</div>
+                    <span class="artist-host-tag">Host</span>
+                </div>
+                <div class="artist-card">
+                    <div class="artist-name">@TheBaconSandwich</div>
+                    <span class="artist-host-tag">Host</span>
+                </div>
             </div>
         </section>
 
@@ -667,6 +851,16 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Artists tab switching
+        document.querySelectorAll('.artists-tab').forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.artists-tab').forEach(function(t) { t.classList.remove('active'); });
+                document.querySelectorAll('.artists-panel').forEach(function(p) { p.classList.remove('active'); });
+                tab.classList.add('active');
+                document.getElementById(tab.dataset.tab).classList.add('active');
+            });
+        });
     </script>
 
 </body>
