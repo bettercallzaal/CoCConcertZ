@@ -48,43 +48,100 @@ This is a static site — no framework or build step required.
 3. No build command or output directory needed — it serves `index.html` from root
 4. Deploys automatically on every push to `main`
 
+## Live Site
+
+**https://cocconcertz.com** — custom domain via Porkbun + Vercel
+
 ## Future Ideas
 
+### Quick Wins
+- [ ] Add real social media URLs (Instagram, TikTok, YouTube, X)
+- [ ] Custom favicon and site icon
+- [ ] Open Graph meta tags (thumbnail, title, description for link sharing)
+- [ ] Add Apple touch icon for mobile bookmarks
+- [ ] Google Analytics or Plausible analytics integration
+
 ### Content & Events
-- [ ] Dynamic event schedule pulled from an API or CMS
-- [ ] Past shows archive with recordings/highlights
-- [ ] Artist lineup pages with bios and social links
-- [ ] Blog/news section for announcements
-- [ ] Newsletter signup for show alerts
+- [ ] Dynamic event schedule pulled from an API or CMS (Notion, Airtable, etc.)
+- [ ] Past shows archive with recordings and highlights
+- [ ] Artist lineup pages with bios, photos, and social links
+- [ ] Blog/news section for announcements and recaps
+- [ ] Newsletter signup (Mailchimp, ConvertKit, Buttondown) for show alerts
+- [ ] Photo/video gallery from past events
+- [ ] Testimonials or quotes from attendees
+- [ ] FAQ section for first-time metaverse visitors
+- [ ] "How to Join" tutorial walkthrough for Spatial newcomers
+- [ ] Press kit page with logos, bios, and media assets
 
 ### Design & UX
-- [ ] Custom logo/branding assets
-- [ ] Background video or animated visuals in the hero
-- [ ] Particle effects or Three.js background animation
+- [ ] Custom COC Concertz logo/wordmark
+- [ ] Background video or looping visuals in the hero section
+- [ ] Particle effects or Three.js animated background
+- [ ] Spline 3D interactive element (e.g. rotating stage or globe)
 - [ ] Dark/light mode toggle
-- [ ] Page transition animations
-- [ ] Loading screen while Spatial embed initializes
+- [ ] Smooth page transition animations (fade, slide)
+- [ ] Loading screen / skeleton UI while Spatial embed initializes
+- [ ] Parallax scrolling effects between sections
+- [ ] Animated gradient border on event cards
+- [ ] Custom cursor effect
+- [ ] Sound toggle — ambient music on the landing page
+- [ ] Confetti or visual effect when countdown hits zero
+
+### Web3 & Blockchain
+- [ ] Wallet connect button (MetaMask, WalletConnect, Coinbase Wallet)
+- [ ] On-chain ticket minting (NFT tickets as event passes)
+- [ ] POAP integration (Proof of Attendance Protocol) for attendees
+- [ ] Token-gated access to exclusive content or backstage areas
+- [ ] NFT gallery showcasing event collectibles and artist drops
+- [ ] DAO governance page — community voting on future events
+- [ ] On-chain event history (transparent attendance records)
+- [ ] Tipping / donations via crypto during live shows
+- [ ] Merch purchases with crypto payments
 
 ### Functionality
-- [ ] Luma checkout button embed (requires Luma event ID from dashboard)
-- [ ] Ticket minting / Web3 wallet connect for on-chain ticketing
-- [ ] Live chat or Discord widget integration
+- [ ] Luma checkout button embed (official script from Luma dashboard)
+- [ ] Discord widget or live chat integration
 - [ ] Real-time "viewers in venue" counter via Spatial API
-- [ ] Multi-language support
+- [ ] Multi-language support (EN, ES, PT, etc.)
+- [ ] Search functionality across events and artists
+- [ ] User accounts / profiles for returning fans
+- [ ] Event reminders via email or push notification
+- [ ] Calendar export (.ics) for upcoming shows
+- [ ] Live poll or voting during concerts
+- [ ] QR code generator for easy mobile access to venue
+- [ ] Referral system — share and earn rewards
+- [ ] Accessibility features (screen reader support, reduced motion, high contrast)
 
 ### SEO & Performance
-- [ ] Open Graph meta tags for social sharing previews
-- [ ] Favicon and Apple touch icons
-- [ ] Structured data (JSON-LD) for events
-- [ ] Analytics integration (Google Analytics, Plausible, etc.)
-- [ ] Image optimization and CDN caching headers
+- [ ] Structured data (JSON-LD) for events — show up in Google event search
+- [ ] Sitemap.xml and robots.txt
+- [ ] Image optimization (WebP, lazy loading)
+- [ ] CDN caching headers via Vercel edge config
+- [ ] Lighthouse score optimization (target 95+)
+- [ ] Preload critical fonts and assets
+- [ ] Server-side rendering or static generation if migrating to Next.js
 
 ### Platform Expansion
 - [ ] Multiple venue pages for different Spatial spaces
-- [ ] Merch store integration
-- [ ] NFT gallery showcasing event collectibles
-- [ ] Mobile app or PWA for push notifications
-- [ ] Integration with streaming platforms (Twitch, YouTube Live)
+- [ ] Merch store integration (Shopify, Printful, BigCartel)
+- [ ] Mobile app or PWA with push notifications
+- [ ] Integration with streaming platforms (Twitch, YouTube Live, Kick)
+- [ ] Spotify/Apple Music embeds for featured artists
+- [ ] Discord bot that announces shows and links to the venue
+- [ ] Telegram or WhatsApp group integration
+- [ ] Podcast page for recorded DJ sets or interviews
+- [ ] Partner/sponsor showcase section
+- [ ] Affiliate program for promoters
+
+### Infrastructure & DevOps
+- [ ] Migrate to Next.js for dynamic pages and SSR
+- [ ] CMS integration (Sanity, Contentful, or Notion as CMS)
+- [ ] CI/CD pipeline with GitHub Actions (lint, preview deploys)
+- [ ] Staging environment for testing before production
+- [ ] Error monitoring (Sentry)
+- [ ] Uptime monitoring (BetterStack, UptimeRobot)
+- [ ] A/B testing on hero CTA and landing page variants
+- [ ] Edge functions for geo-targeted content (show local times)
 
 ## Local Development
 
