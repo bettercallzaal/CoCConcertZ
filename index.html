@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COC Concertz — Live Metaverse Concerts</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #050505;
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* ---- Hero Section ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 60px 20px;
+            position: relative;
+            background: radial-gradient(ellipse at 50% 0%, rgba(168, 85, 247, 0.15) 0%, transparent 60%);
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #a855f7;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(4px);
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 7rem);
+            font-weight: 900;
+            line-height: 1.05;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #fff 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(1rem, 2vw, 1.3rem);
+            color: #999;
+            max-width: 600px;
+            line-height: 1.6;
+            margin-bottom: 40px;
+        }
+
+        .hero-cta {
+            display: inline-block;
+            padding: 18px 48px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.3);
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 60px rgba(168, 85, 247, 0.5);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+            opacity: 0.5;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .scroll-indicator span {
+            display: block;
+            text-align: center;
+            font-size: 1.4rem;
+            margin-top: 4px;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ---- Spatial Embed ---- */
+        .spatial-section {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+        }
+
+        .spatial-section iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* ---- Next Show Banner ---- */
+        .next-show {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(236, 72, 153, 0.1));
+            border-top: 1px solid rgba(168, 85, 247, 0.2);
+            border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .next-show-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #a855f7;
+            margin-bottom: 12px;
+        }
+
+        .next-show h2 {
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+        }
+
+        .countdown-item .number {
+            display: block;
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .countdown-item .label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #666;
+        }
+
+        /* ---- Content Sections ---- */
+        .content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        section {
+            margin-bottom: 80px;
+        }
+
+        section h2 {
+            font-size: 1.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            border-radius: 2px;
+        }
+
+        section p {
+            color: #aaa;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        /* ---- Schedule ---- */
+        .schedule-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .schedule-list li {
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 16px;
+            padding: 24px 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            transition: border-color 0.2s;
+        }
+
+        .schedule-list li:hover {
+            border-color: #a855f7;
+        }
+
+        .event-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .event-name {
+            font-weight: 700;
+            font-size: 1.15rem;
+        }
+
+        .event-desc {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .event-date {
+            color: #a855f7;
+            font-weight: 600;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        /* ---- Socials ---- */
+        .socials {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .socials a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 14px 28px;
+            background: #0f0f0f;
+            border: 1px solid #1a1a1a;
+            border-radius: 12px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: border-color 0.2s, transform 0.2s;
+        }
+
+        .socials a:hover {
+            border-color: #a855f7;
+            transform: translateY(-2px);
+        }
+
+        /* ---- Final CTA ---- */
+        .final-cta {
+            text-align: center;
+            padding: 80px 20px;
+        }
+
+        .final-cta h2 {
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 800;
+            margin-bottom: 16px;
+        }
+
+        .final-cta h2::after {
+            display: none;
+        }
+
+        .final-cta p {
+            color: #666;
+            margin-bottom: 32px;
+            font-size: 1.1rem;
+        }
+
+        .final-cta .hero-cta {
+            font-size: 1rem;
+        }
+
+        /* ---- Footer ---- */
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #333;
+            font-size: 0.8rem;
+            border-top: 1px solid #111;
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 600px) {
+            .hero {
+                padding: 40px 16px;
+            }
+
+            .countdown {
+                gap: 12px;
+            }
+
+            .countdown-item .number {
+                font-size: 1.8rem;
+            }
+
+            .schedule-list li {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .socials {
+                flex-direction: column;
+            }
+
+            .socials a {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-badge">Live in the Metaverse</div>
+        <h1>COC Concertz</h1>
+        <p>Step into immersive virtual venues and experience live music from anywhere in the world. No tickets. No lines. Just vibes.</p>
+        <a class="hero-cta" href="#venue">Enter the Venue</a>
+        <div class="scroll-indicator">
+            Scroll
+            <span>&#8595;</span>
+        </div>
+    </section>
+
+    <!-- Next Show Countdown -->
+    <div class="next-show">
+        <div class="next-show-label">Next Show</div>
+        <h2>+COC ConcertZ #3</h2>
+        <p style="color:#999;">March 7, 2026 &middot; 4:00 PM EST</p>
+        <div class="countdown" id="countdown">
+            <div class="countdown-item">
+                <span class="number" id="days">--</span>
+                <span class="label">Days</span>
+            </div>
+            <div class="countdown-item">
+                <span class="number" id="hours">--</span>
+                <span class="label">Hours</span>
+            </div>
+            <div class="countdown-item">
+                <span class="number" id="minutes">--</span>
+                <span class="label">Min</span>
+            </div>
+            <div class="countdown-item">
+                <span class="number" id="seconds">--</span>
+                <span class="label">Sec</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Spatial Embed -->
+    <div class="spatial-section" id="venue">
+        <iframe
+            src="https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517"
+            allow="camera; microphone; fullscreen"
+            allowfullscreen
+            loading="lazy"
+        ></iframe>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <!-- About -->
+        <section>
+            <h2>About</h2>
+            <p>COC Concertz hosts live performances inside the metaverse, giving fans a front-row experience from anywhere in the world. Our virtual stages feature live music, interactive crowds, and unforgettable vibes — no ticket lines, no boundaries. Jump in, explore, and feel the energy.</p>
+        </section>
+
+        <!-- Schedule + Luma -->
+        <section>
+            <h2>Upcoming Shows</h2>
+            <ul class="schedule-list">
+                <li>
+                    <div class="event-info">
+                        <span class="event-name">+COC ConcertZ #3</span>
+                        <span class="event-desc">Web3 metaverse music experience in StiloWorld</span>
+                    </div>
+                    <span class="event-date">Mar 7, 2026 @ 4PM EST</span>
+                </li>
+            </ul>
+
+            <div style="margin-top: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
+                <a class="hero-cta" href="https://lu.ma/kzqnj4dm" target="_blank" style="font-size: 0.95rem; padding: 14px 32px;">
+                    RSVP on Luma
+                </a>
+                <span style="color: #666; font-size: 0.9rem;">Free entry — register to get reminders</span>
+            </div>
+        </section>
+
+        <!-- Socials -->
+        <section>
+            <h2>Connect</h2>
+            <div class="socials">
+                <a href="#" target="_blank">Instagram</a>
+                <a href="#" target="_blank">TikTok</a>
+                <a href="#" target="_blank">YouTube</a>
+                <a href="#" target="_blank">X / Twitter</a>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Final CTA -->
+    <div class="final-cta">
+        <h2>Ready to experience live music in the metaverse?</h2>
+        <p>Jump in now — the stage is live.</p>
+        <a class="hero-cta" href="https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517" target="_blank">
+            Enter the Venue
+        </a>
+    </div>
+
+    <footer>
+        &copy; 2026 COC Concertz. All rights reserved.
+    </footer>
+
+    <!-- Countdown Timer -->
+    <script>
+        const eventDate = new Date('2026-03-07T21:00:00Z'); // 4PM EST = 9PM UTC
+
+        function updateCountdown() {
+            const now = new Date();
+            const diff = eventDate - now;
+
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '0';
+                document.getElementById('minutes').textContent = '0';
+                document.getElementById('seconds').textContent = '0';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = hours;
+            document.getElementById('minutes').textContent = minutes;
+            document.getElementById('seconds').textContent = seconds;
+        }
+
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+    </script>
+
+</body>
+</html>
