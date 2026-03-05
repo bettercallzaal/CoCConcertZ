@@ -154,14 +154,102 @@
             50% { transform: translateX(-50%) translateY(8px); }
         }
 
-        /* ---- Spatial Embed ---- */
-        .spatial-section {
+        /* ---- Venue Embed ---- */
+        .venue-section {
+            width: 100%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .venue-controls {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px 20px;
+            width: 100%;
+            max-width: 900px;
+            flex-wrap: wrap;
+        }
+
+        .venue-toggle {
+            display: flex;
+            border: 1px solid #1a1a1a;
+            border-radius: 50px;
+            overflow: hidden;
+        }
+
+        .venue-toggle button {
+            padding: 10px 24px;
+            background: transparent;
+            border: none;
+            color: #666;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .venue-toggle button.active {
+            background: linear-gradient(135deg, #a855f7, #ec4899);
+            color: #fff;
+        }
+
+        .venue-toggle button:hover:not(.active) {
+            color: #ccc;
+        }
+
+        .size-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .size-control label {
+            font-size: 0.8rem;
+            color: #555;
+            white-space: nowrap;
+        }
+
+        .size-slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 120px;
+            height: 4px;
+            background: #1a1a1a;
+            border-radius: 2px;
+            outline: none;
+        }
+
+        .size-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #a855f7;
+            cursor: pointer;
+        }
+
+        .size-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: #a855f7;
+            cursor: pointer;
+            border: none;
+        }
+
+        .venue-frame {
             width: 100%;
             height: 100vh;
             position: relative;
+            transition: height 0.3s ease;
         }
 
-        .spatial-section iframe {
+        .venue-frame iframe {
             width: 100%;
             height: 100%;
             border: none;
@@ -615,15 +703,28 @@
         </div>
     </section>
 
-    <!-- Spatial Embed -->
-    <section class="spatial-section" id="venue" aria-label="Virtual venue">
-        <iframe
-            src="https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517"
-            allow="camera; microphone; fullscreen"
-            allowfullscreen
-            loading="lazy"
-            title="COC Concertz virtual venue on Spatial"
-        ></iframe>
+    <!-- Venue Embed -->
+    <section class="venue-section" id="venue" aria-label="Virtual venue">
+        <div class="venue-controls">
+            <div class="venue-toggle">
+                <button class="active" data-mode="metaverse">Metaverse</button>
+                <button data-mode="stream">Stream</button>
+            </div>
+            <div class="size-control">
+                <label>Size</label>
+                <input type="range" class="size-slider" id="sizeSlider" min="40" max="100" value="100">
+            </div>
+        </div>
+        <div class="venue-frame" id="venueFrame">
+            <iframe
+                id="venueIframe"
+                src="https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517"
+                allow="camera; microphone; fullscreen"
+                allowfullscreen
+                loading="lazy"
+                title="COC Concertz virtual venue on Spatial"
+            ></iframe>
+        </div>
     </section>
 
     <!-- Content -->
@@ -826,6 +927,31 @@
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
+
+        // Venue toggle (Metaverse / Stream)
+        var metaverseSrc = 'https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517';
+        var streamSrc = 'https://player.twitch.tv/?channel=bettercallzaal&parent=' + location.hostname;
+        var venueIframe = document.getElementById('venueIframe');
+        var venueFrame = document.getElementById('venueFrame');
+
+        document.querySelectorAll('.venue-toggle button').forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.venue-toggle button').forEach(function(b) { b.classList.remove('active'); });
+                btn.classList.add('active');
+                if (btn.dataset.mode === 'metaverse') {
+                    venueIframe.src = metaverseSrc;
+                    venueIframe.title = 'COC Concertz virtual venue on Spatial';
+                } else {
+                    venueIframe.src = streamSrc;
+                    venueIframe.title = 'COC Concertz live stream on Twitch';
+                }
+            });
+        });
+
+        // Size slider
+        document.getElementById('sizeSlider').addEventListener('input', function(e) {
+            venueFrame.style.height = e.target.value + 'vh';
+        });
 
         // Artists tab switching
         document.querySelectorAll('.artists-tab').forEach(function(tab) {
