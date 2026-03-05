@@ -634,9 +634,21 @@
         }
 
         /* ---- Responsive ---- */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             .hero {
                 padding: 40px 16px;
+                min-height: 90vh;
+            }
+
+            .hero-badge {
+                font-size: 0.75rem;
+                padding: 6px 16px;
+                letter-spacing: 1.5px;
+            }
+
+            .hero-cta {
+                padding: 14px 36px;
+                font-size: 1rem;
             }
 
             .countdown {
@@ -647,9 +659,80 @@
                 font-size: 1.8rem;
             }
 
+            .venue-controls {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+                padding: 12px 16px;
+            }
+
+            .venue-toggle button {
+                padding: 8px 18px;
+                font-size: 0.8rem;
+            }
+
+            .size-slider {
+                width: 100%;
+            }
+
+            .size-control {
+                width: 100%;
+            }
+
+            .venue-frame {
+                height: 60vh;
+            }
+
+            .content {
+                padding: 50px 16px;
+            }
+
+            section {
+                margin-bottom: 50px;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+            }
+
+            section p {
+                font-size: 0.95rem;
+            }
+
+            .steps {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .step {
+                padding: 20px 18px;
+            }
+
             .schedule-list li {
                 flex-direction: column;
                 align-items: flex-start;
+                padding: 18px 20px;
+            }
+
+            .past-shows-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .artists-tabs {
+                gap: 6px;
+            }
+
+            .artists-tab {
+                padding: 8px 14px;
+                font-size: 0.8rem;
+            }
+
+            .artists-panel.active {
+                grid-template-columns: 1fr;
+            }
+
+            .artist-card {
+                padding: 18px;
             }
 
             .socials {
@@ -658,6 +741,47 @@
 
             .socials a {
                 justify-content: center;
+                padding: 12px 20px;
+            }
+
+            .final-cta {
+                padding: 50px 16px;
+            }
+
+            .final-cta .hero-cta {
+                padding: 14px 32px;
+                font-size: 0.95rem;
+            }
+
+            .next-show {
+                padding: 30px 16px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .countdown {
+                gap: 8px;
+            }
+
+            .countdown-item .number {
+                font-size: 1.5rem;
+            }
+
+            .countdown-item .label {
+                font-size: 0.65rem;
+            }
+
+            .venue-frame {
+                height: 50vh;
+            }
+
+            .hero-cta {
+                padding: 12px 28px;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -719,8 +843,10 @@
             <iframe
                 id="venueIframe"
                 src="https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517"
-                allow="camera; microphone; fullscreen"
-                allowfullscreen
+                allow="camera; microphone; fullscreen; autoplay; encrypted-media"
+                allowfullscreen="true"
+                webkitallowfullscreen="true"
+                mozallowfullscreen="true"
                 loading="lazy"
                 title="COC Concertz virtual venue on Spatial"
             ></iframe>
@@ -930,7 +1056,7 @@
 
         // Venue toggle (Metaverse / Stream)
         var metaverseSrc = 'https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517';
-        var streamSrc = 'https://player.twitch.tv/?channel=bettercallzaal&parent=' + location.hostname;
+        var streamSrc = 'https://player.twitch.tv/?channel=bettercallzaal&allowfullscreen=true&muted=false&parent=' + location.hostname;
         var venueIframe = document.getElementById('venueIframe');
         var venueFrame = document.getElementById('venueFrame');
 
