@@ -1446,7 +1446,7 @@
         <h2>SHARE THE SHOW</h2>
         <p>Come check out the live stream — tell your friends about COC Concertz!</p>
         <div class="share-buttons">
-            <a class="share-btn share-btn-primary" id="shareFarcaster" href="https://warpcast.com/~/compose?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&embeds[]=https://cocconcertz.com" target="_blank" rel="noopener">Farcaster</a>
+            <a class="share-btn share-btn-primary" id="shareFarcaster" href="https://warpcast.com/~/compose?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&embeds[]=https://cocconcertz.com&channelKey=cocconcertz" target="_blank" rel="noopener">Farcaster</a>
             <a class="share-btn" href="https://twitter.com/intent/tweet?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&url=https://cocconcertz.com" target="_blank" rel="noopener">X / Twitter</a>
             <button class="share-btn" id="copyLinkBtn" type="button">Copy Link</button>
         </div>
@@ -1644,7 +1644,8 @@
                     e.preventDefault();
                     sdk.actions.composeCast({
                         text: 'Come check out COC Concertz #3 — live metaverse concert happening now!',
-                        embeds: ['https://cocconcertz.com']
+                        embeds: ['https://cocconcertz.com'],
+                        channelKey: 'cocconcertz'
                     });
                 });
             }
