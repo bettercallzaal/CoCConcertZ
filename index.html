@@ -959,6 +959,77 @@
         }
 
         /* ---- Final CTA ---- */
+        .share-section {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        .share-section p {
+            color: var(--text-dim);
+            margin-bottom: 24px;
+            font-size: 1.1rem;
+        }
+        .share-buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .share-btn {
+            display: inline-block;
+            padding: 14px 28px;
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 2px solid var(--yellow);
+            color: var(--yellow);
+            background: transparent;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px));
+            transition: all 0.2s ease;
+        }
+        .share-btn:hover {
+            background: var(--yellow);
+            color: #000;
+        }
+        .share-btn.share-btn-primary {
+            background: var(--yellow);
+            color: #000;
+        }
+        .share-btn.share-btn-primary:hover {
+            background: var(--cyan);
+            border-color: var(--cyan);
+        }
+        .share-copied {
+            color: var(--cyan);
+            font-family: var(--font-display);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            margin-top: 12px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .share-copied.visible { opacity: 1; }
+
+        .stream-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            min-height: 300px;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid var(--yellow);
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+        }
+        .stream-fallback p {
+            color: var(--text-dim);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
         .final-cta {
             text-align: center;
             padding: 120px 20px;
@@ -1369,6 +1440,19 @@
 
     </div>
 
+    <!-- Share -->
+    <section class="share-section reveal" aria-label="Share">
+        <span class="section-label">Spread the Word</span>
+        <h2>SHARE THE SHOW</h2>
+        <p>Come check out the live stream — tell your friends about COC Concertz!</p>
+        <div class="share-buttons">
+            <a class="share-btn share-btn-primary" id="shareWarpcast" href="https://warpcast.com/~/compose?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&embeds[]=https://cocconcertz.com" target="_blank" rel="noopener">Warpcast</a>
+            <a class="share-btn" href="https://twitter.com/intent/tweet?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&url=https://cocconcertz.com" target="_blank" rel="noopener">X / Twitter</a>
+            <button class="share-btn" id="copyLinkBtn" type="button">Copy Link</button>
+        </div>
+        <div class="share-copied" id="shareCopied">LINK COPIED!</div>
+    </section>
+
     <!-- Final CTA -->
     <section class="final-cta reveal" aria-label="Call to action">
         <h2>READY TO EXPERIENCE LIVE<br>MUSIC IN THE METAVERSE?</h2>
@@ -1498,11 +1582,72 @@
         });
     </script>
 
+    <!-- Copy Link handler -->
+    <script>
+        document.getElementById('copyLinkBtn').addEventListener('click', function() {
+            navigator.clipboard.writeText('Come check out COC Concertz #3 — live metaverse concert happening now! https://cocconcertz.com').then(function() {
+                var msg = document.getElementById('shareCopied');
+                msg.classList.add('visible');
+                setTimeout(function() { msg.classList.remove('visible'); }, 2000);
+            });
+        });
+    </script>
+
     <!-- Farcaster Mini App SDK -->
     <script type="module">
         import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
-        if (window.parent !== window || navigator.userAgent.includes('Farcaster')) {
+
+        var isFarcaster = window.parent !== window || navigator.userAgent.includes('Farcaster');
+
+        if (isFarcaster) {
             await sdk.actions.ready();
+
+            // Replace Twitch stream toggle with a fallback button
+            var streamBtn = document.querySelector('[data-mode="stream"]');
+            if (streamBtn) {
+                streamBtn.addEventListener('click', function(e) {
+                    var frame = document.getElementById('venueFrame');
+                    var iframe = document.getElementById('venueIframe');
+                    // Hide iframe and show fallback
+                    if (!document.getElementById('streamFallback')) {
+                        iframe.style.display = 'none';
+                        var fallback = document.createElement('div');
+                        fallback.id = 'streamFallback';
+                        fallback.className = 'stream-fallback';
+                        fallback.innerHTML = '<p>Stream can\'t load inside mini apps</p><button class="cta-btn" id="openTwitchBtn">WATCH LIVE ON TWITCH</button>';
+                        frame.appendChild(fallback);
+                        document.getElementById('openTwitchBtn').addEventListener('click', function() {
+                            sdk.actions.openUrl('https://twitch.tv/bettercallzaal');
+                        });
+                    } else {
+                        iframe.style.display = 'none';
+                        document.getElementById('streamFallback').style.display = 'flex';
+                    }
+                });
+
+                // Restore iframe when switching back to metaverse
+                var metaBtn = document.querySelector('[data-mode="metaverse"]');
+                if (metaBtn) {
+                    metaBtn.addEventListener('click', function() {
+                        var iframe = document.getElementById('venueIframe');
+                        var fallback = document.getElementById('streamFallback');
+                        iframe.style.display = '';
+                        if (fallback) fallback.style.display = 'none';
+                    });
+                }
+            }
+
+            // Override Warpcast share to use composeCast
+            var warpcastBtn = document.getElementById('shareWarpcast');
+            if (warpcastBtn) {
+                warpcastBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    sdk.actions.composeCast({
+                        text: 'Come check out COC Concertz #3 — live metaverse concert happening now!',
+                        embeds: ['https://cocconcertz.com']
+                    });
+                });
+            }
         }
     </script>
 
