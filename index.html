@@ -51,21 +51,101 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Grain SVG Filter -->
+    <svg style="position:absolute;width:0;height:0;">
+        <filter id="grain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+            <feColorMatrix type="saturate" values="0"/>
+            <feBlend in="SourceGraphic" mode="multiply" result="blend"/>
+            <feComponentTransfer>
+                <feFuncA type="linear" slope="0.12"/>
+            </feComponentTransfer>
+        </filter>
+    </svg>
+
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --yellow: #FFD600;
+            --yellow-dim: rgba(255, 214, 0, 0.15);
+            --cyan: #00F0FF;
+            --cyan-dim: rgba(0, 240, 255, 0.1);
+            --black: #050505;
+            --card: #0a0a0a;
+            --border: #1a1a1a;
+            --text: #c8c8c8;
+            --text-dim: #666;
+            --font-display: 'Bebas Neue', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-body: 'Space Grotesk', sans-serif;
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background: #050505;
+            font-family: var(--font-body);
+            background: var(--black);
             color: #fff;
             overflow-x: hidden;
+            position: relative;
         }
+
+        /* ---- Grain Overlay ---- */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            filter: url(#grain);
+            background: transparent;
+            pointer-events: none;
+            z-index: 9999;
+        }
+
+        /* ---- Scanlines ---- */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 0, 0, 0.03) 2px,
+                rgba(0, 0, 0, 0.03) 4px
+            );
+            pointer-events: none;
+            z-index: 9998;
+        }
+
+        /* ---- Halftone Background ---- */
+        .halftone-bg {
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(circle, rgba(255,214,0,0.03) 1px, transparent 1px);
+            background-size: 24px 24px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* ---- Scroll Reveal ---- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .reveal-delay-1 { transition-delay: 0.1s; }
+        .reveal-delay-2 { transition-delay: 0.2s; }
+        .reveal-delay-3 { transition-delay: 0.3s; }
+        .reveal-delay-4 { transition-delay: 0.4s; }
 
         /* ---- Hero Section ---- */
         .hero {
@@ -77,57 +157,154 @@
             text-align: center;
             padding: 60px 20px;
             position: relative;
-            background: radial-gradient(ellipse at 50% 0%, rgba(255, 214, 0, 0.15) 0%, transparent 60%);
+            z-index: 1;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(ellipse, rgba(255, 214, 0, 0.12) 0%, rgba(0, 240, 255, 0.04) 40%, transparent 70%);
+            pointer-events: none;
         }
 
         .hero-badge {
             display: inline-block;
-            padding: 8px 20px;
-            border: 1px solid rgba(255, 214, 0, 0.4);
-            border-radius: 50px;
-            font-size: 0.85rem;
-            color: #FFD600;
+            padding: 8px 24px;
+            border: 1px solid var(--cyan);
+            border-radius: 0;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--cyan);
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 4px;
             margin-bottom: 32px;
-            backdrop-filter: blur(4px);
+            position: relative;
+            animation: badge-flicker 4s infinite;
+        }
+
+        .hero-badge::before,
+        .hero-badge::after {
+            content: '';
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            border: 1px solid var(--cyan);
+        }
+        .hero-badge::before { top: -4px; left: -4px; border-right: none; border-bottom: none; }
+        .hero-badge::after { bottom: -4px; right: -4px; border-left: none; border-top: none; }
+
+        @keyframes badge-flicker {
+            0%, 92%, 100% { opacity: 1; }
+            93% { opacity: 0.4; }
+            94% { opacity: 1; }
+            96% { opacity: 0.6; }
+            97% { opacity: 1; }
         }
 
         .hero h1 {
-            font-size: clamp(3rem, 8vw, 7rem);
-            font-weight: 900;
-            line-height: 1.05;
-            margin-bottom: 24px;
-            background: linear-gradient(135deg, #FFD600 0%, #FFF176 50%, #FFD600 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-family: var(--font-display);
+            font-size: clamp(5rem, 15vw, 14rem);
+            font-weight: 400;
+            line-height: 0.9;
+            margin-bottom: 8px;
+            color: var(--yellow);
+            position: relative;
+            letter-spacing: 4px;
+        }
+
+        /* Glitch Effect */
+        .glitch {
+            position: relative;
+            display: inline-block;
+        }
+        .glitch::before,
+        .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        .glitch::before {
+            color: var(--cyan);
+            animation: glitch-1 3s infinite linear alternate-reverse;
+            clip-path: inset(0 0 80% 0);
+        }
+        .glitch::after {
+            color: #ff003c;
+            animation: glitch-2 2.5s infinite linear alternate-reverse;
+            clip-path: inset(80% 0 0 0);
+        }
+
+        @keyframes glitch-1 {
+            0%, 87% { transform: translate(0); }
+            88% { transform: translate(-4px, -2px); }
+            89% { transform: translate(4px, 2px); }
+            90% { transform: translate(-2px, 1px); }
+            91%, 100% { transform: translate(0); }
+        }
+        @keyframes glitch-2 {
+            0%, 91% { transform: translate(0); }
+            92% { transform: translate(3px, 1px); }
+            93% { transform: translate(-3px, -1px); }
+            94% { transform: translate(2px, -1px); }
+            95%, 100% { transform: translate(0); }
+        }
+
+        .hero-subtitle {
+            font-family: var(--font-display);
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            letter-spacing: 12px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
+            text-transform: uppercase;
         }
 
         .hero p {
-            font-size: clamp(1rem, 2vw, 1.3rem);
-            color: #999;
-            max-width: 600px;
-            line-height: 1.6;
-            margin-bottom: 40px;
+            font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+            color: var(--text-dim);
+            max-width: 500px;
+            line-height: 1.7;
+            margin-bottom: 48px;
+            font-family: var(--font-body);
         }
 
-        .hero-cta {
+        .cta-btn {
             display: inline-block;
-            padding: 18px 48px;
-            background: #FFD600;
+            padding: 18px 52px;
+            background: var(--yellow);
             color: #000;
             text-decoration: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 700;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 0 40px rgba(255, 214, 0, 0.3);
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            letter-spacing: 3px;
+            transition: all 0.2s;
+            position: relative;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
         }
 
-        .hero-cta:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 60px rgba(255, 214, 0, 0.5);
+        .cta-btn:hover {
+            background: var(--cyan);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--yellow);
+        }
+
+        .cta-btn-outline {
+            background: transparent;
+            border: 2px solid var(--yellow);
+            color: var(--yellow);
+        }
+        .cta-btn-outline:hover {
+            background: var(--yellow);
+            color: #000;
+            box-shadow: 4px 4px 0 var(--cyan);
         }
 
         .scroll-indicator {
@@ -136,22 +313,134 @@
             left: 50%;
             transform: translateX(-50%);
             animation: bounce 2s infinite;
-            opacity: 0.5;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 3px;
             text-transform: uppercase;
+            color: var(--text-dim);
         }
-
         .scroll-indicator span {
             display: block;
             text-align: center;
-            font-size: 1.4rem;
+            font-size: 1.2rem;
             margin-top: 4px;
+            color: var(--cyan);
         }
 
         @keyframes bounce {
             0%, 100% { transform: translateX(-50%) translateY(0); }
             50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* ---- Next Show Banner ---- */
+        .next-show {
+            position: relative;
+            z-index: 1;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            overflow: hidden;
+        }
+
+        .next-show::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,214,0,0.06) 0%, rgba(0,240,255,0.03) 100%);
+            pointer-events: none;
+        }
+
+        .next-show-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--cyan);
+            margin-bottom: 16px;
+            display: inline-block;
+            padding: 4px 16px;
+            border: 1px solid rgba(0,240,255,0.3);
+        }
+
+        .next-show-live {
+            display: inline-block;
+            padding: 4px 16px;
+            background: #ff003c;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+            animation: live-pulse 1.5s infinite;
+        }
+
+        @keyframes live-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        .next-show h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            letter-spacing: 4px;
+            margin-bottom: 8px;
+            color: var(--yellow);
+        }
+
+        .next-show .show-date {
+            font-family: var(--font-mono);
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        .countdown {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .countdown-item {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .countdown-item .number {
+            display: block;
+            font-family: var(--font-mono);
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--yellow);
+            line-height: 1;
+            text-shadow: 0 0 30px rgba(255,214,0,0.3);
+        }
+
+        .countdown-item .label {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            color: var(--text-dim);
+            margin-top: 8px;
+        }
+
+        .countdown-separator {
+            font-family: var(--font-mono);
+            font-size: 2.5rem;
+            color: var(--text-dim);
+            align-self: flex-start;
+            padding-top: 4px;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.2; }
         }
 
         /* ---- Venue Embed ---- */
@@ -161,6 +450,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            z-index: 1;
         }
 
         .venue-controls {
@@ -169,77 +459,82 @@
             gap: 16px;
             padding: 16px 20px;
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             flex-wrap: wrap;
+            border-bottom: 1px solid var(--border);
         }
 
         .venue-toggle {
             display: flex;
-            border: 1px solid #1a1a1a;
-            border-radius: 50px;
             overflow: hidden;
         }
 
         .venue-toggle button {
             padding: 10px 24px;
             background: transparent;
-            border: none;
-            color: #666;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
+            border: 1px solid var(--border);
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
+        .venue-toggle button:first-child { border-right: none; }
+
         .venue-toggle button.active {
-            background: #FFD600;
+            background: var(--yellow);
             color: #000;
+            border-color: var(--yellow);
         }
 
         .venue-toggle button:hover:not(.active) {
-            color: #ccc;
+            color: var(--cyan);
+            border-color: var(--cyan);
         }
 
         .size-control {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
         }
 
         .size-control label {
-            font-size: 0.8rem;
-            color: #555;
-            white-space: nowrap;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .size-slider {
             -webkit-appearance: none;
             appearance: none;
             width: 120px;
-            height: 4px;
-            background: #1a1a1a;
-            border-radius: 2px;
+            height: 2px;
+            background: var(--border);
             outline: none;
         }
 
         .size-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #FFD600;
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
             cursor: pointer;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
         }
 
         .size-slider::-moz-range-thumb {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #FFD600;
+            width: 14px;
+            height: 14px;
+            background: var(--yellow);
             cursor: pointer;
             border: none;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
         }
 
         .venue-frame {
@@ -255,91 +550,55 @@
             border: none;
         }
 
-        /* ---- Next Show Banner ---- */
-        .next-show {
-            background: linear-gradient(135deg, rgba(255, 214, 0, 0.08), rgba(255, 214, 0, 0.04));
-            border-top: 1px solid rgba(255, 214, 0, 0.2);
-            border-bottom: 1px solid rgba(255, 214, 0, 0.2);
-            padding: 40px 20px;
-            text-align: center;
-        }
-
-        .next-show-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #FFD600;
-            margin-bottom: 12px;
-        }
-
-        .next-show h2 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem);
-            font-weight: 800;
-            margin-bottom: 16px;
-        }
-
-        .countdown {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .countdown-item {
-            text-align: center;
-        }
-
-        .countdown-item .number {
-            display: block;
-            font-size: 2.5rem;
-            font-weight: 800;
-            background: #FFD600;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .countdown-item .label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #666;
-        }
-
-        /* ---- Content Sections ---- */
+        /* ---- Section Styling ---- */
         .content {
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
-            padding: 80px 20px;
+            padding: 100px 24px;
+            position: relative;
+            z-index: 1;
         }
 
         section {
-            margin-bottom: 80px;
+            margin-bottom: 100px;
         }
 
-        section h2 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            position: relative;
+        .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--cyan);
+            margin-bottom: 16px;
             display: inline-block;
         }
 
-        section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -8px;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: #FFD600;
-            border-radius: 2px;
+        .section-label::before {
+            content: '// ';
+            opacity: 0.5;
+        }
+
+        section h2 {
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            letter-spacing: 3px;
+            margin-bottom: 24px;
+            color: #fff;
+            position: relative;
         }
 
         section p {
-            color: #aaa;
+            color: var(--text);
             line-height: 1.8;
-            font-size: 1.05rem;
+            font-size: 1rem;
+        }
+
+        /* ---- Divider ---- */
+        .section-divider {
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--border) 20%, var(--yellow) 50%, var(--border) 80%, transparent);
+            margin: 0 auto;
         }
 
         /* ---- Schedule ---- */
@@ -347,24 +606,49 @@
             list-style: none;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
 
         .schedule-list li {
-            background: #0f0f0f;
-            border: 1px solid #1a1a1a;
-            border-radius: 16px;
+            background: var(--card);
+            border: 1px solid var(--border);
             padding: 24px 28px;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
-            transition: border-color 0.2s;
+            gap: 12px;
+            transition: all 0.2s;
+            position: relative;
+            clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+        }
+
+        .schedule-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--yellow);
+            transition: width 0.2s;
         }
 
         .schedule-list li:hover {
-            border-color: #FFD600;
+            border-color: var(--yellow);
+        }
+        .schedule-list li:hover::before {
+            width: 5px;
+        }
+
+        .schedule-list li.next-up::before {
+            background: var(--cyan);
+            animation: bar-pulse 2s infinite;
+        }
+
+        @keyframes bar-pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.4; }
         }
 
         .event-info {
@@ -374,20 +658,35 @@
         }
 
         .event-name {
-            font-weight: 700;
-            font-size: 1.15rem;
+            font-family: var(--font-display);
+            font-size: 1.4rem;
+            letter-spacing: 2px;
         }
 
         .event-desc {
-            color: #666;
-            font-size: 0.9rem;
+            color: var(--text-dim);
+            font-size: 0.85rem;
         }
 
         .event-date {
-            color: #FFD600;
-            font-weight: 600;
-            font-size: 0.95rem;
-            white-space: nowrap;
+            font-family: var(--font-mono);
+            color: var(--yellow);
+            font-weight: 700;
+            font-size: 0.8rem;
+            letter-spacing: 1px;
+        }
+
+        .event-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            background: var(--cyan-dim);
+            color: var(--cyan);
+            margin-bottom: 4px;
         }
 
         /* ---- Past Shows ---- */
@@ -395,123 +694,128 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 16px;
-            margin-top: 8px;
+            margin-top: 16px;
         }
 
         .past-show-card {
-            background: #0a0a0a;
-            border: 1px solid #1a1a1a;
-            border-radius: 16px;
-            padding: 24px 28px;
-            opacity: 0.7;
-            transition: opacity 0.2s;
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            position: relative;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+            opacity: 0.6;
+            transition: all 0.3s;
         }
 
         .past-show-card:hover {
-            opacity: 0.9;
+            opacity: 1;
+            border-color: var(--text-dim);
         }
 
         .past-show-card .event-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 6px;
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
         }
 
         .past-show-card .event-desc {
-            color: #555;
-            font-size: 0.9rem;
-            margin-bottom: 10px;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            margin-bottom: 12px;
+            line-height: 1.5;
         }
 
         .past-show-card .event-date {
-            color: #666;
-            font-weight: 600;
-            font-size: 0.85rem;
+            color: var(--text-dim);
+            font-size: 0.75rem;
         }
 
         .past-show-tag {
             display: inline-block;
             padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(255, 214, 0, 0.1);
-            color: #FFD600;
-            margin-bottom: 12px;
+            letter-spacing: 2px;
+            border: 1px solid var(--text-dim);
+            color: var(--text-dim);
+            margin-bottom: 14px;
         }
 
         /* ---- How to Join ---- */
         .steps {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 24px;
-            margin-top: 8px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-top: 16px;
         }
 
         .step {
-            background: #0f0f0f;
-            border: 1px solid #1a1a1a;
-            border-radius: 16px;
-            padding: 28px 24px;
-            text-align: center;
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 32px 24px;
+            position: relative;
+            transition: border-color 0.2s;
+        }
+
+        .step:hover {
+            border-color: var(--cyan);
         }
 
         .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: #FFD600;
-            font-weight: 800;
-            font-size: 1.1rem;
+            font-family: var(--font-display);
+            font-size: 3rem;
+            color: var(--yellow);
+            line-height: 1;
             margin-bottom: 16px;
+            display: block;
         }
 
         .step h3 {
-            font-size: 1rem;
-            font-weight: 700;
-            margin-bottom: 8px;
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
         }
 
         .step p {
-            color: #666;
-            font-size: 0.9rem;
-            line-height: 1.5;
+            color: var(--text-dim);
+            font-size: 0.88rem;
+            line-height: 1.6;
         }
 
         /* ---- Artists Tabs ---- */
         .artists-tabs {
             display: flex;
-            gap: 8px;
+            gap: 4px;
             margin-bottom: 24px;
             flex-wrap: wrap;
         }
 
         .artists-tab {
             padding: 10px 20px;
-            border: 1px solid #1a1a1a;
-            border-radius: 50px;
+            border: 1px solid var(--border);
             background: transparent;
-            color: #666;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.85rem;
-            font-weight: 600;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
             cursor: pointer;
             transition: all 0.2s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .artists-tab:hover {
-            border-color: #FFD600;
-            color: #ccc;
+            border-color: var(--cyan);
+            color: var(--cyan);
         }
 
         .artists-tab.active {
-            background: #FFD600;
-            border-color: transparent;
+            background: var(--yellow);
+            border-color: var(--yellow);
             color: #000;
         }
 
@@ -521,293 +825,279 @@
 
         .artists-panel.active {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 16px;
         }
 
         .artist-card {
-            background: #0f0f0f;
-            border: 1px solid #1a1a1a;
-            border-radius: 16px;
-            padding: 24px;
-            transition: border-color 0.2s;
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 28px;
+            transition: all 0.3s;
             position: relative;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
         }
 
         .artist-card:hover {
-            border-color: #FFD600;
+            border-color: var(--yellow);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 rgba(255,214,0,0.2);
         }
 
         .artist-card-link {
             position: absolute;
             inset: 0;
             z-index: 1;
-            border-radius: 16px;
-        }
-
-        .artist-name {
-            font-weight: 700;
-            font-size: 1.1rem;
-            margin-bottom: 4px;
-        }
-
-        .artist-role {
-            color: #FFD600;
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 10px;
-        }
-
-        .artist-card p {
-            color: #555;
-            font-size: 0.88rem;
-            line-height: 1.5;
         }
 
         .artist-card:has(.artist-card-link) {
             cursor: pointer;
         }
 
+        .artist-name {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            margin-bottom: 4px;
+        }
+
+        .artist-role {
+            font-family: var(--font-mono);
+            color: var(--cyan);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .artist-card p {
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+
         .artist-host-tag {
             display: inline-block;
             padding: 3px 10px;
-            border-radius: 20px;
-            font-size: 0.7rem;
-            font-weight: 600;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            background: rgba(255, 214, 0, 0.1);
-            color: #FFD600;
-            margin-bottom: 10px;
+            letter-spacing: 2px;
+            background: var(--yellow-dim);
+            color: var(--yellow);
+            margin-bottom: 12px;
         }
 
         /* ---- Socials ---- */
         .socials {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             flex-wrap: wrap;
         }
 
         .socials a {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 14px 28px;
-            background: #0f0f0f;
-            border: 1px solid #1a1a1a;
-            border-radius: 12px;
+            gap: 12px;
+            padding: 18px 28px;
+            background: var(--card);
+            border: 1px solid var(--border);
             color: #fff;
             text-decoration: none;
-            font-weight: 600;
-            font-size: 0.95rem;
-            transition: border-color 0.2s, transform 0.2s;
+            font-family: var(--font-display);
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            transition: all 0.2s;
+            clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
         }
 
         .socials a:hover {
-            border-color: #FFD600;
-            transform: translateY(-2px);
+            border-color: var(--yellow);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--yellow);
+        }
+
+        /* ---- CTA Actions Row ---- */
+        .cta-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-top: 28px;
+        }
+
+        .cta-row .cta-hint {
+            font-family: var(--font-mono);
+            color: var(--text-dim);
+            font-size: 0.75rem;
+            letter-spacing: 1px;
         }
 
         /* ---- Final CTA ---- */
         .final-cta {
             text-align: center;
-            padding: 80px 20px;
+            padding: 120px 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .final-cta::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(ellipse, rgba(0,240,255,0.06) 0%, transparent 70%);
+            pointer-events: none;
         }
 
         .final-cta h2 {
-            font-size: clamp(1.8rem, 4vw, 2.8rem);
-            font-weight: 800;
+            font-family: var(--font-display);
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            letter-spacing: 4px;
             margin-bottom: 16px;
         }
-
-        .final-cta h2::after {
-            display: none;
-        }
+        .final-cta h2::after { display: none; }
 
         .final-cta p {
-            color: #666;
-            margin-bottom: 32px;
+            color: var(--text-dim);
+            margin-bottom: 40px;
             font-size: 1.1rem;
-        }
-
-        .final-cta .hero-cta {
-            font-size: 1rem;
         }
 
         /* ---- Footer ---- */
         footer {
             text-align: center;
-            padding: 30px 20px;
-            color: #333;
-            font-size: 0.8rem;
-            border-top: 1px solid #111;
+            padding: 40px 20px;
+            color: var(--text-dim);
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            border-top: 1px solid var(--border);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ---- Accent Decorations ---- */
+        .corner-decoration {
+            position: fixed;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .corner-decoration.top-left {
+            top: 16px;
+            left: 16px;
+            width: 40px;
+            height: 40px;
+            border-top: 2px solid var(--yellow);
+            border-left: 2px solid var(--yellow);
+        }
+        .corner-decoration.bottom-right {
+            bottom: 16px;
+            right: 16px;
+            width: 40px;
+            height: 40px;
+            border-bottom: 2px solid var(--yellow);
+            border-right: 2px solid var(--yellow);
+        }
+
+        /* Vertical side text */
+        .side-text {
+            position: fixed;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.08);
+            writing-mode: vertical-rl;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .side-text.left {
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .side-text.right {
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%) rotate(180deg);
         }
 
         /* ---- Responsive ---- */
         @media (max-width: 768px) {
-            .hero {
-                padding: 40px 16px;
-                min-height: 90vh;
-            }
-
-            .hero-badge {
-                font-size: 0.75rem;
-                padding: 6px 16px;
-                letter-spacing: 1.5px;
-            }
-
-            .hero-cta {
-                padding: 14px 36px;
-                font-size: 1rem;
-            }
-
-            .countdown {
-                gap: 12px;
-            }
-
-            .countdown-item .number {
-                font-size: 1.8rem;
-            }
-
+            .hero { padding: 40px 16px; min-height: 90vh; }
+            .hero-badge { font-size: 0.65rem; letter-spacing: 3px; padding: 6px 16px; }
+            .hero-subtitle { letter-spacing: 6px; }
+            .cta-btn { padding: 14px 36px; font-size: 1.1rem; }
+            .countdown { gap: 12px; }
+            .countdown-item .number { font-size: 2rem; }
+            .countdown-item { min-width: 60px; }
+            .countdown-separator { font-size: 1.8rem; }
             .venue-controls {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 12px;
                 padding: 12px 16px;
             }
-
-            .venue-toggle button {
-                padding: 8px 18px;
-                font-size: 0.8rem;
-            }
-
-            .size-slider {
-                width: 100%;
-            }
-
-            .size-control {
-                width: 100%;
-            }
-
-            .venue-frame {
-                height: 60vh;
-            }
-
-            .content {
-                padding: 50px 16px;
-            }
-
-            section {
-                margin-bottom: 50px;
-            }
-
-            section h2 {
-                font-size: 1.5rem;
-            }
-
-            section p {
-                font-size: 0.95rem;
-            }
-
-            .steps {
-                grid-template-columns: 1fr;
-                gap: 16px;
-            }
-
-            .step {
-                padding: 20px 18px;
-            }
-
+            .venue-toggle button { padding: 8px 18px; font-size: 0.7rem; }
+            .size-slider { width: 100%; }
+            .size-control { width: 100%; }
+            .venue-frame { height: 60vh; }
+            .content { padding: 60px 16px; }
+            section { margin-bottom: 60px; }
+            section h2 { font-size: clamp(2rem, 5vw, 3rem); }
+            .steps { grid-template-columns: 1fr; gap: 12px; }
             .schedule-list li {
                 flex-direction: column;
                 align-items: flex-start;
-                padding: 18px 20px;
+                padding: 20px 22px;
             }
-
-            .past-shows-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .artists-tabs {
-                gap: 6px;
-            }
-
-            .artists-tab {
-                padding: 8px 14px;
-                font-size: 0.8rem;
-            }
-
-            .artists-panel.active {
-                grid-template-columns: 1fr;
-            }
-
-            .artist-card {
-                padding: 18px;
-            }
-
-            .socials {
-                flex-direction: column;
-            }
-
-            .socials a {
-                justify-content: center;
-                padding: 12px 20px;
-            }
-
-            .final-cta {
-                padding: 50px 16px;
-            }
-
-            .final-cta .hero-cta {
-                padding: 14px 32px;
-                font-size: 0.95rem;
-            }
-
-            .next-show {
-                padding: 30px 16px;
-            }
+            .past-shows-grid { grid-template-columns: 1fr; }
+            .artists-panel.active { grid-template-columns: 1fr; }
+            .artist-card { padding: 22px; }
+            .socials { flex-direction: column; }
+            .socials a { justify-content: center; }
+            .final-cta { padding: 80px 16px; }
+            .next-show { padding: 40px 16px; }
+            .corner-decoration, .side-text { display: none; }
+            .cta-row { flex-direction: column; align-items: flex-start; }
         }
 
         @media (max-width: 380px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            .countdown {
-                gap: 8px;
-            }
-
-            .countdown-item .number {
-                font-size: 1.5rem;
-            }
-
-            .countdown-item .label {
-                font-size: 0.65rem;
-            }
-
-            .venue-frame {
-                height: 50vh;
-            }
-
-            .hero-cta {
-                padding: 12px 28px;
-                font-size: 0.9rem;
-            }
+            .hero h1 { font-size: clamp(3.5rem, 15vw, 5rem); }
+            .countdown { gap: 8px; }
+            .countdown-item .number { font-size: 1.5rem; }
+            .countdown-separator { font-size: 1.4rem; }
+            .venue-frame { height: 50vh; }
+            .cta-btn { padding: 12px 28px; font-size: 1rem; }
         }
     </style>
 </head>
 <body>
+
+    <div class="halftone-bg"></div>
+
+    <!-- Corner Decorations -->
+    <div class="corner-decoration top-left"></div>
+    <div class="corner-decoration bottom-right"></div>
+    <div class="side-text left">COC Concertz &mdash; Live in the Metaverse</div>
+    <div class="side-text right">Web3 Music &mdash; Free Entry &mdash; No Boundaries</div>
 
     <main>
 
     <!-- Hero -->
     <section class="hero" aria-label="Hero">
         <div class="hero-badge">Live in the Metaverse</div>
-        <h1>COC Concertz</h1>
+        <h1><span class="glitch" data-text="COC">COC</span></h1>
+        <h1 style="margin-top:-8px;"><span class="glitch" data-text="CONCERTZ">CONCERTZ</span></h1>
+        <div class="hero-subtitle">Virtual Stages &middot; Real Music</div>
         <p>Step into immersive virtual venues and experience live music from anywhere in the world. No tickets. No lines. Just vibes.</p>
-        <a class="hero-cta" href="#venue">Enter the Venue</a>
+        <a class="cta-btn" href="#venue">ENTER THE VENUE</a>
         <div class="scroll-indicator">
             Scroll
             <span>&#8595;</span>
@@ -816,22 +1106,25 @@
 
     <!-- Next Show Countdown -->
     <section class="next-show" aria-label="Next show countdown">
-        <div class="next-show-label">Next Show</div>
-        <h2>+COC ConcertZ #3</h2>
-        <p style="color:#999;">March 7, 2026 &middot; 4:00 PM EST</p>
+        <div id="showStatusBadge" class="next-show-label">Next Show</div>
+        <h2 id="nextShowName">+COC CONCERTZ #3</h2>
+        <p class="show-date" id="nextShowDate">March 7, 2026 &middot; 4:00 PM EST</p>
         <div class="countdown" id="countdown">
             <div class="countdown-item">
                 <span class="number" id="days">--</span>
                 <span class="label">Days</span>
             </div>
+            <span class="countdown-separator">:</span>
             <div class="countdown-item">
                 <span class="number" id="hours">--</span>
                 <span class="label">Hours</span>
             </div>
+            <span class="countdown-separator">:</span>
             <div class="countdown-item">
                 <span class="number" id="minutes">--</span>
                 <span class="label">Min</span>
             </div>
+            <span class="countdown-separator">:</span>
             <div class="countdown-item">
                 <span class="number" id="seconds">--</span>
                 <span class="label">Sec</span>
@@ -869,115 +1162,139 @@
     <div class="content">
 
         <!-- About -->
-        <section>
-            <h2>About</h2>
+        <section class="reveal">
+            <span class="section-label">About</span>
+            <h2>WHAT IS COC CONCERTZ</h2>
             <p>COC Concertz hosts live performances inside the metaverse, giving fans a front-row experience from anywhere in the world. Our virtual stages feature live music, interactive crowds, and unforgettable vibes — no ticket lines, no boundaries. Jump in, explore, and feel the energy.</p>
         </section>
 
+        <div class="section-divider"></div>
+
         <!-- How to Join -->
-        <section>
-            <h2>How to Join</h2>
+        <section class="reveal" style="margin-top: 100px;">
+            <span class="section-label">Getting Started</span>
+            <h2>HOW TO JOIN</h2>
             <p style="margin-bottom: 24px;">Getting into the metaverse is easy — and completely free.</p>
             <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Click "Enter the Venue"</h3>
+                <div class="step reveal reveal-delay-1">
+                    <span class="step-number">01</span>
+                    <h3>ENTER THE VENUE</h3>
                     <p>Hit the button above or scroll to the embedded venue on this page.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Create a Spatial Account</h3>
+                <div class="step reveal reveal-delay-2">
+                    <span class="step-number">02</span>
+                    <h3>CREATE AN ACCOUNT</h3>
                     <p>Sign up for free on Spatial — takes less than a minute.</p>
                 </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Explore and Enjoy</h3>
+                <div class="step reveal reveal-delay-3">
+                    <span class="step-number">03</span>
+                    <h3>EXPLORE & ENJOY</h3>
                     <p>Walk around the virtual venue, meet other fans, and vibe to the music.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Schedule + Luma -->
-        <section>
-            <h2>Upcoming Shows</h2>
+        <div class="section-divider"></div>
+
+        <!-- Upcoming Shows -->
+        <section class="reveal" style="margin-top: 100px;">
+            <span class="section-label">Schedule</span>
+            <h2>UPCOMING SHOWS</h2>
             <ul class="schedule-list">
-                <li>
+                <li class="next-up reveal reveal-delay-1">
                     <div class="event-info">
-                        <span class="event-name">+COC ConcertZ #3</span>
+                        <span class="event-tag">Tomorrow</span>
+                        <span class="event-name">+COC CONCERTZ #3</span>
                         <span class="event-desc">Web3 metaverse music experience in StiloWorld</span>
                     </div>
-                    <span class="event-date">Mar 7, 2026 @ 4PM EST</span>
+                    <span class="event-date">MAR 7, 2026 @ 4PM EST</span>
+                </li>
+                <li class="reveal reveal-delay-2">
+                    <div class="event-info">
+                        <span class="event-name">+COC CONCERTZ #4</span>
+                        <span class="event-desc">Details coming soon</span>
+                    </div>
+                    <span class="event-date">APR 11, 2026 @ 4PM EST</span>
                 </li>
             </ul>
 
-            <div style="margin-top: 24px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap;">
-                <a class="hero-cta" href="https://lu.ma/kzqnj4dm" target="_blank" style="font-size: 0.95rem; padding: 14px 32px;">
-                    RSVP on Luma
+            <div class="cta-row">
+                <a class="cta-btn" href="https://lu.ma/kzqnj4dm" target="_blank" style="font-size: 1rem; padding: 14px 36px;">
+                    RSVP ON LUMA
                 </a>
-                <span style="color: #666; font-size: 0.9rem;">Free entry — register to get reminders</span>
+                <span class="cta-hint">Free entry — register to get reminders</span>
             </div>
         </section>
+
+        <div class="section-divider"></div>
 
         <!-- Past Shows -->
-        <section>
-            <h2>Past Shows</h2>
+        <section class="reveal" style="margin-top: 100px;">
+            <span class="section-label">Archive</span>
+            <h2>PAST SHOWS</h2>
             <div class="past-shows-grid">
-                <div class="past-show-card">
+                <div class="past-show-card reveal reveal-delay-1">
                     <span class="past-show-tag">Completed</span>
-                    <div class="event-name">+COC ConcertZ #1</div>
+                    <div class="event-name">+COC CONCERTZ #1</div>
                     <div class="event-desc">The first-ever COC Concertz metaverse show</div>
-                    <div class="event-date">March 29, 2025</div>
+                    <div class="event-date">MARCH 29, 2025</div>
                 </div>
-                <div class="past-show-card">
+                <div class="past-show-card reveal reveal-delay-2">
                     <span class="past-show-tag">Completed</span>
-                    <div class="event-name">+COC ConcertZ #2</div>
+                    <div class="event-name">+COC CONCERTZ #2</div>
                     <div class="event-desc">Second installment — bigger crowd, bigger sound</div>
-                    <div class="event-date">October 11, 2025</div>
+                    <div class="event-date">OCTOBER 11, 2025</div>
                 </div>
             </div>
-            <div style="margin-top: 20px;">
-                <a class="hero-cta" href="https://www.youtube.com/watch?v=-ggYAdu4KRE&list=PLAJfhSekeHMLPEd-PjFnuU_UZmXFR5kvA" target="_blank" rel="noopener" style="font-size: 0.9rem; padding: 12px 28px;">
-                    Watch Past Shows on YouTube
+            <div class="cta-row">
+                <a class="cta-btn cta-btn-outline" href="https://www.youtube.com/watch?v=-ggYAdu4KRE&list=PLAJfhSekeHMLPEd-PjFnuU_UZmXFR5kvA" target="_blank" rel="noopener" style="font-size: 0.95rem; padding: 12px 32px;">
+                    WATCH ON YOUTUBE
                 </a>
             </div>
         </section>
+
+        <div class="section-divider"></div>
 
         <!-- Communities -->
-        <section>
-            <h2>Connect</h2>
-            <p style="margin-bottom: 20px;">COC ConcertZ is hosted by two Web3 communities building at the intersection of music, art, and culture.</p>
+        <section class="reveal" style="margin-top: 100px;">
+            <span class="section-label">Community</span>
+            <h2>CONNECT</h2>
+            <p style="margin-bottom: 24px;">COC ConcertZ is hosted by two Web3 communities building at the intersection of music, art, and culture.</p>
             <div class="socials">
-                <a href="https://thezao.com" target="_blank" rel="noopener" aria-label="Visit The ZAO">
-                    <img src="images/zao-logo.png" alt="The ZAO" style="height: 40px; width: auto; border-radius: 8px;">
-                    The ZAO
+                <a href="https://thezao.com" target="_blank" rel="noopener" aria-label="Visit The ZAO" class="reveal reveal-delay-1">
+                    <img src="images/zao-logo.png" alt="The ZAO" style="height: 40px; width: auto; border-radius: 4px;">
+                    THE ZAO
                 </a>
-                <a href="https://communityofcommunities.xyz/" target="_blank" rel="noopener" aria-label="Visit Community of Communities">
+                <a href="https://communityofcommunities.xyz/" target="_blank" rel="noopener" aria-label="Visit Community of Communities" class="reveal reveal-delay-2">
                     <img src="images/coc-logo-circle.jpeg" alt="Community of Communities" style="height: 40px; width: 40px; border-radius: 50%; object-fit: cover;">
-                    Community of Communities
+                    COMMUNITY OF COMMUNITIES
                 </a>
             </div>
         </section>
 
+        <div class="section-divider"></div>
+
         <!-- Artists -->
-        <section>
-            <h2>Artist</h2>
+        <section class="reveal" style="margin-top: 100px;">
+            <span class="section-label">Lineup</span>
+            <h2>ARTISTS</h2>
             <div class="artists-tabs">
-                <button class="artists-tab" data-tab="concert1">ConcertZ #1</button>
-                <button class="artists-tab" data-tab="concert2">ConcertZ #2</button>
-                <button class="artists-tab active" data-tab="concert3">ConcertZ #3</button>
+                <button class="artists-tab" data-tab="concert1">#1</button>
+                <button class="artists-tab" data-tab="concert2">#2</button>
+                <button class="artists-tab active" data-tab="concert3">#3</button>
             </div>
 
             <!-- ConcertZ #1 — March 29, 2025 -->
             <div class="artists-panel" id="concert1">
                 <div class="artist-card">
                     <a href="https://www.thezao.com/community/attabotty" target="_blank" rel="noopener" class="artist-card-link" aria-label="AttaBotty on The ZAO"></a>
-                    <div class="artist-name">AttaBotty</div>
+                    <div class="artist-name">ATTABOTTY</div>
                     <div class="artist-role">Performer</div>
                     <p>Composer, multi-instrumentalist, and audiovisual storyteller. Fuses EDM, lo-fi, and cinematic orchestra with 2D/3D animation.</p>
                 </div>
                 <div class="artist-card">
                     <a href="https://www.thezao.com/community/clejan" target="_blank" rel="noopener" class="artist-card-link" aria-label="Clejan on The ZAO"></a>
-                    <div class="artist-name">Clejan</div>
+                    <div class="artist-name">CLEJAN</div>
                     <div class="artist-role">Performer</div>
                     <p>Rapper, singer, songwriter, and classically trained violinist from Atlanta. Creator of the signature "Trap Violin" sound.</p>
                 </div>
@@ -986,19 +1303,19 @@
             <!-- ConcertZ #2 — October 11, 2025 -->
             <div class="artists-panel" id="concert2">
                 <div class="artist-card">
-                    <div class="artist-name">Fellenz</div>
+                    <div class="artist-name">FELLENZ</div>
                     <div class="artist-role">Performer</div>
                     <p>Opening act with a 30-minute live set in the SaltyVerse Auditorium.</p>
                 </div>
                 <div class="artist-card">
                     <a href="https://www.thezao.com/community/stilo" target="_blank" rel="noopener" class="artist-card-link" aria-label="Stilo World on The ZAO"></a>
-                    <div class="artist-name">Stilo World</div>
+                    <div class="artist-name">STILO WORLD</div>
                     <div class="artist-role">DJ &middot; WaveWarZ</div>
                     <p>DJing WaveWarZ — an extended set blending beats and Web3 culture live on Spatial.</p>
                 </div>
                 <div class="artist-card">
                     <a href="https://www.thezao.com/community/attabotty" target="_blank" rel="noopener" class="artist-card-link" aria-label="AttaBotty on The ZAO"></a>
-                    <div class="artist-name">AttaBotty</div>
+                    <div class="artist-name">ATTABOTTY</div>
                     <div class="artist-role">Performer</div>
                     <p>Returning with a 30-minute closing set of immersive audiovisual performance.</p>
                 </div>
@@ -1008,18 +1325,18 @@
             <div class="artists-panel active" id="concert3">
                 <div class="artist-card" style="grid-column: 1 / -1;">
                     <a href="https://www.thezao.com/community/stilo" target="_blank" rel="noopener" class="artist-card-link" aria-label="Stilo World on The ZAO"></a>
-                    <div class="artist-name">Stilo World</div>
+                    <div class="artist-name">STILO WORLD</div>
                     <div class="artist-role">Headline Act &middot; WaveWarZ</div>
                     <p>Live set from 5:15 – 5:45 PM EST in StiloWorld, plus an English vs Spanish WaveWarZ Community Battle.</p>
-                    <img src="images/wavewarz-battle.jpeg" alt="WaveWarZ English vs Spanish Community Battle" style="width:100%;border-radius:12px;margin-top:16px;">
+                    <img src="images/wavewarz-battle.jpeg" alt="WaveWarZ English vs Spanish Community Battle" style="width:100%;border-radius:4px;margin-top:16px;clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));">
                 </div>
                 <div class="artist-card">
-                    <div class="artist-name">D&uacute;o D&oslash; Musica</div>
+                    <div class="artist-name">D&Uacute;O D&Oslash; MUSICA</div>
                     <div class="artist-role">Headline Act</div>
                     <p>Opening live set from 4:15 – 4:45 PM EST.</p>
                 </div>
                 <div class="artist-card">
-                    <div class="artist-name">Jose Cabrera</div>
+                    <div class="artist-name">JOSE CABRERA</div>
                     <div class="artist-role">Headline Act</div>
                     <p>Live set from 4:45 – 5:15 PM EST.</p>
                 </div>
@@ -1029,51 +1346,85 @@
     </div>
 
     <!-- Final CTA -->
-    <section class="final-cta" aria-label="Call to action">
-        <h2>Ready to experience live music in the metaverse?</h2>
+    <section class="final-cta reveal" aria-label="Call to action">
+        <h2>READY TO EXPERIENCE LIVE<br>MUSIC IN THE METAVERSE?</h2>
         <p>Jump in now — the stage is live.</p>
-        <a class="hero-cta" href="https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517" target="_blank">
-            Enter the Venue
+        <a class="cta-btn" href="https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517" target="_blank">
+            ENTER THE VENUE
         </a>
     </section>
 
     </main>
 
     <footer>
-        &copy; 2026 COC Concertz. All rights reserved.
+        &copy; 2026 COC CONCERTZ &mdash; ALL RIGHTS RESERVED
     </footer>
 
-    <!-- Countdown Timer -->
     <script defer>
-        const eventDate = new Date('2026-03-07T21:00:00Z'); // 4PM EST = 9PM UTC
+        // ---- Upcoming Shows Data (evergreen: add new shows here) ----
+        var upcomingShows = [
+            { name: '+COC CONCERTZ #3', date: '2026-03-07T21:00:00Z', display: 'March 7, 2026 \u00b7 4:00 PM EST' },
+            { name: '+COC CONCERTZ #4', date: '2026-04-11T20:00:00Z', display: 'April 11, 2026 \u00b7 4:00 PM EST' }
+        ];
 
+        // Find the next upcoming show
+        function getNextShow() {
+            var now = new Date();
+            for (var i = 0; i < upcomingShows.length; i++) {
+                if (new Date(upcomingShows[i].date) > now) return upcomingShows[i];
+            }
+            return upcomingShows[upcomingShows.length - 1];
+        }
+
+        var nextShow = getNextShow();
+        var eventDate = new Date(nextShow.date);
+
+        document.getElementById('nextShowName').textContent = nextShow.name;
+        document.getElementById('nextShowDate').innerHTML = nextShow.display;
+
+        // Check if show is today/tomorrow for the badge
+        var now = new Date();
+        var diffHours = (eventDate - now) / (1000 * 60 * 60);
+        var statusBadge = document.getElementById('showStatusBadge');
+        if (diffHours <= 0) {
+            statusBadge.className = 'next-show-live';
+            statusBadge.textContent = 'LIVE NOW';
+        } else if (diffHours <= 24) {
+            statusBadge.className = 'next-show-live';
+            statusBadge.textContent = 'TOMORROW';
+        } else {
+            statusBadge.className = 'next-show-label';
+            statusBadge.textContent = 'NEXT SHOW';
+        }
+
+        // Countdown
         function updateCountdown() {
-            const now = new Date();
-            const diff = eventDate - now;
+            var now = new Date();
+            var diff = eventDate - now;
 
             if (diff <= 0) {
-                document.getElementById('days').textContent = '0';
-                document.getElementById('hours').textContent = '0';
-                document.getElementById('minutes').textContent = '0';
-                document.getElementById('seconds').textContent = '0';
+                document.getElementById('days').textContent = '00';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
                 return;
             }
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            var d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var s = Math.floor((diff % (1000 * 60)) / 1000);
 
-            document.getElementById('days').textContent = days;
-            document.getElementById('hours').textContent = hours;
-            document.getElementById('minutes').textContent = minutes;
-            document.getElementById('seconds').textContent = seconds;
+            document.getElementById('days').textContent = String(d).padStart(2, '0');
+            document.getElementById('hours').textContent = String(h).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(s).padStart(2, '0');
         }
 
         updateCountdown();
         setInterval(updateCountdown, 1000);
 
-        // Venue toggle (Metaverse / Stream)
+        // ---- Venue toggle ----
         var metaverseSrc = 'https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517';
         var streamSrc = 'https://player.twitch.tv/?channel=bettercallzaal&allowfullscreen=true&muted=false&parent=' + location.hostname;
         var venueIframe = document.getElementById('venueIframe');
@@ -1093,12 +1444,12 @@
             });
         });
 
-        // Size slider
+        // ---- Size slider ----
         document.getElementById('sizeSlider').addEventListener('input', function(e) {
             venueFrame.style.height = e.target.value + 'vh';
         });
 
-        // Artists tab switching
+        // ---- Artists tab switching ----
         document.querySelectorAll('.artists-tab').forEach(function(tab) {
             tab.addEventListener('click', function() {
                 document.querySelectorAll('.artists-tab').forEach(function(t) { t.classList.remove('active'); });
@@ -1106,6 +1457,20 @@
                 tab.classList.add('active');
                 document.getElementById(tab.dataset.tab).classList.add('active');
             });
+        });
+
+        // ---- Scroll Reveal (IntersectionObserver) ----
+        var revealElements = document.querySelectorAll('.reveal');
+        var revealObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        revealElements.forEach(function(el) {
+            revealObserver.observe(el);
         });
     </script>
 
