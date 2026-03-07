@@ -1446,7 +1446,7 @@
         <h2>SHARE THE SHOW</h2>
         <p>Come check out the live stream — tell your friends about COC Concertz!</p>
         <div class="share-buttons">
-            <a class="share-btn share-btn-primary" id="shareWarpcast" href="https://warpcast.com/~/compose?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&embeds[]=https://cocconcertz.com" target="_blank" rel="noopener">Warpcast</a>
+            <a class="share-btn share-btn-primary" id="shareFarcaster" href="https://warpcast.com/~/compose?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&embeds[]=https://cocconcertz.com" target="_blank" rel="noopener">Farcaster</a>
             <a class="share-btn" href="https://twitter.com/intent/tweet?text=Come+check+out+COC+Concertz+%233+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&url=https://cocconcertz.com" target="_blank" rel="noopener">X / Twitter</a>
             <button class="share-btn" id="copyLinkBtn" type="button">Copy Link</button>
         </div>
@@ -1637,10 +1637,10 @@
                 }
             }
 
-            // Override Warpcast share to use composeCast
-            var warpcastBtn = document.getElementById('shareWarpcast');
-            if (warpcastBtn) {
-                warpcastBtn.addEventListener('click', function(e) {
+            // Override Farcaster share to use composeCast inside mini app
+            var farcasterBtn = document.getElementById('shareFarcaster');
+            if (farcasterBtn) {
+                farcasterBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     sdk.actions.composeCast({
                         text: 'Come check out COC Concertz #3 — live metaverse concert happening now!',
