@@ -9,6 +9,8 @@
     "name": "COC Concertz",
     "homeUrl": "https://cocconcertz.com",
     "iconUrl": "https://cocconcertz.com/images/coc-logo-circle.jpeg",
+    "imageUrl": "https://cocconcertz.com/images/concertz3-flyer.jpeg",
+    "buttonTitle": "Enter the Venue",
     "splashImageUrl": "https://cocconcertz.com/images/coc-logo-circle.jpeg",
     "splashBackgroundColor": "#FFD600",
     "subtitle": "Live Metaverse Concerts",
