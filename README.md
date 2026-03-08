@@ -22,6 +22,7 @@ A landing page and Farcaster Mini App for COC Concertz, a live metaverse concert
 - Spatial.io metaverse venue embed with Twitch stream toggle
 - Event schedule with "Today" / "Live Now" dynamic badges
 - ConcertZ #3 flyer image in schedule section
+- ConcertZ #4 promoted with RSVP link to Luma in schedule + final CTA
 - Past shows archive (ConcertZ #1 and #2)
 - Artist lineup with tabbed panels per concert (#1, #2, #3)
 - YouTube video embeds with clickable song lists for all past performances
@@ -39,7 +40,7 @@ A landing page and Farcaster Mini App for COC Concertz, a live metaverse concert
 - Mini App SDK integration with `ready()` call
 - Stream fallback — "Watch Live on Twitch" button inside Farcaster (nested iframes blocked by Twitch)
 - Native `composeCast` share to `/cocconcertz` channel
-- Splash screen with COC logo and yellow (#FFD600) background
+- Splash screen with spec-compliant 200x200px logo and yellow (#FFD600) background
 - Manifest includes: imageUrl, buttonTitle, primaryCategory (music), tags, heroImageUrl, OG metadata
 
 ### SEO & Meta
