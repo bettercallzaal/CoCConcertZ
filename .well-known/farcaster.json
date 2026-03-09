@@ -8,8 +8,8 @@
     "version": "1",
     "name": "COC Concertz",
     "homeUrl": "https://cocconcertz.com",
-    "iconUrl": "https://cocconcertz.com/images/coc-splash-200.jpeg",
-    "imageUrl": "https://cocconcertz.com/images/concertz3-flyer.jpeg",
+    "iconUrl": "https://cocconcertz.com/images/coc-icon-1024.png",
+    "imageUrl": "https://cocconcertz.com/images/concertz3-embed.png",
     "buttonTitle": "Enter the Venue",
     "splashImageUrl": "https://cocconcertz.com/images/coc-splash-200.jpeg",
     "splashBackgroundColor": "#FFD600",
@@ -17,10 +17,10 @@
     "description": "Free live concerts inside the metaverse. Experience immersive music from anywhere.",
     "primaryCategory": "music",
     "tags": ["music", "metaverse", "web3", "concerts", "live"],
-    "heroImageUrl": "https://cocconcertz.com/images/concertz3-flyer.jpeg",
+    "heroImageUrl": "https://cocconcertz.com/images/concertz3-embed.png",
     "tagline": "Virtual Stages. Real Music.",
     "ogTitle": "COC Concertz",
     "ogDescription": "Free live concerts inside the metaverse. No tickets, no lines, just vibes.",
-    "ogImageUrl": "https://cocconcertz.com/images/concertz3-flyer.jpeg"
+    "ogImageUrl": "https://cocconcertz.com/images/concertz3-embed.png"
   }
 }

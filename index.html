@@ -13,7 +13,7 @@
     <link rel="apple-touch-icon" href="images/coc-concertz-logo.jpeg">
 
     <!-- Farcaster Mini App -->
-    <meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://cocconcertz.com/images/concertz3-flyer.jpeg","button":{"title":"Enter the Venue","action":{"type":"launch_frame","name":"COC Concertz","url":"https://cocconcertz.com","splashImageUrl":"https://cocconcertz.com/images/coc-splash-200.jpeg","splashBackgroundColor":"#FFD600"}}}' />
+    <meta name="fc:miniapp" content='{"version":"1","imageUrl":"https://cocconcertz.com/images/concertz3-embed.png","button":{"title":"Enter the Venue","action":{"type":"launch_frame","name":"COC Concertz","url":"https://cocconcertz.com","splashImageUrl":"https://cocconcertz.com/images/coc-splash-200.jpeg","splashBackgroundColor":"#FFD600"}}}' />
 
     <!-- Open Graph -->
     <meta property="og:title" content="COC Concertz — Live Metaverse Concerts">
@@ -1787,60 +1787,68 @@
 
     <!-- Farcaster Mini App SDK -->
     <script type="module">
-        import { sdk } from 'https://esm.sh/@farcaster/miniapp-sdk';
+        try {
+            var { sdk } = await import('https://esm.sh/@farcaster/miniapp-sdk');
 
-        var isFarcaster = window.parent !== window || navigator.userAgent.includes('Farcaster');
-
-        if (isFarcaster) {
+            // Always call ready() first — this dismisses the splash screen.
+            // If we're not in Farcaster, this is a no-op.
             await sdk.actions.ready();
 
-            // Replace Twitch stream toggle with a fallback button
-            var streamBtn = document.querySelector('[data-mode="stream"]');
-            if (streamBtn) {
-                streamBtn.addEventListener('click', function(e) {
-                    var frame = document.getElementById('venueFrame');
-                    var iframe = document.getElementById('venueIframe');
-                    // Hide iframe and show fallback
-                    if (!document.getElementById('streamFallback')) {
-                        iframe.style.display = 'none';
-                        var fallback = document.createElement('div');
-                        fallback.id = 'streamFallback';
-                        fallback.className = 'stream-fallback';
-                        fallback.innerHTML = '<p>Stream can\'t load inside mini apps</p><button class="cta-btn" id="openTwitchBtn">WATCH LIVE ON TWITCH</button>';
-                        frame.appendChild(fallback);
-                        document.getElementById('openTwitchBtn').addEventListener('click', function() {
-                            sdk.actions.openUrl('https://twitch.tv/bettercallzaal');
-                        });
-                    } else {
-                        iframe.style.display = 'none';
-                        document.getElementById('streamFallback').style.display = 'flex';
-                    }
-                });
+            // Check if we're actually inside Farcaster via SDK context
+            var context = await sdk.context;
+            var isFarcaster = !!context;
 
-                // Restore iframe when switching back to metaverse
-                var metaBtn = document.querySelector('[data-mode="metaverse"]');
-                if (metaBtn) {
-                    metaBtn.addEventListener('click', function() {
+            if (isFarcaster) {
+                // Replace Twitch stream toggle with a fallback button
+                var streamBtn = document.querySelector('[data-mode="stream"]');
+                if (streamBtn) {
+                    streamBtn.addEventListener('click', function(e) {
+                        var frame = document.getElementById('venueFrame');
                         var iframe = document.getElementById('venueIframe');
-                        var fallback = document.getElementById('streamFallback');
-                        iframe.style.display = '';
-                        if (fallback) fallback.style.display = 'none';
+                        // Hide iframe and show fallback
+                        if (!document.getElementById('streamFallback')) {
+                            iframe.style.display = 'none';
+                            var fallback = document.createElement('div');
+                            fallback.id = 'streamFallback';
+                            fallback.className = 'stream-fallback';
+                            fallback.innerHTML = '<p>Stream can\'t load inside mini apps</p><button class="cta-btn" id="openTwitchBtn">WATCH LIVE ON TWITCH</button>';
+                            frame.appendChild(fallback);
+                            document.getElementById('openTwitchBtn').addEventListener('click', function() {
+                                sdk.actions.openUrl('https://twitch.tv/bettercallzaal');
+                            });
+                        } else {
+                            iframe.style.display = 'none';
+                            document.getElementById('streamFallback').style.display = 'flex';
+                        }
+                    });
+
+                    // Restore iframe when switching back to metaverse
+                    var metaBtn = document.querySelector('[data-mode="metaverse"]');
+                    if (metaBtn) {
+                        metaBtn.addEventListener('click', function() {
+                            var iframe = document.getElementById('venueIframe');
+                            var fallback = document.getElementById('streamFallback');
+                            iframe.style.display = '';
+                            if (fallback) fallback.style.display = 'none';
+                        });
+                    }
+                }
+
+                // Override Farcaster share to use composeCast inside mini app
+                var farcasterBtn = document.getElementById('shareFarcaster');
+                if (farcasterBtn) {
+                    farcasterBtn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        sdk.actions.composeCast({
+                            text: 'Come check out COC Concertz #4 — live metaverse concert happening now!',
+                            embeds: ['https://cocconcertz.com'],
+                            channelKey: 'cocconcertz'
+                        });
                     });
                 }
             }
-
-            // Override Farcaster share to use composeCast inside mini app
-            var farcasterBtn = document.getElementById('shareFarcaster');
-            if (farcasterBtn) {
-                farcasterBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    sdk.actions.composeCast({
-                        text: 'Come check out COC Concertz #3 — live metaverse concert happening now!',
-                        embeds: ['https://cocconcertz.com'],
-                        channelKey: 'cocconcertz'
-                    });
-                });
-            }
+        } catch (err) {
+            console.warn('Farcaster SDK not available:', err);
         }
     </script>
 
