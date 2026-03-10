@@ -760,7 +760,32 @@
             width: 100%;
             height: 100vh;
             position: relative;
-            transition: height 0.3s ease;
+            transition: height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Tap-to-expand on mobile */
+        .venue-expand-btn {
+            display: none;
+            width: 100%;
+            padding: 14px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-top: none;
+            color: var(--cyan);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .venue-expand-btn:hover {
+            background: rgba(0,240,255,0.05);
+            color: var(--yellow);
+        }
+        .venue-expand-btn.expanded {
+            border-bottom: 1px solid var(--border);
         }
 
         .venue-frame iframe {
@@ -1490,7 +1515,9 @@
             .venue-toggle button { padding: 8px 18px; font-size: 0.7rem; }
             .size-slider { width: 100%; }
             .size-control { width: 100%; }
-            .venue-frame { height: 60vh; }
+            .venue-frame { height: 30vh; }
+            .venue-frame.expanded { height: 80vh; }
+            .venue-expand-btn { display: block; }
             .content { padding: 60px 16px; }
             section { margin-bottom: 60px; }
             section h2 { font-size: clamp(2rem, 5vw, 3rem); }
@@ -1516,7 +1543,8 @@
             .countdown { gap: 8px; }
             .countdown-item .number { font-size: 1.5rem; }
             .countdown-separator { font-size: 1.4rem; }
-            .venue-frame { height: 50vh; }
+            .venue-frame { height: 25vh; }
+            .venue-frame.expanded { height: 70vh; }
             .cta-btn { padding: 12px 28px; font-size: 1rem; }
         }
     </style>
@@ -1612,6 +1640,7 @@
                 title="COC Concertz virtual venue on Spatial"
             ></iframe>
         </div>
+        <button class="venue-expand-btn" id="venueExpandBtn">TAP TO EXPAND VENUE</button>
     </section>
 
     <div class="section-slash"></div>
@@ -1669,12 +1698,6 @@
                 </li>
             </ul>
 
-            <div class="cta-row" style="flex-direction: column; align-items: stretch; text-align: center; margin-top: 40px;">
-                <a class="cta-btn rsvp-pulse" href="https://luma.com/0ksej24k" target="_blank">
-                    RSVP NOW — FREE ENTRY
-                </a>
-                <span class="cta-hint" style="text-align: center;">Register to get reminders &middot; April 11, 2026</span>
-            </div>
         </section>
 
         <div class="section-divider"></div>
@@ -1738,9 +1761,9 @@
             <span class="section-label">Lineup</span>
             <h2>ARTISTS</h2>
             <div class="artists-tabs">
-                <button class="artists-tab" data-tab="concert1">#1</button>
-                <button class="artists-tab" data-tab="concert2">#2</button>
-                <button class="artists-tab active" data-tab="concert3">#3</button>
+                <button class="artists-tab" data-tab="concert1">CONCERTZ #1</button>
+                <button class="artists-tab" data-tab="concert2">CONCERTZ #2</button>
+                <button class="artists-tab active" data-tab="concert3">CONCERTZ #3</button>
             </div>
 
             <!-- ConcertZ #1 — March 29, 2025 -->
@@ -1866,8 +1889,8 @@
     <section class="final-cta reveal" aria-label="Call to action">
         <h2>COC CONCERTZ #4<br>IS COMING</h2>
         <p>April 11, 2026 @ 4PM EST — RSVP now to save your spot.</p>
-        <a class="cta-btn" href="https://luma.com/0ksej24k" target="_blank">
-            RSVP FOR CONCERTZ #4
+        <a class="cta-btn rsvp-pulse" href="https://luma.com/0ksej24k" target="_blank">
+            RSVP NOW — FREE ENTRY
         </a>
     </section>
 
@@ -1920,10 +1943,10 @@
             var diff = eventDate - now;
 
             if (diff <= 0) {
-                document.getElementById('days').textContent = '00';
-                document.getElementById('hours').textContent = '00';
-                document.getElementById('minutes').textContent = '00';
-                document.getElementById('seconds').textContent = '00';
+                var countdownEl = document.getElementById('countdown');
+                countdownEl.innerHTML = '<a class="cta-btn rsvp-pulse" href="#venue" style="font-size:1.4rem;animation:rsvp-glow 1.5s ease-in-out infinite;">JOIN LIVE NOW</a>';
+                statusBadge.className = 'next-show-live';
+                statusBadge.textContent = 'LIVE NOW';
                 return;
             }
 
@@ -1979,6 +2002,17 @@
         document.getElementById('sizeSlider').addEventListener('input', function(e) {
             venueFrame.style.height = e.target.value + 'vh';
         });
+
+        // ---- Venue expand/collapse on mobile ----
+        var expandBtn = document.getElementById('venueExpandBtn');
+        if (expandBtn) {
+            expandBtn.addEventListener('click', function() {
+                var frame = document.getElementById('venueFrame');
+                var isExpanded = frame.classList.toggle('expanded');
+                expandBtn.classList.toggle('expanded');
+                expandBtn.textContent = isExpanded ? 'TAP TO COLLAPSE' : 'TAP TO EXPAND VENUE';
+            });
+        }
 
         // ---- Artists tab switching ----
         document.querySelectorAll('.artists-tab').forEach(function(tab) {
