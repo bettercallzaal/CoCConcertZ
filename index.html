@@ -60,7 +60,8 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
 
     <!-- Grain SVG Filter -->
     <svg style="position:absolute;width:0;height:0;">
@@ -86,8 +87,8 @@
             --text: #c8c8c8;
             --text-dim: #666;
             --font-display: 'Bebas Neue', sans-serif;
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-body: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --font-body: 'Satoshi', sans-serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -424,6 +425,63 @@
             95%, 100% { transform: translate(-50%, -50%); }
         }
 
+        /* ---- Hero Entrance Animation ---- */
+        .hero-badge {
+            animation: badge-flicker 4s infinite, hero-fade-in 0.8s ease-out both;
+            animation-delay: 0s, 0.1s;
+        }
+        .hero-logos {
+            animation: hero-scatter-in 1s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both;
+        }
+        @keyframes hero-scatter-in {
+            from { opacity: 0; transform: scale(0.85); filter: blur(8px); }
+            to { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+        .hero-anchor-text {
+            animation: hero-fade-in 0.8s ease-out 0.6s both;
+        }
+        .hero-subtitle {
+            animation: hero-fade-in 0.8s ease-out 0.8s both;
+        }
+        .hero p {
+            animation: hero-fade-in 0.8s ease-out 1s both;
+        }
+        .hero .cta-btn {
+            animation: hero-fade-in 0.8s ease-out 1.2s both;
+        }
+        .scroll-indicator {
+            animation: hero-fade-in 0.8s ease-out 1.5s both, bounce 2s infinite 2s;
+        }
+        @keyframes hero-fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ---- Hero Anchor Text (ZAO x COC) ---- */
+        .hero-anchor-text {
+            font-family: var(--font-display);
+            font-size: clamp(0.8rem, 1.8vw, 1.1rem);
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            color: var(--text-dim);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            justify-content: center;
+        }
+        .hero-anchor-text .x-mark {
+            color: var(--yellow);
+            font-size: 1.4em;
+            font-weight: 700;
+        }
+        .hero-anchor-text .community-name {
+            transition: color 0.3s;
+        }
+        .hero-anchor-text .community-name:hover {
+            color: var(--cyan);
+        }
+
         .hero-subtitle {
             font-family: var(--font-display);
             font-size: clamp(1.2rem, 3vw, 2rem);
@@ -478,7 +536,6 @@
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%);
-            animation: bounce 2s infinite;
             font-family: var(--font-mono);
             font-size: 0.7rem;
             letter-spacing: 3px;
@@ -515,6 +572,22 @@
             inset: 0;
             background: linear-gradient(135deg, rgba(255,214,0,0.06) 0%, rgba(0,240,255,0.03) 100%);
             pointer-events: none;
+        }
+
+        .next-show::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--yellow), var(--cyan), var(--yellow), transparent);
+            animation: countdown-bar-sweep 3s ease-in-out infinite;
+        }
+
+        @keyframes countdown-bar-sweep {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
         }
 
         .next-show-label {
@@ -579,11 +652,17 @@
         .countdown-item .number {
             display: block;
             font-family: var(--font-mono);
-            font-size: 3rem;
+            font-size: clamp(3rem, 6vw, 4.5rem);
             font-weight: 700;
             color: var(--yellow);
             line-height: 1;
-            text-shadow: 0 0 30px rgba(255,214,0,0.3);
+            text-shadow: 0 0 30px rgba(255,214,0,0.3), 0 0 60px rgba(255,214,0,0.15);
+            animation: countdown-glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes countdown-glow {
+            0% { text-shadow: 0 0 20px rgba(255,214,0,0.2), 0 0 40px rgba(255,214,0,0.1); }
+            100% { text-shadow: 0 0 40px rgba(255,214,0,0.5), 0 0 80px rgba(255,214,0,0.2), 0 0 4px rgba(0,240,255,0.15); }
         }
 
         .countdown-item .label {
@@ -869,13 +948,31 @@
             padding: 28px;
             position: relative;
             clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
-            opacity: 0.6;
+            opacity: 0.5;
             transition: all 0.3s;
         }
 
         .past-show-card:hover {
             opacity: 1;
             border-color: var(--text-dim);
+        }
+
+        /* Newest show = most prominent */
+        .past-show-card:first-child {
+            opacity: 0.85;
+            border-color: rgba(255,214,0,0.25);
+            background: linear-gradient(135deg, var(--card) 0%, rgba(255,214,0,0.04) 100%);
+        }
+        .past-show-card:first-child:hover {
+            border-color: var(--yellow);
+            opacity: 1;
+        }
+        .past-show-card:first-child .past-show-tag {
+            border-color: var(--yellow);
+            color: var(--yellow);
+        }
+        .past-show-card:nth-child(2) {
+            opacity: 0.65;
         }
 
         .past-show-card .event-name {
@@ -1256,6 +1353,73 @@
             font-size: 1.1rem;
         }
 
+        /* ---- RSVP Pulse ---- */
+        .rsvp-pulse {
+            font-size: 1.4rem !important;
+            padding: 22px 52px !important;
+            letter-spacing: 3px;
+            position: relative;
+            animation: rsvp-glow 2s ease-in-out infinite;
+        }
+        @keyframes rsvp-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255,214,0,0.2), 0 0 60px rgba(255,214,0,0.1); }
+            50% { box-shadow: 0 0 30px rgba(255,214,0,0.4), 0 0 80px rgba(255,214,0,0.2), 0 0 4px rgba(0,240,255,0.2); }
+        }
+
+        /* ---- Section Diagonal Transitions ---- */
+        .section-slash {
+            width: 100%;
+            height: 80px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .section-slash::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(170deg, transparent 48%, rgba(255,214,0,0.08) 49%, rgba(255,214,0,0.08) 51%, transparent 52%);
+        }
+        .section-slash::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(170deg, transparent 46%, rgba(0,240,255,0.04) 47%, rgba(0,240,255,0.04) 48%, transparent 49%);
+        }
+
+        /* ---- Share Section Redesign ---- */
+        .share-section .share-btn-hero {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto 16px;
+            padding: 22px 40px;
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            background: var(--yellow);
+            border: 2px solid var(--yellow);
+            color: #000;
+            font-family: var(--font-display);
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+            transition: all 0.2s;
+            animation: rsvp-glow 3s ease-in-out infinite;
+        }
+        .share-section .share-btn-hero:hover {
+            background: var(--cyan);
+            border-color: var(--cyan);
+            transform: translate(-2px, -2px);
+            box-shadow: 4px 4px 0 var(--yellow);
+        }
+        .share-secondary {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
         /* ---- Footer ---- */
         .footer-logo {
             width: 120px;
@@ -1336,6 +1500,7 @@
             .hero-logos { height: clamp(160px, 40vw, 220px); width: 90vw; }
             .logo-piece.ml, .logo-piece.mr { display: none; }
             .hero-badge { font-size: 0.65rem; letter-spacing: 3px; padding: 6px 16px; }
+            .hero-anchor-text { letter-spacing: 4px; gap: 10px; font-size: 0.7rem; }
             .hero-subtitle { letter-spacing: 6px; }
             .cta-btn { padding: 14px 36px; font-size: 1.1rem; }
             .countdown { gap: 12px; }
@@ -1411,6 +1576,11 @@
             <img src="images/coc-concertz-logo.jpeg" alt="" class="logo-piece bl" loading="eager">
             <img src="images/coc-concertz-logo.jpeg" alt="" class="logo-piece br" loading="eager">
         </div>
+        <div class="hero-anchor-text">
+            <span class="community-name">THE ZAO</span>
+            <span class="x-mark">&times;</span>
+            <span class="community-name">COC</span>
+        </div>
         <div class="hero-subtitle">Virtual Stages &middot; Real Music</div>
         <p>Step into immersive virtual venues and experience live music from anywhere in the world. No tickets. No lines. Just vibes.</p>
         <a class="cta-btn" href="#venue">ENTER THE VENUE</a>
@@ -1474,6 +1644,8 @@
         </div>
     </section>
 
+    <div class="section-slash"></div>
+
     <!-- Content -->
     <div class="content">
 
@@ -1527,11 +1699,11 @@
                 </li>
             </ul>
 
-            <div class="cta-row">
-                <a class="cta-btn" href="https://luma.com/0ksej24k" target="_blank" style="font-size: 1.25rem; padding: 20px 52px; letter-spacing: 2px;">
-                    RSVP NOW
+            <div class="cta-row" style="flex-direction: column; align-items: stretch; text-align: center; margin-top: 40px;">
+                <a class="cta-btn rsvp-pulse" href="https://luma.com/0ksej24k" target="_blank">
+                    RSVP NOW — FREE ENTRY
                 </a>
-                <span class="cta-hint">Free entry — register to get reminders</span>
+                <span class="cta-hint" style="text-align: center;">Register to get reminders &middot; April 11, 2026</span>
             </div>
         </section>
 
@@ -1703,18 +1875,22 @@
 
     </div>
 
+    <div class="section-slash"></div>
+
     <!-- Share -->
     <section class="share-section reveal" aria-label="Share">
         <span class="section-label">Spread the Word</span>
         <h2>SHARE THE SHOW</h2>
-        <p>Come check out the live stream — tell your friends about COC Concertz!</p>
-        <div class="share-buttons">
-            <a class="share-btn share-btn-primary" id="shareFarcaster" href="https://warpcast.com/~/compose?text=Come+check+out+COC+Concertz+%234+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&embeds[]=https://cocconcertz.com&channelKey=cocconcertz" target="_blank" rel="noopener">Farcaster</a>
+        <p>Invite the community — cast it on Farcaster or share anywhere.</p>
+        <a class="share-btn-hero" id="shareFarcaster" href="https://warpcast.com/~/compose?text=Come+check+out+COC+Concertz+%234+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&embeds[]=https://cocconcertz.com&channelKey=cocconcertz" target="_blank" rel="noopener">CAST ON FARCASTER</a>
+        <div class="share-secondary">
             <a class="share-btn" href="https://twitter.com/intent/tweet?text=Come+check+out+COC+Concertz+%234+%E2%80%94+live+metaverse+concert+happening+now!+%F0%9F%8E%B6&url=https://cocconcertz.com" target="_blank" rel="noopener">X / Twitter</a>
             <button class="share-btn" id="copyLinkBtn" type="button">Copy Link</button>
         </div>
         <div class="share-copied" id="shareCopied">LINK COPIED!</div>
     </section>
+
+    <div class="section-slash"></div>
 
     <!-- Final CTA -->
     <section class="final-cta reveal" aria-label="Call to action">
