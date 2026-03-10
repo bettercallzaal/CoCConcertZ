@@ -449,9 +449,6 @@
         .hero .cta-btn {
             animation: hero-fade-in 0.8s ease-out 1.2s both;
         }
-        .scroll-indicator {
-            animation: hero-fade-in 0.8s ease-out 1.5s both, bounce 2s infinite 2s;
-        }
         @keyframes hero-fade-in {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -531,29 +528,6 @@
             box-shadow: 4px 4px 0 var(--cyan);
         }
 
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: var(--font-mono);
-            font-size: 0.7rem;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            color: var(--text-dim);
-        }
-        .scroll-indicator span {
-            display: block;
-            text-align: center;
-            font-size: 1.2rem;
-            margin-top: 4px;
-            color: var(--cyan);
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(8px); }
-        }
 
         /* ---- Next Show Banner ---- */
         .next-show {
@@ -1584,10 +1558,6 @@
         <div class="hero-subtitle">Virtual Stages &middot; Real Music</div>
         <p>Step into immersive virtual venues and experience live music from anywhere in the world. No tickets. No lines. Just vibes.</p>
         <a class="cta-btn" href="#venue">ENTER THE VENUE</a>
-        <div class="scroll-indicator">
-            Scroll
-            <span>&#8595;</span>
-        </div>
     </section>
 
     <!-- Next Show Countdown -->
