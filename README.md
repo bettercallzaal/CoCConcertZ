@@ -9,38 +9,47 @@ A landing page and Farcaster Mini App for COC Concertz, a live metaverse concert
 ## What's Built
 
 ### Branding & Design
-- Official C.O.C. Concertz logo as hero centerpiece with pulsing gold glow and glitch overlay effect
+- Scattered floating logo constellation in the hero — 7 logo pieces at varying sizes, rotations, and opacities, each drifting independently with unique float animations
+- Glitch overlay effect on the center logo piece (hue-shifted pseudo-elements)
+- "THE ZAO × COC" hero anchor text — establishes the cross-community collaboration identity
+- Staggered cinematic page-load entrance: badge → logos scatter in with blur → anchor text → subtitle → paragraph → CTA (all sequenced with animation-delay)
 - Sticky nav logo appears on scroll (IntersectionObserver) with golden drop-shadow
 - Logo in footer with hover glow
 - Favicon and apple-touch-icon using the logo
 - Gig poster x cyberpunk aesthetic with halftone backgrounds, clipped corners, grain overlay, scanlines
-- Fonts: Bebas Neue (display), JetBrains Mono (mono), Space Grotesk (body)
+- Diagonal slash section transitions with yellow/cyan gradient lines between major sections
+- Fonts: Bebas Neue (display), IBM Plex Mono (mono), Satoshi (body)
 - Color palette: gold (#FFD600), cyan (#00F0FF), deep black (#050505)
 
 ### Core Site
 - Live countdown timer to next show (auto-advances through upcoming shows)
+- Countdown "LIVE NOW" state — when timer hits zero, countdown numbers are replaced with a pulsing "JOIN LIVE NOW" button linking to the venue, and status badge swaps to "LIVE NOW"
+- Countdown numbers with pulsing yellow/cyan text-shadow glow and animated gradient sweep bar on the bottom edge
 - Spatial.io metaverse venue embed with Twitch stream toggle
+- Venue tap-to-expand on mobile — starts at 30vh with a "TAP TO EXPAND VENUE" button, toggles to 80vh with smooth animation
 - Event schedule with "Today" / "Live Now" dynamic badges
-- ConcertZ #3 flyer image in schedule section
-- ConcertZ #4 promoted with RSVP link to Luma in schedule + final CTA
-- Past shows archive (ConcertZ #1 and #2)
-- Artist lineup with tabbed panels per concert (#1, #2, #3)
+- ConcertZ #4 promoted with pulsing glow RSVP button in the final CTA section
+- Past shows archive (ConcertZ #1, #2, #3) ordered newest first with visual hierarchy — newest card is most prominent with yellow accent border and gradient background, older shows progressively fade
+- Past show flyer images on #3 and #2 cards
+- Artist lineup with tabbed panels per concert (CONCERTZ #1, CONCERTZ #2, CONCERTZ #3)
 - YouTube video embeds with clickable song lists for all past performances
   - ConcertZ #1: AttaBotty (8 videos), Clejan (14 videos)
   - ConcertZ #2: Fellenz, Stilo World WaveWarZ, AttaBotty
 - Community links (The ZAO, Community of Communities)
-- Social share section (Farcaster, X/Twitter, Copy Link) with pre-filled share text
+- Share section with "CAST ON FARCASTER" as hero-sized primary button with glow animation, X/Twitter and Copy Link as smaller secondary actions
 - "How to Join" steps for new metaverse visitors
 - Responsive design for mobile and desktop
 - Scroll-reveal animations on all sections
 
 ### Farcaster Mini App
-- `fc:miniapp` embed meta tag for feed discovery with "Enter the Venue" button
+- `fc:miniapp` embed meta tag with `launch_frame` action for feed discovery
 - `/.well-known/farcaster.json` manifest with signed account association (FID 19640)
-- Mini App SDK integration with `ready()` call
+- Mini App SDK integration — `sdk.actions.ready()` called unconditionally to dismiss splash screen, with `sdk.context` for Farcaster detection and try/catch error handling
 - Stream fallback — "Watch Live on Twitch" button inside Farcaster (nested iframes blocked by Twitch)
 - Native `composeCast` share to `/cocconcertz` channel
 - Splash screen with spec-compliant 200x200px logo and yellow (#FFD600) background
+- Spec-compliant 1024x1024 PNG icon (no alpha) for app store discovery
+- 3:2 aspect ratio embed preview image (1280x853) for feed cards
 - Manifest includes: imageUrl, buttonTitle, primaryCategory (music), tags, heroImageUrl, OG metadata
 
 ### SEO & Meta
@@ -72,9 +81,9 @@ Static site on Vercel — auto-deploys on push to `main`. Custom domain via Pork
 - [ ] Confetti or visual effect when countdown hits zero / show goes live
 - [ ] Calendar export (.ics download) for upcoming shows
 - [ ] QR code for easy mobile access to the venue
-- [ ] Convert logo to 1024x1024 PNG (no alpha) for Farcaster spec compliance
+- [x] Convert logo to 1024x1024 PNG (no alpha) for Farcaster spec compliance
 - [ ] Add Farcaster mini app screenshots (1284x2778px, up to 3) for app store listing
-- [ ] Create 3:2 aspect ratio (1200x800) version of flyer for optimal embed previews
+- [x] Create 3:2 aspect ratio embed image for optimal feed card previews
 - [ ] Farcaster notifications via webhookUrl for show reminders
 - [ ] Google Analytics or Plausible analytics integration
 - [ ] Loading skeleton / shimmer while Spatial embed initializes
@@ -98,7 +107,7 @@ Static site on Vercel — auto-deploys on push to `main`. Custom domain via Pork
 - [ ] Custom cursor effect matching the cyberpunk theme
 - [ ] Dark/light mode toggle (light mode with inverted gold-on-white)
 - [ ] Parallax scrolling effects between sections
-- [ ] Micro-interactions on CTA buttons (ripple, pulse on hover)
+- [x] Micro-interactions on CTA buttons (pulsing glow on RSVP)
 - [ ] Animated waveform visualizer in the hero or countdown section
 
 ### Web3 & Blockchain
