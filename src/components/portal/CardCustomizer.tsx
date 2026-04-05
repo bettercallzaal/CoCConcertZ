@@ -1,9 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, Input, FileUpload } from "@/components/ui";
+import { Button, Input } from "@/components/ui";
 import { updateArtist } from "@/lib/db";
-import { uploadFile, getStoragePath } from "@/lib/storage";
 import type { Artist } from "@/lib/types";
 
 interface CardCustomizerProps {
@@ -33,7 +32,6 @@ export function CardCustomizer({ artist, onSaved }: CardCustomizerProps) {
 
   const [accentColor, setAccentColor] = useState(cc.primaryColor ?? "#FFD600");
   const [bgColor, setBgColor] = useState(cc.backgroundColor ?? "#0a0a0a");
-  const [bgImageFile, setBgImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -44,18 +42,10 @@ export function CardCustomizer({ artist, onSaved }: CardCustomizerProps) {
     setSuccess(false);
 
     try {
-      let backgroundImage = cc.backgroundImage;
-
-      if (bgImageFile) {
-        const path = getStoragePath("artists", artist.id, `card-bg-${Date.now()}-${bgImageFile.name}`);
-        backgroundImage = await uploadFile(path, bgImageFile);
-      }
-
       const customization: Artist["cardCustomization"] = {
         ...cc,
         primaryColor: accentColor,
         backgroundColor: bgColor,
-        backgroundImage,
       };
 
       await updateArtist(artist.id, { cardCustomization: customization });
@@ -125,14 +115,6 @@ export function CardCustomizer({ artist, onSaved }: CardCustomizerProps) {
           />
         </div>
       </div>
-
-      {/* Background image */}
-      <FileUpload
-        label="Background Image"
-        accept="image/*"
-        currentUrl={cc.backgroundImage}
-        onUpload={(file) => setBgImageFile(file)}
-      />
 
       {/* Feedback */}
       {error && (

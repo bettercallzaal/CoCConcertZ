@@ -3,9 +3,8 @@
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { createArtist, updateArtist } from "@/lib/db";
-import { uploadFile, getStoragePath } from "@/lib/storage";
 import type { Artist } from "@/lib/types";
-import { Input, Textarea, Button, FileUpload } from "@/components/ui";
+import { Input, Textarea, Button } from "@/components/ui";
 
 interface ProfileFormProps {
   artist: Artist | null;
@@ -35,8 +34,6 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
   const { artistSlug } = useAuth();
   const [stageName, setStageName] = useState(artist?.stageName ?? "");
   const [bio, setBio] = useState(artist?.bio ?? "");
-  const [profilePhotoFile, setProfilePhotoFile] = useState<File | null>(null);
-
   // Social links
   const [twitter, setTwitter] = useState(artist?.socialLinks?.twitter ?? "");
   const [farcaster, setFarcaster] = useState(artist?.socialLinks?.farcaster ?? "");
@@ -66,15 +63,6 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
     setSuccess(false);
 
     try {
-      let profilePhotoUrl = artist?.profilePhoto;
-
-      if (profilePhotoFile) {
-        const ext = profilePhotoFile.name.split(".").pop() ?? "jpg";
-        const artistId = artist?.id ?? artistSlug ?? "tmp-artist";
-        const path = getStoragePath("artists", artistId, `profile.${ext}`);
-        profilePhotoUrl = await uploadFile(path, profilePhotoFile);
-      }
-
       const slug = makeSlug(trimmedName);
 
       const data: Omit<Artist, "id" | "createdAt"> = {
@@ -82,7 +70,7 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
         stageName: trimmedName,
         slug,
         bio: bio.trim(),
-        profilePhoto: profilePhotoUrl,
+        profilePhoto: artist?.profilePhoto,
         socialLinks: {
           twitter: twitter.trim() || undefined,
           farcaster: farcaster.trim() || undefined,
@@ -134,17 +122,6 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
             style={{ minHeight: "120px" }}
           />
         </div>
-      </div>
-
-      {/* Profile photo */}
-      <div>
-        <div style={sectionLabelStyle}>Profile Photo</div>
-        <FileUpload
-          label="Photo"
-          accept="image/*"
-          onUpload={(file) => setProfilePhotoFile(file)}
-          currentUrl={artist?.profilePhoto}
-        />
       </div>
 
       {/* Social links */}
