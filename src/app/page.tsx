@@ -13,10 +13,14 @@ import FinalCTA from "@/components/home/FinalCTA";
 import Footer from "@/components/home/Footer";
 import StickyNav from "@/components/home/StickyNav";
 import ScrollReveal from "@/components/home/ScrollReveal";
+import AnnouncementBanner from "@/components/home/AnnouncementBanner";
 
 export default function Home() {
   return (
     <>
+      {/* Announcement Banner */}
+      <AnnouncementBanner />
+
       {/* Sticky Nav Logo */}
       <StickyNav />
 

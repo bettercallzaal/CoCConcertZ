@@ -40,6 +40,8 @@ export default function AdminDashboardPage() {
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
   const [liveLoading, setLiveLoading] = useState(false);
+  const [announcementText, setAnnouncementText] = useState("");
+  const [announcementLoading, setAnnouncementLoading] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -64,6 +66,13 @@ export default function AdminDashboardPage() {
           pendingInvites: pending,
         });
         setUpcomingEvents(upcoming);
+        // Pre-fill announcement from the live/upcoming event
+        const liveOrNext =
+          upcoming.find((e) => e.status === "live") ??
+          upcoming.find((e) => e.status === "upcoming");
+        if (liveOrNext?.announcement) {
+          setAnnouncementText(liveOrNext.announcement);
+        }
       } catch (err) {
         console.error("Failed to load dashboard data", err);
       } finally {
@@ -96,6 +105,43 @@ export default function AdminDashboardPage() {
       console.error("Failed to update event status", err);
     } finally {
       setLiveLoading(false);
+    }
+  }
+
+  async function handlePostAnnouncement() {
+    if (!controlEvent || !announcementText.trim()) return;
+    setAnnouncementLoading(true);
+    try {
+      await updateEvent(controlEvent.id, { announcement: announcementText.trim() });
+      setUpcomingEvents((prev) =>
+        prev.map((e) =>
+          e.id === controlEvent.id
+            ? { ...e, announcement: announcementText.trim() }
+            : e
+        )
+      );
+    } catch (err) {
+      console.error("Failed to post announcement", err);
+    } finally {
+      setAnnouncementLoading(false);
+    }
+  }
+
+  async function handleClearAnnouncement() {
+    if (!controlEvent) return;
+    setAnnouncementLoading(true);
+    try {
+      await updateEvent(controlEvent.id, { announcement: "" });
+      setUpcomingEvents((prev) =>
+        prev.map((e) =>
+          e.id === controlEvent.id ? { ...e, announcement: "" } : e
+        )
+      );
+      setAnnouncementText("");
+    } catch (err) {
+      console.error("Failed to clear announcement", err);
+    } finally {
+      setAnnouncementLoading(false);
     }
   }
 
@@ -285,6 +331,126 @@ export default function AdminDashboardPage() {
             50% { opacity: 0.8; box-shadow: 0 0 0 8px rgba(239,68,68,0); }
           }
         `}</style>
+      </div>
+
+      {/* Announcement */}
+      <div style={{ marginBottom: "40px" }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "12px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.2em",
+            color: "var(--text-dim)",
+            marginBottom: "16px",
+          }}
+        >
+          Announcement
+        </h2>
+        <Card>
+          {loading ? (
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "12px",
+                color: "var(--text-dim)",
+              }}
+            >
+              Loading...
+            </div>
+          ) : !controlEvent ? (
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "12px",
+                color: "var(--text-dim)",
+              }}
+            >
+              No active event to announce on.
+            </div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+              {controlEvent.announcement && (
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "11px",
+                    color: "#eab308",
+                    background: "rgba(234, 179, 8, 0.08)",
+                    border: "1px solid rgba(234, 179, 8, 0.3)",
+                    padding: "8px 12px",
+                  }}
+                >
+                  <span style={{ color: "var(--text-dim)", marginRight: 8 }}>Current:</span>
+                  {controlEvent.announcement}
+                </div>
+              )}
+              <div style={{ display: "flex", gap: "10px", alignItems: "stretch" }}>
+                <input
+                  type="text"
+                  value={announcementText}
+                  onChange={(e) => setAnnouncementText(e.target.value)}
+                  placeholder="Type announcement message..."
+                  style={{
+                    flex: 1,
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "12px",
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    color: "var(--text)",
+                    padding: "10px 14px",
+                    outline: "none",
+                    borderRadius: 0,
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handlePostAnnouncement();
+                  }}
+                />
+                <button
+                  onClick={handlePostAnnouncement}
+                  disabled={announcementLoading || !announcementText.trim()}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.15em",
+                    padding: "10px 20px",
+                    background: "rgba(234, 179, 8, 0.12)",
+                    color: "#eab308",
+                    border: "1px solid #eab308",
+                    cursor: announcementLoading || !announcementText.trim() ? "not-allowed" : "pointer",
+                    opacity: announcementLoading || !announcementText.trim() ? 0.5 : 1,
+                    borderRadius: 0,
+                  }}
+                >
+                  POST
+                </button>
+                <button
+                  onClick={handleClearAnnouncement}
+                  disabled={announcementLoading || !controlEvent.announcement}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "11px",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.15em",
+                    padding: "10px 20px",
+                    background: "transparent",
+                    color: "var(--text-dim)",
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    cursor: announcementLoading || !controlEvent.announcement ? "not-allowed" : "pointer",
+                    opacity: announcementLoading || !controlEvent.announcement ? 0.4 : 1,
+                    borderRadius: 0,
+                  }}
+                >
+                  CLEAR
+                </button>
+              </div>
+            </div>
+          )}
+        </Card>
       </div>
 
       {/* Seed artists */}
