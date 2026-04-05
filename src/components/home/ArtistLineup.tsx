@@ -1,6 +1,8 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
+import { getArtists } from "@/lib/db";
+import type { Artist as FirestoreArtist } from "@/lib/types";
 
 interface Song {
   vid: string;
@@ -18,6 +20,10 @@ interface Artist {
   songs?: Song[];
   image?: { src: string; alt: string };
   fullWidth?: boolean;
+  // Firestore-enriched fields
+  profilePhoto?: string;
+  socialLinks?: FirestoreArtist["socialLinks"];
+  cardCustomization?: FirestoreArtist["cardCustomization"];
 }
 
 interface Concert {
@@ -27,7 +33,71 @@ interface Concert {
   bannerImage?: string;
 }
 
-const concerts: Concert[] = [
+// Hardcoded fallback data for ConcertZ #4
+const CONCERT4_FALLBACK_ARTISTS: Artist[] = [
+  {
+    name: "JOSEPH GOATS",
+    role: "Performer",
+    bio: "Community artist from The ZAO, performing live at COC ConcertZ #4.",
+  },
+  {
+    name: "STILO",
+    role: "Performer · Venue Host",
+    bio: "Host of StiloWorld and 150+ consecutive weekly VR concerts. Returning for his third COC ConcertZ appearance.",
+    link: { url: "https://www.thezao.com/community/stilo", label: "Stilo on The ZAO" },
+  },
+  {
+    name: "TOM FELLENZ",
+    role: "Performer",
+    bio: "ZAO community member and returning performer — previously opened ConcertZ #2 with a live set in the SaltyVerse Auditorium.",
+  },
+];
+
+// Name normalization map: Firestore stageName → hardcoded artist name key
+const STAGE_NAME_MAP: Record<string, string> = {
+  "Joseph Goats": "JOSEPH GOATS",
+  "JOSEPH GOATS": "JOSEPH GOATS",
+  "Stilo": "STILO",
+  "Stilo World": "STILO",
+  "STILO": "STILO",
+  "STILO WORLD": "STILO",
+  "Tom Fellenz": "TOM FELLENZ",
+  "TOM FELLENZ": "TOM FELLENZ",
+};
+
+/** Merge Firestore artist data onto a hardcoded fallback artist card */
+function mergeArtistData(fallback: Artist, fsArtist: FirestoreArtist): Artist {
+  const merged: Artist = { ...fallback };
+
+  // Override bio if Firestore has one
+  if (fsArtist.bio && fsArtist.bio.trim()) {
+    merged.bio = fsArtist.bio;
+  }
+
+  // Add profile photo
+  if (fsArtist.profilePhoto) {
+    merged.profilePhoto = fsArtist.profilePhoto;
+  }
+
+  // Add social links
+  if (fsArtist.socialLinks && Object.values(fsArtist.socialLinks).some(Boolean)) {
+    merged.socialLinks = fsArtist.socialLinks;
+  }
+
+  // Add card customization
+  if (fsArtist.cardCustomization) {
+    merged.cardCustomization = fsArtist.cardCustomization;
+  }
+
+  // Add ZAO link from social links if not already set
+  if (!merged.link && fsArtist.socialLinks?.website) {
+    merged.link = { url: fsArtist.socialLinks.website, label: `${fsArtist.stageName} website` };
+  }
+
+  return merged;
+}
+
+const HARDCODED_CONCERTS: Concert[] = [
   {
     id: "concert1",
     label: "CONCERTZ #1",
@@ -39,7 +109,7 @@ const concerts: Concert[] = [
         link: { url: "https://www.thezao.com/community/attabotty", label: "AttaBotty on The ZAO" },
         videoId: "-ggYAdu4KRE",
         songs: [
-          { vid: "-ggYAdu4KRE", num: "\u25B6", title: "Intro" },
+          { vid: "-ggYAdu4KRE", num: "▶", title: "Intro" },
           { vid: "E0xE65RRKI0", num: "1", title: "Attabotty Flyin" },
           { vid: "v_Vhbx9exgo", num: "2", title: "Altered Pathways" },
           { vid: "lyyx-jEY94k", num: "3", title: "Stay Based" },
@@ -56,7 +126,7 @@ const concerts: Concert[] = [
         link: { url: "https://www.thezao.com/community/clejan", label: "Clejan on The ZAO" },
         videoId: "4n1dFs5T4T4",
         songs: [
-          { vid: "4n1dFs5T4T4", num: "\u25B6", title: "Intro" },
+          { vid: "4n1dFs5T4T4", num: "▶", title: "Intro" },
           { vid: "M04SiX3stEE", num: "1", title: "Let's Go" },
           { vid: "rwSbB9JTZx0", num: "2", title: "Drive Fast" },
           { vid: "7BSUzE2LM64", num: "3", title: "My Favorite Strings" },
@@ -86,7 +156,7 @@ const concerts: Concert[] = [
       },
       {
         name: "STILO WORLD",
-        role: "DJ \u00b7 WaveWarZ",
+        role: "DJ · WaveWarZ",
         bio: "DJing WaveWarZ — an extended set blending beats and Web3 culture live on Spatial.",
         link: { url: "https://www.thezao.com/community/stilo", label: "Stilo World on The ZAO" },
         videoId: "-nx9gZtK8ug",
@@ -105,49 +175,64 @@ const concerts: Concert[] = [
     label: "CONCERTZ #3",
     artists: [
       {
-        name: "D\u00daO D\u00d8 MUSICA",
+        name: "DÚO DØ MUSICA",
         role: "Headline Act",
-        bio: "Opening live set from 4:15 \u2013 4:45 PM EST.",
+        bio: "Opening live set from 4:15 – 4:45 PM EST.",
       },
       {
         name: "JOSEPH GOATS",
         role: "Headline Act",
-        bio: "Live set from 4:45 \u2013 5:15 PM EST.",
+        bio: "Live set from 4:45 – 5:15 PM EST.",
       },
       {
         name: "STILO WORLD",
-        role: "Headline Act \u00b7 WaveWarZ",
-        bio: "Live set from 5:15 \u2013 5:45 PM EST in StiloWorld, plus an English vs Spanish WaveWarZ Community Battle.",
+        role: "Headline Act · WaveWarZ",
+        bio: "Live set from 5:15 – 5:45 PM EST in StiloWorld, plus an English vs Spanish WaveWarZ Community Battle.",
         link: { url: "https://www.thezao.com/community/stilo", label: "Stilo World on The ZAO" },
         image: { src: "/images/wavewarz-battle.jpeg", alt: "WaveWarZ English vs Spanish Community Battle" },
         fullWidth: true,
       },
     ],
   },
-  {
-    id: "concert4",
-    label: "CONCERTZ #4",
-    bannerImage: "/images/coc4.jpg",
-    artists: [
-      {
-        name: "JOSEPH GOATS",
-        role: "Performer",
-        bio: "Community artist from The ZAO, performing live at COC ConcertZ #4.",
-      },
-      {
-        name: "STILO",
-        role: "Performer \u00b7 Venue Host",
-        bio: "Host of StiloWorld and 150+ consecutive weekly VR concerts. Returning for his third COC ConcertZ appearance.",
-        link: { url: "https://www.thezao.com/community/stilo", label: "Stilo on The ZAO" },
-      },
-      {
-        name: "TOM FELLENZ",
-        role: "Performer",
-        bio: "ZAO community member and returning performer — previously opened ConcertZ #2 with a live set in the SaltyVerse Auditorium.",
-      },
-    ],
-  },
 ];
+
+function SocialLinks({ links }: { links: FirestoreArtist["socialLinks"] }) {
+  const entries = Object.entries(links).filter(([, v]) => Boolean(v)) as [string, string][];
+  if (entries.length === 0) return null;
+
+  const labelMap: Record<string, string> = {
+    twitter: "Twitter / X",
+    farcaster: "Farcaster",
+    audius: "Audius",
+    spotify: "Spotify",
+    youtube: "YouTube",
+    website: "Website",
+  };
+
+  return (
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10 }}>
+      {entries.map(([platform, url]) => (
+        <a
+          key={platform}
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={{
+            fontSize: "0.72rem",
+            padding: "3px 8px",
+            border: "1px solid rgba(255,255,255,0.2)",
+            borderRadius: 2,
+            color: "rgba(255,255,255,0.7)",
+            textDecoration: "none",
+            letterSpacing: "0.04em",
+          }}
+        >
+          {labelMap[platform] ?? platform}
+        </a>
+      ))}
+    </div>
+  );
+}
 
 function ArtistCard({ artist }: { artist: Artist }) {
   const [activeVid, setActiveVid] = useState(artist.videoId || (artist.songs?.[0]?.vid ?? ""));
@@ -156,10 +241,23 @@ function ArtistCard({ artist }: { artist: Artist }) {
     setActiveVid(vid);
   }, []);
 
+  const cardStyle: React.CSSProperties = {};
+  if (artist.cardCustomization?.backgroundColor) {
+    cardStyle.backgroundColor = artist.cardCustomization.backgroundColor;
+  }
+
+  const accentStyle: React.CSSProperties = {};
+  if (artist.cardCustomization?.primaryColor) {
+    accentStyle.color = artist.cardCustomization.primaryColor;
+  }
+
   return (
     <div
       className="artist-card"
-      style={artist.fullWidth ? { gridColumn: "1 / -1" } : undefined}
+      style={{
+        ...(artist.fullWidth ? { gridColumn: "1 / -1" } : {}),
+        ...cardStyle,
+      }}
     >
       {artist.link && (
         <a
@@ -170,9 +268,32 @@ function ArtistCard({ artist }: { artist: Artist }) {
           aria-label={artist.link.label}
         />
       )}
-      <div className="artist-name">{artist.name}</div>
+
+      {/* Profile photo for Firestore-enriched artists */}
+      {artist.profilePhoto && (
+        // eslint-disable-next-line @next/next/no-img-element
+        <img
+          src={artist.profilePhoto}
+          alt={`${artist.name} profile photo`}
+          style={{
+            width: 72,
+            height: 72,
+            borderRadius: "50%",
+            objectFit: "cover",
+            marginBottom: 12,
+            border: artist.cardCustomization?.primaryColor
+              ? `2px solid ${artist.cardCustomization.primaryColor}`
+              : "2px solid rgba(255,255,255,0.2)",
+          }}
+        />
+      )}
+
+      <div className="artist-name" style={accentStyle}>{artist.name}</div>
       <div className="artist-role">{artist.role}</div>
       <p>{artist.bio}</p>
+
+      {/* Social links from Firestore */}
+      {artist.socialLinks && <SocialLinks links={artist.socialLinks} />}
 
       {(artist.videoId || artist.songs) && (
         <div className="video-embed-wrap visible">
@@ -223,6 +344,44 @@ function ArtistCard({ artist }: { artist: Artist }) {
 
 export default function ArtistLineup() {
   const [activeTab, setActiveTab] = useState("concert4");
+  const [concert4Artists, setConcert4Artists] = useState<Artist[]>(CONCERT4_FALLBACK_ARTISTS);
+
+  useEffect(() => {
+    let cancelled = false;
+    getArtists()
+      .then((fsArtists) => {
+        if (cancelled || fsArtists.length === 0) return;
+
+        // Build a lookup by normalized stage name
+        const fsMap = new Map<string, FirestoreArtist>();
+        for (const fsa of fsArtists) {
+          const key = STAGE_NAME_MAP[fsa.stageName] ?? fsa.stageName.toUpperCase();
+          fsMap.set(key, fsa);
+        }
+
+        const merged = CONCERT4_FALLBACK_ARTISTS.map((fallback) => {
+          const fsArtist = fsMap.get(fallback.name);
+          return fsArtist ? mergeArtistData(fallback, fsArtist) : fallback;
+        });
+
+        setConcert4Artists(merged);
+      })
+      .catch(() => {
+        // Firestore unavailable — keep fallback data, no error surface needed
+      });
+
+    return () => { cancelled = true; };
+  }, []);
+
+  const concerts: Concert[] = [
+    ...HARDCODED_CONCERTS,
+    {
+      id: "concert4",
+      label: "CONCERTZ #4",
+      bannerImage: "/images/coc4.jpg",
+      artists: concert4Artists,
+    },
+  ];
 
   return (
     <section className="reveal" style={{ marginTop: 100 }}>
@@ -247,6 +406,7 @@ export default function ArtistLineup() {
         >
           {concert.bannerImage && (
             <div style={{ gridColumn: "1 / -1", marginBottom: 8 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={concert.bannerImage}
                 alt={`${concert.label} Flyer`}
