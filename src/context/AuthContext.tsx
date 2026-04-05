@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState, type ReactNode } from "
 
 interface AuthContextValue {
   role: "admin" | "artist" | null;
+  artistSlug: string | null;
   loading: boolean;
   signIn: (passcode: string) => Promise<"admin" | "artist" | null>;
   signOut: () => Promise<void>;
@@ -11,6 +12,7 @@ interface AuthContextValue {
 
 const AuthContext = createContext<AuthContextValue>({
   role: null,
+  artistSlug: null,
   loading: true,
   signIn: async () => null,
   signOut: async () => {},
@@ -18,6 +20,7 @@ const AuthContext = createContext<AuthContextValue>({
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [role, setRole] = useState<"admin" | "artist" | null>(null);
+  const [artistSlug, setArtistSlug] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -25,6 +28,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then((r) => r.json())
       .then((data) => {
         setRole(data.role || null);
+        setArtistSlug(data.artistSlug || null);
         setLoading(false);
       })
       .catch(() => setLoading(false));
@@ -39,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     if (res.ok) {
       const data = await res.json();
       setRole(data.role);
+      setArtistSlug(data.artistSlug ?? null);
       return data.role;
     }
     return null;
@@ -47,10 +52,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function signOut() {
     await fetch("/api/auth", { method: "DELETE" });
     setRole(null);
+    setArtistSlug(null);
   }
 
   return (
-    <AuthContext.Provider value={{ role, loading, signIn, signOut }}>
+    <AuthContext.Provider value={{ role, artistSlug, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

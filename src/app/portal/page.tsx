@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { getArtists, getEvents } from "@/lib/db";
+import { useAuth } from "@/context/AuthContext";
+import { getArtistBySlug, getEvents } from "@/lib/db";
 import type { Artist, Event } from "@/lib/types";
 import { Card } from "@/components/ui";
 
@@ -25,18 +26,20 @@ const QUICK_LINKS = [
 ];
 
 export default function PortalDashboardPage() {
+  const { artistSlug, loading: authLoading } = useAuth();
   const [artist, setArtist] = useState<Artist | null>(null);
   const [myEvents, setMyEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    if (authLoading) return;
+
     async function load() {
       try {
-        const [artists, allEvents] = await Promise.all([
-          getArtists(),
+        const [artistData, allEvents] = await Promise.all([
+          artistSlug ? getArtistBySlug(artistSlug) : Promise.resolve(null),
           getEvents(),
         ]);
-        const artistData = artists[0] ?? null;
 
         setArtist(artistData);
 
@@ -54,7 +57,7 @@ export default function PortalDashboardPage() {
     }
 
     load();
-  }, []);
+  }, [authLoading, artistSlug]);
 
   return (
     <div style={{ padding: "32px" }}>

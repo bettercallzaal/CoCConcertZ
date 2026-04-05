@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { getArtists, getEvents, getSetsForArtist } from "@/lib/db";
+import { getArtistBySlug, getEvents, getSetsForArtist } from "@/lib/db";
 import { SetlistEditor } from "@/components/portal/SetlistEditor";
 import { Card } from "@/components/ui";
 import type { Artist, Event, SetItem } from "@/lib/types";
@@ -27,7 +27,7 @@ const pageHeadingStyle: React.CSSProperties = {
 };
 
 export default function SetsPage() {
-  const { loading: authLoading } = useAuth();
+  const { artistSlug, loading: authLoading } = useAuth();
 
   const [artist, setArtist] = useState<Artist | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
@@ -41,8 +41,7 @@ export default function SetsPage() {
 
     async function load() {
       try {
-        const artists = await getArtists();
-        const artistData = artists[0] ?? null;
+        const artistData = artistSlug ? await getArtistBySlug(artistSlug) : null;
         if (!artistData) {
           setError("No artist profile found. Contact an admin.");
           setLoading(false);
@@ -70,7 +69,7 @@ export default function SetsPage() {
     }
 
     load();
-  }, [authLoading]);
+  }, [authLoading, artistSlug]);
 
   function getSetForEvent(eventId: string): SetItem | null {
     return sets.find((s) => s.eventId === eventId) ?? null;
