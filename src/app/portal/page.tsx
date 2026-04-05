@@ -88,6 +88,57 @@ export default function PortalDashboardPage() {
         </p>
       </div>
 
+      {/* View public profile link */}
+      {!loading && artist && (
+        <div style={{ marginBottom: "24px" }}>
+          <a
+            href={`/artists/${artist.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              fontFamily: "var(--font-mono)",
+              fontSize: "11px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              color: "var(--text-dim)",
+              textDecoration: "none",
+              transition: "color 0.15s",
+              padding: "6px 0",
+              borderBottom: "1px solid transparent",
+            }}
+            onMouseEnter={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = "var(--yellow)";
+              (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = "rgba(255,214,0,0.3)";
+            }}
+            onMouseLeave={(e) => {
+              (e.currentTarget as HTMLAnchorElement).style.color = "var(--text-dim)";
+              (e.currentTarget as HTMLAnchorElement).style.borderBottomColor = "transparent";
+            }}
+          >
+            <svg
+              width="11"
+              height="11"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+              <polyline points="15 3 21 3 21 9" />
+              <line x1="10" y1="14" x2="21" y2="3" />
+            </svg>
+            View Your Public Profile
+          </a>
+        </div>
+      )}
+
       {/* No profile prompt */}
       {!loading && !artist && (
         <Card
