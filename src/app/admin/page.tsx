@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { getEvents, getArtists, getUsers, getInvites } from "@/lib/db";
 import type { Event, Artist, User, Invite } from "@/lib/types";
 import { Card } from "@/components/ui";
+import { SeedArtists } from "@/components/admin/SeedArtists";
 
 interface Stats {
   events: number;
@@ -126,6 +127,24 @@ export default function AdminDashboardPage() {
             </div>
           </Card>
         ))}
+      </div>
+
+      {/* Seed artists */}
+      <div style={{ marginBottom: "40px" }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "12px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.2em",
+            color: "var(--text-dim)",
+            marginBottom: "16px",
+          }}
+        >
+          Data Tools
+        </h2>
+        <SeedArtists />
       </div>
 
       {/* Upcoming shows */}
