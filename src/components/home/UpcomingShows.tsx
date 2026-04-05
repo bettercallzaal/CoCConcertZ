@@ -1,25 +1,90 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { getEvents } from "@/lib/db";
+import type { Event } from "@/lib/types";
+
+const HARDCODED_EVENTS = [
+  {
+    id: "hc-1",
+    tag: "Next Up",
+    name: "+COC CONCERTZ #4",
+    desc: "Live in StiloWorld — Joseph Goats, Stilo, Tom Fellenz",
+    date: "APR 11, 2026 @ 4PM EST",
+    isNextUp: true,
+  },
+  {
+    id: "hc-2",
+    tag: "Announced",
+    name: "+COC CONCERTZ #5",
+    desc: "Next metaverse concert — don't miss it",
+    date: "MAY 9, 2026 @ 4PM EST",
+    isNextUp: false,
+  },
+];
+
+function formatEventDate(date: Date): string {
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).toUpperCase() + " @ 4PM EST";
+}
+
 export default function UpcomingShows() {
+  const [events, setEvents] = useState<Event[]>([]);
+  const [useFirestore, setUseFirestore] = useState(false);
+
+  useEffect(() => {
+    getEvents()
+      .then((all) => {
+        const upcoming = all.filter(
+          (e) => e.status === "upcoming" || e.status === "live"
+        );
+        if (upcoming.length > 0) {
+          setEvents(upcoming);
+          setUseFirestore(true);
+        }
+      })
+      .catch((err) => {
+        console.warn("UpcomingShows: Firestore fetch failed, using hardcoded data", err);
+      });
+  }, []);
+
   return (
     <section className="reveal" style={{ marginTop: 100 }}>
       <span className="section-label">Schedule</span>
       <h2>UPCOMING SHOWS</h2>
       <ul className="schedule-list">
-        <li className="next-up reveal reveal-delay-1">
-          <div className="event-info">
-            <span className="event-tag">Next Up</span>
-            <span className="event-name">+COC CONCERTZ #4</span>
-            <span className="event-desc">Live in StiloWorld — Joseph Goats, Stilo, Tom Fellenz</span>
-          </div>
-          <span className="event-date">APR 11, 2026 @ 4PM EST</span>
-        </li>
-        <li className="reveal reveal-delay-2">
-          <div className="event-info">
-            <span className="event-tag">Announced</span>
-            <span className="event-name">+COC CONCERTZ #5</span>
-            <span className="event-desc">Next metaverse concert — don&apos;t miss it</span>
-          </div>
-          <span className="event-date">MAY 9, 2026 @ 4PM EST</span>
-        </li>
+        {useFirestore
+          ? events.map((event, i) => (
+              <li
+                key={event.id}
+                className={`reveal reveal-delay-${i + 1}${i === 0 ? " next-up" : ""}`}
+              >
+                <div className="event-info">
+                  <span className="event-tag">
+                    {event.status === "live" ? "LIVE NOW" : i === 0 ? "Next Up" : "Announced"}
+                  </span>
+                  <span className="event-name">+COC CONCERTZ #{event.number}</span>
+                  <span className="event-desc">{event.description}</span>
+                </div>
+                <span className="event-date">{formatEventDate(event.date)}</span>
+              </li>
+            ))
+          : HARDCODED_EVENTS.map((event) => (
+              <li
+                key={event.id}
+                className={`reveal reveal-delay-${event.isNextUp ? "1" : "2"}${event.isNextUp ? " next-up" : ""}`}
+              >
+                <div className="event-info">
+                  <span className="event-tag">{event.tag}</span>
+                  <span className="event-name">{event.name}</span>
+                  <span className="event-desc">{event.desc}</span>
+                </div>
+                <span className="event-date">{event.date}</span>
+              </li>
+            ))}
       </ul>
     </section>
   );
