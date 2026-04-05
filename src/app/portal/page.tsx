@@ -2,8 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { useAuth } from "@/context/AuthContext";
-import { getArtistByUserId, getEvents } from "@/lib/db";
+import { getArtists, getEvents } from "@/lib/db";
 import type { Artist, Event } from "@/lib/types";
 import { Card } from "@/components/ui";
 
@@ -26,20 +25,18 @@ const QUICK_LINKS = [
 ];
 
 export default function PortalDashboardPage() {
-  const { user } = useAuth();
   const [artist, setArtist] = useState<Artist | null>(null);
   const [myEvents, setMyEvents] = useState<Event[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
-
     async function load() {
       try {
-        const [artistData, allEvents] = await Promise.all([
-          getArtistByUserId(user!.uid),
+        const [artists, allEvents] = await Promise.all([
+          getArtists(),
           getEvents(),
         ]);
+        const artistData = artists[0] ?? null;
 
         setArtist(artistData);
 
@@ -57,7 +54,7 @@ export default function PortalDashboardPage() {
     }
 
     load();
-  }, [user]);
+  }, []);
 
   return (
     <div style={{ padding: "32px" }}>
@@ -84,7 +81,7 @@ export default function PortalDashboardPage() {
             marginTop: "6px",
           }}
         >
-          Welcome back{user?.displayName ? `, ${user.displayName}` : ""}.
+          Welcome back.
         </p>
       </div>
 

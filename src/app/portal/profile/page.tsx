@@ -1,23 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useAuth } from "@/context/AuthContext";
-import { getArtistByUserId } from "@/lib/db";
+import { getArtists } from "@/lib/db";
 import type { Artist } from "@/lib/types";
 import { ProfileForm } from "@/components/portal/ProfileForm";
 
 export default function PortalProfilePage() {
-  const { user } = useAuth();
   const [artist, setArtist] = useState<Artist | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!user) return;
-
     async function load() {
       try {
-        const data = await getArtistByUserId(user!.uid);
-        setArtist(data);
+        const artists = await getArtists();
+        setArtist(artists[0] ?? null);
       } catch (err) {
         console.error("Failed to load artist profile", err);
       } finally {
@@ -26,7 +22,7 @@ export default function PortalProfilePage() {
     }
 
     load();
-  }, [user]);
+  }, []);
 
   return (
     <div style={{ padding: "32px", maxWidth: "900px" }}>

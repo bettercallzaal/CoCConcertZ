@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
 import { createInvite } from "@/lib/db";
 import type { UserRole } from "@/lib/types";
 import { Button, Input } from "@/components/ui";
@@ -36,7 +35,6 @@ const labelStyle: React.CSSProperties = {
 };
 
 export function InviteForm({ onSuccess }: InviteFormProps) {
-  const { user } = useAuth();
   const [email, setEmail] = useState("");
   const [role, setRole] = useState<UserRole>("fan");
   const [error, setError] = useState("");
@@ -45,7 +43,6 @@ export function InviteForm({ onSuccess }: InviteFormProps) {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!user) return;
 
     const trimmed = email.trim().toLowerCase();
     if (!trimmed) {
@@ -63,7 +60,7 @@ export function InviteForm({ onSuccess }: InviteFormProps) {
       await createInvite({
         email: trimmed,
         role,
-        invitedBy: user.uid,
+        invitedBy: "passcode-user",
         status: "pending",
       });
       setEmail("");

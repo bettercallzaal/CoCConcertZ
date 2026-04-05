@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { getArtistByUserId } from "@/lib/db";
+import { getArtists } from "@/lib/db";
 import { CardCustomizer } from "@/components/portal/CardCustomizer";
 import { ArtistCard } from "@/components/ArtistCard";
 import { Card } from "@/components/ui";
@@ -29,7 +29,7 @@ const sectionLabelStyle: React.CSSProperties = {
 };
 
 export default function CardPage() {
-  const { user, loading: authLoading } = useAuth();
+  const { loading: authLoading } = useAuth();
 
   const [artist, setArtist] = useState<Artist | null>(null);
   const [previewCustomization, setPreviewCustomization] = useState<
@@ -39,11 +39,12 @@ export default function CardPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    if (authLoading || !user) return;
+    if (authLoading) return;
 
     async function load() {
       try {
-        const artistData = await getArtistByUserId(user!.uid);
+        const artists = await getArtists();
+        const artistData = artists[0] ?? null;
         if (!artistData) {
           setError("No artist profile found. Contact an admin.");
         } else {
@@ -57,7 +58,7 @@ export default function CardPage() {
     }
 
     load();
-  }, [user, authLoading]);
+  }, [authLoading]);
 
   function handleSaved(updated: Partial<Artist["cardCustomization"]>) {
     setArtist((prev) =>

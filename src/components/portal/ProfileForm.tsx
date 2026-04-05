@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import { useAuth } from "@/context/AuthContext";
 import { createArtist, updateArtist } from "@/lib/db";
 import { uploadFile, getStoragePath } from "@/lib/storage";
 import type { Artist } from "@/lib/types";
@@ -32,8 +31,6 @@ const sectionLabelStyle: React.CSSProperties = {
 };
 
 export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
-  const { user } = useAuth();
-
   const [stageName, setStageName] = useState(artist?.stageName ?? "");
   const [bio, setBio] = useState(artist?.bio ?? "");
   const [profilePhotoFile, setProfilePhotoFile] = useState<File | null>(null);
@@ -55,7 +52,6 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!user) return;
 
     const trimmedName = stageName.trim();
     if (!trimmedName) {
@@ -72,7 +68,7 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
 
       if (profilePhotoFile) {
         const ext = profilePhotoFile.name.split(".").pop() ?? "jpg";
-        const artistId = artist?.id ?? `tmp-${user.uid}`;
+        const artistId = artist?.id ?? `tmp-passcode-user`;
         const path = getStoragePath("artists", artistId, `profile.${ext}`);
         profilePhotoUrl = await uploadFile(path, profilePhotoFile);
       }
@@ -80,7 +76,7 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
       const slug = makeSlug(trimmedName);
 
       const data: Omit<Artist, "id" | "createdAt"> = {
-        userId: user.uid,
+        userId: "passcode-user",
         stageName: trimmedName,
         slug,
         bio: bio.trim(),
