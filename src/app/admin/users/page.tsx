@@ -7,7 +7,7 @@ import type { User } from "@/lib/types";
 import { UserList } from "@/components/admin/UserList";
 
 export default function UsersPage() {
-  const { user: currentUser } = useAuth();
+  const { role } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -73,7 +73,7 @@ export default function UsersPage() {
       ) : (
         <UserList
           users={users}
-          currentUserId={currentUser?.uid ?? ""}
+          currentUserId=""
           onRoleChanged={fetchUsers}
         />
       )}

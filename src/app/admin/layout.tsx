@@ -10,19 +10,15 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user, loading } = useAuth();
+  const { role, loading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
     if (loading) return;
-    if (!user) {
+    if (role !== "admin") {
       router.replace("/login");
-      return;
     }
-    if (user.role !== "admin") {
-      router.replace("/");
-    }
-  }, [user, loading, router]);
+  }, [role, loading, router]);
 
   if (loading) {
     return (
@@ -52,7 +48,7 @@ export default function AdminLayout({
     );
   }
 
-  if (!user || user.role !== "admin") {
+  if (role !== "admin") {
     return null;
   }
 

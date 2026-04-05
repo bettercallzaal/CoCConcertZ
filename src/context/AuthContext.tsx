@@ -1,50 +1,56 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
-import { auth, db } from "@/lib/firebase";
-import type { User } from "@/lib/types";
 
 interface AuthContextValue {
-  user: User | null;
+  role: "admin" | "artist" | null;
   loading: boolean;
-  refreshUser: () => Promise<void>;
+  signIn: (passcode: string) => Promise<"admin" | "artist" | null>;
+  signOut: () => Promise<void>;
 }
 
-const AuthContext = createContext<AuthContextValue>({ user: null, loading: true, refreshUser: async () => {} });
+const AuthContext = createContext<AuthContextValue>({
+  role: null,
+  loading: true,
+  signIn: async () => null,
+  signOut: async () => {},
+});
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [role, setRole] = useState<"admin" | "artist" | null>(null);
   const [loading, setLoading] = useState(true);
 
-  async function fetchUser(uid: string) {
-    const userSnap = await getDoc(doc(db, "users", uid));
-    if (userSnap.exists()) {
-      setUser({ uid, ...userSnap.data() } as User);
-    } else {
-      setUser(null);
-    }
-  }
-
-  async function refreshUser() {
-    if (auth.currentUser) await fetchUser(auth.currentUser.uid);
-  }
-
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
-      if (firebaseUser) {
-        await fetchUser(firebaseUser.uid);
-      } else {
-        setUser(null);
-      }
-      setLoading(false);
-    });
-    return unsubscribe;
+    fetch("/api/auth/me")
+      .then((r) => r.json())
+      .then((data) => {
+        setRole(data.role || null);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
   }, []);
 
+  async function signIn(passcode: string): Promise<"admin" | "artist" | null> {
+    const res = await fetch("/api/auth", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ passcode }),
+    });
+    if (res.ok) {
+      const data = await res.json();
+      setRole(data.role);
+      return data.role;
+    }
+    return null;
+  }
+
+  async function signOut() {
+    await fetch("/api/auth", { method: "DELETE" });
+    setRole(null);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, loading, refreshUser }}>
+    <AuthContext.Provider value={{ role, loading, signIn, signOut }}>
       {children}
     </AuthContext.Provider>
   );

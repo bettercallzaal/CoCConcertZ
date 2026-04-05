@@ -4,7 +4,6 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-import { signOut } from "@/lib/auth";
 import { Button } from "@/components/ui";
 
 const NAV_ITEMS = [
@@ -16,10 +15,11 @@ const NAV_ITEMS = [
 
 export function PortalSidebar() {
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { signOut } = useAuth();
 
   const handleSignOut = async () => {
     await signOut();
+    window.location.href = "/";
   };
 
   return (
@@ -130,21 +130,15 @@ export function PortalSidebar() {
           gap: "10px",
         }}
       >
-        {user?.displayName && (
-          <div
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: "11px",
-              color: "var(--text-dim)",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-              whiteSpace: "nowrap",
-            }}
-            title={user.displayName}
-          >
-            {user.displayName}
-          </div>
-        )}
+        <div
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "11px",
+            color: "var(--text-dim)",
+          }}
+        >
+          Artist Portal
+        </div>
         <Button variant="ghost" size="sm" onClick={handleSignOut}>
           Sign Out
         </Button>
