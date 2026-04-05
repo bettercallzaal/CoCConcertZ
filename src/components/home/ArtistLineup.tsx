@@ -24,6 +24,7 @@ interface Concert {
   id: string;
   label: string;
   artists: Artist[];
+  bannerImage?: string;
 }
 
 const concerts: Concert[] = [
@@ -126,6 +127,7 @@ const concerts: Concert[] = [
   {
     id: "concert4",
     label: "CONCERTZ #4",
+    bannerImage: "/images/coc4.jpg",
     artists: [
       {
         name: "JOSEPH GOATS",
@@ -243,6 +245,19 @@ export default function ArtistLineup() {
           key={concert.id}
           className={`artists-panel${activeTab === concert.id ? " active" : ""}`}
         >
+          {concert.bannerImage && (
+            <div style={{ gridColumn: "1 / -1", marginBottom: 8 }}>
+              <img
+                src={concert.bannerImage}
+                alt={`${concert.label} Flyer`}
+                style={{
+                  width: "100%",
+                  borderRadius: 4,
+                  clipPath: "polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px))",
+                }}
+              />
+            </div>
+          )}
           {concert.artists.map((artist, i) => (
             <ArtistCard key={`${concert.id}-${i}`} artist={artist} />
           ))}

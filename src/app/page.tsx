@@ -42,6 +42,8 @@ export default function Home() {
         <div className="content">
           <About />
           <div className="section-divider" />
+          <ArtistLineup />
+          <div className="section-divider" />
           <HowToJoin />
           <div className="section-divider" />
           <UpcomingShows />
@@ -49,8 +51,6 @@ export default function Home() {
           <PastShows />
           <div className="section-divider" />
           <Community />
-          <div className="section-divider" />
-          <ArtistLineup />
         </div>
 
         <div className="section-slash" />
