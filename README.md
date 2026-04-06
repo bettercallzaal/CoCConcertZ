@@ -14,8 +14,12 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - Cyberpunk-themed homepage with floating logo constellation, grain overlay, scanlines, halftone backgrounds
 - Live countdown timer to next show (auto-advances through upcoming events)
 - "LIVE NOW" state — countdown becomes "JOIN NOW" button, status badge pulses
+- **Full-page live mode takeover** — when a show goes live, visitors get a dramatic full-screen overlay with blurred flyer background, pulsing "LIVE NOW" heading, and CTA buttons. The entire page border glows red/yellow. Dismissible, shows once per session
+- **Live chat** — collapsible side panel for real-time chat during shows. No login required — pick a name and go. Rate-limited, auto-scrolling, real-time via Firestore
+- **"Now Playing" bar** — fixed bottom bar showing the current song and artist with animated equalizer bars, updated live by admin during shows
+- **Post-show recap cards** — auto-generated after shows with visitor count, chat messages, artists performed. Shareable, displayed on homepage for 7 days
 - Spatial.io metaverse venue embed with Twitch stream toggle
-- Artist lineup with tabbed panels per concert (ConcertZ #1-4)
+- Artist lineup with tabbed panels per concert (ConcertZ #1-4) with staggered entrance animations and border glow effects
 - ConcertZ #4 artist cards pull live from Firestore — artist profile edits appear on the site
 - Upcoming and past shows connected to Firestore (admin-managed)
 - Live visitor count with real-time Firestore presence
@@ -40,8 +44,10 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 
 ### Admin Dashboard (`/admin`)
 - **Event Management** — full CRUD for events (name, date, description, venue, RSVP link, status, flyer/banner)
-- **GO LIVE / END SHOW** — one-click toggle to flip an event to live mode
+- **GO LIVE / END SHOW** — one-click toggle to flip an event to live mode, triggers full-page takeover for visitors
+- **Now Playing Controls** — tap through the setlist during a live show, updates the public "Now Playing" bar in real-time
 - **Announcement Banner** — type a message, it shows across the public site instantly
+- **Post-Show Recap Generator** — one click after END SHOW auto-counts visitors, chat messages, and artists, creates a shareable recap card
 - **Invite System** — send invites by email with role assignment (admin/artist/fan), track pending/accepted/revoked
 - **User Management** — view all users, switch roles
 - **Seed Artists** — one-click button to pre-populate artist profiles
@@ -160,11 +166,26 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 
 ## Show Day Checklist
 
+### Before the show
 1. Go to `cocconcertz.com/admin`
-2. Click **GO LIVE** on the event
-3. Post an announcement: "ConcertZ #4 is LIVE — join now!"
-4. After the show, click **END SHOW**
-5. Clear the announcement
+2. Verify artists have set up their profiles in the portal
+3. Post an announcement: "ConcertZ #4 starts at 4PM EST today!"
+
+### Going live
+4. Click **GO LIVE** — visitors get the full-page live takeover
+5. Update the announcement: "ConcertZ #4 is LIVE — join now!"
+6. Use **Now Playing** controls to mark the current song as each artist performs
+
+### During the show
+7. Monitor the live chat
+8. Tap through setlist songs as they play
+9. Update announcements as needed
+
+### After the show
+10. Click **END SHOW**
+11. Click **GENERATE RECAP** — auto-creates the recap card with stats
+12. Clear the announcement
+13. The recap card appears on the homepage for 7 days
 
 ---
 
