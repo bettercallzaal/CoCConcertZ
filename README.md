@@ -24,8 +24,14 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - Upcoming and past shows connected to Firestore (admin-managed)
 - Live visitor count with real-time Firestore presence
 - Announcement banner system (admin-controlled, dismissible)
+- **Video highlights** — "BEST MOMENTS" grid with curated clips from past shows, click-to-play YouTube embeds
+- **Email signup** — "GET NOTIFIED" section for show announcements, saves to Firestore with duplicate detection
+- **Fan photo gallery** — fans submit photos with captions, displayed in a grid on the homepage. Cloudinary-hosted uploads
+- **Team section** — Zaal & Thy Rev cards with roles, bios, and social links
+- **Telegram link** in community section
 - Share section (Farcaster composeCast, X/Twitter, clipboard copy)
 - Scroll-reveal animations, responsive design
+- Mobile-responsive hamburger menus for admin and portal sidebars
 
 ### Public Artist Pages (`/artists/[slug]`)
 - Shareable profile pages for each artist
@@ -34,6 +40,7 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - Bio, social links, performance history across events
 - Setlist display with song/video links
 - Upcoming performance CTA with RSVP button
+- **Auto-generated OG images** — branded social cards generated dynamically for sharing
 
 ### Public Event Pages (`/events/[number]`)
 - Dedicated page per concert with flyer/banner image
@@ -50,11 +57,13 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **Post-Show Recap Generator** — one click after END SHOW auto-counts visitors, chat messages, and artists, creates a shareable recap card
 - **Invite System** — send invites by email with role assignment (admin/artist/fan), track pending/accepted/revoked
 - **User Management** — view all users, switch roles
+- **Platform Stats** — subscriber count, events, artists, gallery photos, visitors at a glance
+- **Subscriber Management** — view recent signups, export full list as CSV
 - **Seed Artists** — one-click button to pre-populate artist profiles
 
 ### Artist Portal (`/portal`)
 - Per-artist passcode login (unique 5-letter code per artist)
-- **Profile Editor** — stage name, bio, social links (Twitter, Farcaster, Audius, Spotify, YouTube, website), wallet address
+- **Profile Editor** — stage name, bio, profile photo upload (Cloudinary), social links (Twitter, Farcaster, Audius, Spotify, YouTube, website), wallet address
 - **Setlist Manager** — add songs and videos per event, with platform selection
 - **Card Customizer** — choose accent color and background color with live preview
 - **Preview Link** — "View your public profile" opens their shareable artist page
@@ -81,8 +90,10 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **Framework:** Next.js 16 (App Router, TypeScript)
 - **Styling:** Tailwind CSS + CSS custom properties
 - **Auth:** Passcode-based (admin + per-artist codes via env vars, httpOnly cookies)
-- **Database:** Firebase Firestore
+- **Database:** Firebase Firestore (real-time via onSnapshot)
+- **Image Storage:** Cloudinary (25GB free tier)
 - **Hosting:** Vercel (auto-deploy on push to `main`)
+- **OG Images:** Dynamic generation via Next.js `ImageResponse` (Edge runtime)
 - **Venue:** Spatial.io (metaverse embed)
 - **Stream:** Twitch (live stream embed)
 - **Video:** YouTube (performance embeds with click-to-play song lists)
@@ -110,7 +121,12 @@ src/
 │   │   └── card/page.tsx           # Customize card appearance
 │   ├── artists/[slug]/page.tsx     # Public artist profiles
 │   ├── events/[number]/page.tsx    # Public event pages
-│   └── api/auth/                   # Auth API (passcode verify, cookie mgmt)
+│   └── api/
+│       ├── auth/                   # Auth API (passcode verify, cookie mgmt)
+│       ├── upload/                 # Cloudinary image upload endpoint
+│       └── og/                     # Dynamic OG image generation
+│           ├── countdown/          # Countdown social card
+│           └── artist/             # Artist profile social card
 ├── components/
 │   ├── home/                       # Homepage sections (14 components)
 │   ├── admin/                      # Admin components
@@ -151,6 +167,11 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 - `sets` — songs, videos, notes per artist per event
 - `invites` — email, role, status
 - `users` — role, email, displayName
+- `subscribers` — email signups for show notifications
+- `gallery` — fan-submitted photos with captions
+- `chat/{eventId}/messages` — live chat messages per event
+- `live/nowPlaying` — current song and artist during live shows
+- `recaps/{eventId}` — auto-generated post-show recap data
 - `stats/visitors` — real-time visitor count
 
 ### Concert History
@@ -222,6 +243,11 @@ NEXT_PUBLIC_FIREBASE_APP_ID=
 FIREBASE_ADMIN_PROJECT_ID=
 FIREBASE_ADMIN_CLIENT_EMAIL=
 FIREBASE_ADMIN_PRIVATE_KEY=
+
+# Cloudinary
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 
 # Auth
 ADMIN_PASSCODE=
