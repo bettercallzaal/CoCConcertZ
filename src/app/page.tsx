@@ -7,6 +7,7 @@ import HowToJoin from "@/components/home/HowToJoin";
 import UpcomingShows from "@/components/home/UpcomingShows";
 import PastShows from "@/components/home/PastShows";
 import Community from "@/components/home/Community";
+import FanGallery from "@/components/home/FanGallery";
 import ArtistLineup from "@/components/home/ArtistLineup";
 import ShareSection from "@/components/home/ShareSection";
 import FinalCTA from "@/components/home/FinalCTA";
@@ -69,6 +70,8 @@ export default function Home() {
           <PastShows />
           <div className="section-divider" />
           <Community />
+          <div className="section-divider" />
+          <FanGallery />
         </div>
 
         <div className="section-slash" />
