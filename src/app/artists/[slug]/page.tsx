@@ -27,16 +27,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       url: `https://cocconcertz.com/artists/${artist.slug}`,
       siteName: "COC Concertz",
-      ...(artist.profilePhoto && {
-        images: [{ url: artist.profilePhoto }],
-      }),
+      images: [{ url: `/api/og/artist?slug=${slug}`, width: 1200, height: 630 }],
       type: "profile",
     },
     twitter: {
       card: "summary_large_image",
       title: `${artist.stageName} — COC Concertz`,
       description,
-      ...(artist.profilePhoto && { images: [artist.profilePhoto] }),
+      images: [`/api/og/artist?slug=${slug}`],
     },
   };
 }
