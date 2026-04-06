@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getEvents, getArtists, getUsers, getInvites, updateEvent, getSetsForEvent, getArtist } from "@/lib/db";
-import { collection, doc, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, deleteDoc, onSnapshot, getCountFromServer } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { Event, Artist, User, Invite, SetItem, Song } from "@/lib/types";
 import { Card } from "@/components/ui";
@@ -13,6 +13,14 @@ interface Stats {
   artists: number;
   users: number;
   pendingInvites: number;
+}
+
+interface PlatformStats {
+  subscribers: number;
+  events: number;
+  artists: number;
+  galleryPhotos: number;
+  siteVisitors: number;
 }
 
 const labelStyle: React.CSSProperties = {
@@ -57,6 +65,8 @@ export default function AdminDashboardPage() {
     artists: string[];
     generatedAt: string;
   } | null>(null);
+  const [platformStats, setPlatformStats] = useState<PlatformStats | null>(null);
+  const [platformStatsLoading, setPlatformStatsLoading] = useState(true);
 
   useEffect(() => {
     async function load() {
@@ -102,6 +112,37 @@ export default function AdminDashboardPage() {
       }
     }
     load();
+  }, []);
+
+  // Load platform-wide stats
+  useEffect(() => {
+    async function loadPlatformStats() {
+      try {
+        const [subscribersSnap, gallerySnap, visitorsSnap] = await Promise.all([
+          getCountFromServer(collection(db, "subscribers")),
+          getCountFromServer(collection(db, "gallery")),
+          getDoc(doc(db, "stats", "visitors")),
+        ]);
+
+        const [events, artists] = await Promise.all([getEvents(), getArtists()]);
+
+        setPlatformStats({
+          subscribers: subscribersSnap.data().count,
+          events: events.length,
+          artists: artists.length,
+          galleryPhotos: gallerySnap.data().count,
+          siteVisitors: visitorsSnap.exists()
+            ? (visitorsSnap.data().count ?? visitorsSnap.data().total ?? visitorsSnap.data().peak ?? 0)
+            : 0,
+        });
+      } catch (err) {
+        console.error("Failed to load platform stats", err);
+        setPlatformStats(null);
+      } finally {
+        setPlatformStatsLoading(false);
+      }
+    }
+    loadPlatformStats();
   }, []);
 
   // Load setlist when live event changes
@@ -329,6 +370,93 @@ export default function AdminDashboardPage() {
         >
           COC ConcertZ admin overview
         </p>
+      </div>
+
+      {/* Platform Stats */}
+      <div style={{ marginBottom: "40px" }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "12px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.2em",
+            color: "var(--text-dim)",
+            marginBottom: "16px",
+          }}
+        >
+          Platform Stats
+        </h2>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
+            gap: "16px",
+          }}
+        >
+          {(
+            [
+              {
+                label: "Subscribers",
+                value: platformStats?.subscribers ?? 0,
+                accent: "var(--cyan)",
+                icon: "✉",
+              },
+              {
+                label: "Total Events",
+                value: platformStats?.events ?? 0,
+                accent: "var(--yellow)",
+                icon: "◈",
+              },
+              {
+                label: "Total Artists",
+                value: platformStats?.artists ?? 0,
+                accent: "var(--yellow)",
+                icon: "♪",
+              },
+              {
+                label: "Gallery Photos",
+                value: platformStats?.galleryPhotos ?? 0,
+                accent: "var(--cyan)",
+                icon: "◻",
+              },
+              {
+                label: "Site Visitors",
+                value: platformStats?.siteVisitors ?? 0,
+                accent: "#a78bfa",
+                icon: "◉",
+              },
+            ] as { label: string; value: number; accent: string; icon: string }[]
+          ).map((stat) => (
+            <Card key={stat.label}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                  <span style={labelStyle}>{stat.label}</span>
+                  <span
+                    style={{
+                      fontSize: "16px",
+                      opacity: 0.4,
+                      color: stat.accent,
+                    }}
+                  >
+                    {stat.icon}
+                  </span>
+                </div>
+                <span
+                  style={{
+                    fontFamily: "var(--font-display)",
+                    fontSize: "38px",
+                    fontWeight: 900,
+                    color: stat.accent,
+                    lineHeight: 1,
+                  }}
+                >
+                  {platformStatsLoading ? "—" : stat.value.toLocaleString()}
+                </span>
+              </div>
+            </Card>
+          ))}
+        </div>
       </div>
 
       {/* Stat cards */}
