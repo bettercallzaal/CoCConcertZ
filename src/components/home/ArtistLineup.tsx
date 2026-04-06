@@ -39,6 +39,7 @@ const CONCERT4_FALLBACK_ARTISTS: Artist[] = [
     name: "JOSEPH GOATS",
     role: "Performer",
     bio: "Community artist from The ZAO, performing live at COC ConcertZ #4.",
+    link: { url: "https://www.thezao.com/community/josephgoats", label: "Joseph Goats on The ZAO" },
   },
   {
     name: "STILO",
@@ -50,6 +51,7 @@ const CONCERT4_FALLBACK_ARTISTS: Artist[] = [
     name: "TOM FELLENZ",
     role: "Performer",
     bio: "ZAO community member and returning performer — previously opened ConcertZ #2 with a live set in the SaltyVerse Auditorium.",
+    link: { url: "https://www.thezao.com/community/fellenz", label: "Tom Fellenz on The ZAO" },
   },
 ];
 
@@ -152,6 +154,7 @@ const HARDCODED_CONCERTS: Concert[] = [
         name: "TOM FELLENZ",
         role: "Performer",
         bio: "Opening act with a 30-minute live set in the SaltyVerse Auditorium.",
+        link: { url: "https://www.thezao.com/community/fellenz", label: "Tom Fellenz on The ZAO" },
         videoId: "zYm3g_YUYjE",
       },
       {
@@ -183,6 +186,7 @@ const HARDCODED_CONCERTS: Concert[] = [
         name: "JOSEPH GOATS",
         role: "Headline Act",
         bio: "Live set from 4:45 – 5:15 PM EST.",
+        link: { url: "https://www.thezao.com/community/josephgoats", label: "Joseph Goats on The ZAO" },
       },
       {
         name: "STILO WORLD",
@@ -234,7 +238,7 @@ function SocialLinks({ links }: { links: FirestoreArtist["socialLinks"] }) {
   );
 }
 
-function ArtistCard({ artist }: { artist: Artist }) {
+function ArtistCard({ artist, cardIndex = 0 }: { artist: Artist; cardIndex?: number }) {
   const [activeVid, setActiveVid] = useState(artist.videoId || (artist.songs?.[0]?.vid ?? ""));
 
   const handleSongClick = useCallback((vid: string) => {
@@ -253,10 +257,11 @@ function ArtistCard({ artist }: { artist: Artist }) {
 
   return (
     <div
-      className="artist-card"
+      className="artist-card artist-card-entering"
       style={{
         ...(artist.fullWidth ? { gridColumn: "1 / -1" } : {}),
         ...cardStyle,
+        animationDelay: `${cardIndex * 100}ms`,
       }}
     >
       {artist.link && (
@@ -344,6 +349,7 @@ function ArtistCard({ artist }: { artist: Artist }) {
 
 export default function ArtistLineup() {
   const [activeTab, setActiveTab] = useState("concert4");
+  const [animationKey, setAnimationKey] = useState(0);
   const [concert4Artists, setConcert4Artists] = useState<Artist[]>(CONCERT4_FALLBACK_ARTISTS);
 
   useEffect(() => {
@@ -392,7 +398,7 @@ export default function ArtistLineup() {
           <button
             key={concert.id}
             className={`artists-tab${activeTab === concert.id ? " active" : ""}`}
-            onClick={() => setActiveTab(concert.id)}
+            onClick={() => { setActiveTab(concert.id); setAnimationKey((k) => k + 1); }}
           >
             {concert.label}
           </button>
@@ -419,7 +425,11 @@ export default function ArtistLineup() {
             </div>
           )}
           {concert.artists.map((artist, i) => (
-            <ArtistCard key={`${concert.id}-${i}`} artist={artist} />
+            <ArtistCard
+              key={`${concert.id}-${i}-${animationKey}`}
+              artist={artist}
+              cardIndex={i}
+            />
           ))}
         </div>
       ))}
