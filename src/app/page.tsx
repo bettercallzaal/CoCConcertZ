@@ -17,10 +17,15 @@ import AnnouncementBanner from "@/components/home/AnnouncementBanner";
 import VisitorCount from "@/components/home/VisitorCount";
 import NowPlaying from "@/components/home/NowPlaying";
 import LiveChat from "@/components/home/LiveChat";
+import LiveMode from "@/components/home/LiveMode";
+import ShowRecap from "@/components/home/ShowRecap";
 
 export default function Home() {
   return (
     <>
+      {/* Live Mode Takeover */}
+      <LiveMode />
+
       {/* Announcement Banner */}
       <AnnouncementBanner />
 
@@ -39,6 +44,9 @@ export default function Home() {
 
         {/* Next Show Countdown */}
         <Countdown />
+
+        {/* Post-Show Recap (shows for 7 days after a completed event) */}
+        <ShowRecap />
 
         {/* Live Visitor Count */}
         <VisitorCount />
