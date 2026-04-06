@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { getEvents, getArtists, getUsers, getInvites, updateEvent, getSetsForEvent, getArtist } from "@/lib/db";
-import { doc, setDoc, deleteDoc, onSnapshot } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, setDoc, deleteDoc, onSnapshot } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import type { Event, Artist, User, Invite, SetItem, Song } from "@/lib/types";
 import { Card } from "@/components/ui";
@@ -47,6 +47,16 @@ export default function AdminDashboardPage() {
   const [setlistSongs, setSetlistSongs] = useState<{ song: Song; artistName: string }[]>([]);
   const [nowPlayingSong, setNowPlayingSong] = useState<string | null>(null);
   const [nowPlayingLoading, setNowPlayingLoading] = useState(false);
+  const [lastCompletedEvent, setLastCompletedEvent] = useState<Event | null>(null);
+  const [recapLoading, setRecapLoading] = useState(false);
+  const [recapData, setRecapData] = useState<{
+    eventName: string;
+    eventDate: string;
+    visitorCount: number;
+    chatMessages: number;
+    artists: string[];
+    generatedAt: string;
+  } | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -77,6 +87,13 @@ export default function AdminDashboardPage() {
           upcoming.find((e) => e.status === "upcoming");
         if (liveOrNext?.announcement) {
           setAnnouncementText(liveOrNext.announcement);
+        }
+        // Track the most recently completed event for recap generation
+        const completed = events
+          .filter((e) => e.status === "completed")
+          .sort((a, b) => b.date.getTime() - a.date.getTime());
+        if (completed.length > 0) {
+          setLastCompletedEvent(completed[0]);
         }
       } catch (err) {
         console.error("Failed to load dashboard data", err);
@@ -165,6 +182,10 @@ export default function AdminDashboardPage() {
     try {
       const newStatus: Event["status"] = controlEvent.status === "live" ? "completed" : "live";
       await updateEvent(controlEvent.id, { status: newStatus });
+      if (newStatus === "completed") {
+        setLastCompletedEvent({ ...controlEvent, status: "completed" });
+        setRecapData(null); // reset any previous recap card
+      }
       setUpcomingEvents((prev) =>
         prev
           .map((e) =>
@@ -176,6 +197,64 @@ export default function AdminDashboardPage() {
       console.error("Failed to update event status", err);
     } finally {
       setLiveLoading(false);
+    }
+  }
+
+  async function handleGenerateRecap() {
+    if (!lastCompletedEvent) return;
+    setRecapLoading(true);
+    try {
+      const eventId = lastCompletedEvent.id;
+
+      // 1. Get peak visitor count from stats/visitors
+      let visitorCount = 0;
+      try {
+        const visitorsSnap = await getDoc(doc(db, "stats", "visitors"));
+        if (visitorsSnap.exists()) {
+          const vData = visitorsSnap.data();
+          visitorCount = vData.peak ?? vData.count ?? vData.total ?? 0;
+        }
+      } catch {
+        // stats doc may not exist — leave as 0
+      }
+
+      // 2. Count chat messages
+      let chatMessages = 0;
+      try {
+        const chatSnap = await getDocs(collection(db, "chat", eventId, "messages"));
+        chatMessages = chatSnap.size;
+      } catch {
+        // chat may not exist — leave as 0
+      }
+
+      // 3. Get artist names from the event lineup
+      const artistNames: string[] = [];
+      if (lastCompletedEvent.artists && lastCompletedEvent.artists.length > 0) {
+        for (const ea of lastCompletedEvent.artists) {
+          try {
+            const artist = await getArtist(ea.artistId);
+            if (artist) artistNames.push(artist.stageName);
+          } catch {
+            // skip unresolvable artist
+          }
+        }
+      }
+
+      // 4. Save recap doc
+      const recap = {
+        eventName: lastCompletedEvent.name,
+        eventDate: lastCompletedEvent.date.toISOString(),
+        visitorCount,
+        chatMessages,
+        artists: artistNames,
+        generatedAt: new Date().toISOString(),
+      };
+      await setDoc(doc(db, "recaps", eventId), recap);
+      setRecapData(recap);
+    } catch (err) {
+      console.error("Failed to generate recap", err);
+    } finally {
+      setRecapLoading(false);
     }
   }
 
@@ -403,6 +482,189 @@ export default function AdminDashboardPage() {
           }
         `}</style>
       </div>
+
+      {/* Generate Recap — shown when a completed event exists */}
+      {lastCompletedEvent && (
+        <div style={{ marginBottom: "40px" }}>
+          <h2
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "12px",
+              fontWeight: 700,
+              textTransform: "uppercase",
+              letterSpacing: "0.2em",
+              color: "var(--text-dim)",
+              marginBottom: "16px",
+            }}
+          >
+            Post-Show Recap
+          </h2>
+          <Card>
+            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+              {/* Header row */}
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "16px",
+                  flexWrap: "wrap",
+                }}
+              >
+                <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-display)",
+                      fontSize: "16px",
+                      fontWeight: 800,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                      color: "var(--text)",
+                    }}
+                  >
+                    {lastCompletedEvent.name}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "11px",
+                      color: "var(--text-dim)",
+                    }}
+                  >
+                    {lastCompletedEvent.date.toLocaleDateString("en-US", {
+                      weekday: "short",
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    })}
+                  </span>
+                </div>
+                <button
+                  onClick={handleGenerateRecap}
+                  disabled={recapLoading}
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "12px",
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.2em",
+                    padding: "12px 28px",
+                    border: "2px solid",
+                    borderRadius: 0,
+                    cursor: recapLoading ? "not-allowed" : "pointer",
+                    opacity: recapLoading ? 0.6 : 1,
+                    transition: "all 0.15s ease",
+                    background: "rgba(0, 240, 255, 0.08)",
+                    color: "var(--cyan)",
+                    borderColor: "var(--cyan)",
+                  }}
+                >
+                  {recapLoading ? "Generating..." : "Generate Recap"}
+                </button>
+              </div>
+
+              {/* Recap result card */}
+              {recapData && (
+                <div
+                  style={{
+                    padding: "20px",
+                    background: "linear-gradient(135deg, rgba(255,214,0,0.06) 0%, rgba(0,240,255,0.03) 100%)",
+                    border: "1px solid rgba(255,214,0,0.2)",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "14px",
+                  }}
+                >
+                  {/* Stats row */}
+                  <div style={{ display: "flex", gap: "24px", flexWrap: "wrap" }}>
+                    {[
+                      { label: "Visitors", value: recapData.visitorCount.toLocaleString() },
+                      { label: "Chat Messages", value: recapData.chatMessages.toLocaleString() },
+                      { label: "Artists", value: String(recapData.artists.length) },
+                    ].map((s) => (
+                      <div key={s.label} style={{ display: "flex", flexDirection: "column", gap: "3px" }}>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-display)",
+                            fontSize: "28px",
+                            fontWeight: 900,
+                            color: "#eab308",
+                            lineHeight: 1,
+                          }}
+                        >
+                          {s.value}
+                        </span>
+                        <span
+                          style={{
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "10px",
+                            textTransform: "uppercase",
+                            letterSpacing: "0.15em",
+                            color: "var(--text-dim)",
+                          }}
+                        >
+                          {s.label}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Artist list */}
+                  {recapData.artists.length > 0 && (
+                    <div>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "10px",
+                          textTransform: "uppercase",
+                          letterSpacing: "0.15em",
+                          color: "var(--text-dim)",
+                          display: "block",
+                          marginBottom: "8px",
+                        }}
+                      >
+                        Lineup
+                      </span>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px" }}>
+                        {recapData.artists.map((name) => (
+                          <span
+                            key={name}
+                            style={{
+                              fontFamily: "var(--font-mono)",
+                              fontSize: "11px",
+                              fontWeight: 700,
+                              textTransform: "uppercase",
+                              color: "var(--cyan)",
+                              padding: "4px 10px",
+                              border: "1px solid rgba(0,240,255,0.25)",
+                              background: "rgba(0,240,255,0.05)",
+                            }}
+                          >
+                            {name}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Generated at */}
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "10px",
+                      color: "var(--text-dim)",
+                      opacity: 0.6,
+                    }}
+                  >
+                    Saved to recaps/{lastCompletedEvent.id} &mdash; generated{" "}
+                    {new Date(recapData.generatedAt).toLocaleString()}
+                  </span>
+                </div>
+              )}
+            </div>
+          </Card>
+        </div>
+      )}
 
       {/* Now Playing */}
       {controlEvent?.status === "live" && (
