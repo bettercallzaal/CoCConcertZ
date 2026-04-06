@@ -15,6 +15,8 @@ import StickyNav from "@/components/home/StickyNav";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import AnnouncementBanner from "@/components/home/AnnouncementBanner";
 import VisitorCount from "@/components/home/VisitorCount";
+import NowPlaying from "@/components/home/NowPlaying";
+import LiveChat from "@/components/home/LiveChat";
 
 export default function Home() {
   return (
@@ -73,6 +75,12 @@ export default function Home() {
       </main>
 
       <Footer />
+
+      {/* Now Playing Bar */}
+      <NowPlaying />
+
+      {/* Live Chat */}
+      <LiveChat />
 
       {/* Scroll Reveal Observer */}
       <ScrollReveal />
