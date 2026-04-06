@@ -14,6 +14,7 @@ import Footer from "@/components/home/Footer";
 import StickyNav from "@/components/home/StickyNav";
 import ScrollReveal from "@/components/home/ScrollReveal";
 import AnnouncementBanner from "@/components/home/AnnouncementBanner";
+import VisitorCount from "@/components/home/VisitorCount";
 
 export default function Home() {
   return (
@@ -36,6 +37,9 @@ export default function Home() {
 
         {/* Next Show Countdown */}
         <Countdown />
+
+        {/* Live Visitor Count */}
+        <VisitorCount />
 
         {/* Venue Embed */}
         <VenueEmbed />
