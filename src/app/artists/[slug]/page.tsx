@@ -1,7 +1,9 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getArtistBySlug, getEvents, getSetsForArtist } from "@/lib/db";
+import { getArtistBySlugServer, getEventsServer, getSetsForArtistServer } from "@/lib/db-server";
 import type { Artist, Event, SetItem } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -13,7 +15,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const artist = await getArtistBySlug(slug);
+  const artist = await getArtistBySlugServer(slug);
   if (!artist) return { title: "Artist Not Found" };
 
   const description =
@@ -120,13 +122,13 @@ export default async function ArtistProfilePage({ params }: Props) {
   const { slug } = await params;
 
   const [artist, allEvents] = await Promise.all([
-    getArtistBySlug(slug),
-    getEvents(),
+    getArtistBySlugServer(slug),
+    getEventsServer(),
   ]);
 
   if (!artist) notFound();
 
-  const sets = await getSetsForArtist(artist.id);
+  const sets = await getSetsForArtistServer(artist.id);
 
   // Events this artist was part of
   const artistEvents = allEvents.filter((e) =>

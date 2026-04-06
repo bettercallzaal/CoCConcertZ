@@ -1,8 +1,10 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getEventByNumber, getArtists } from "@/lib/db";
+import { getEventByNumberServer, getArtistsServer } from "@/lib/db-server";
 import type { Artist } from "@/lib/types";
+
+export const dynamic = "force-dynamic";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -14,7 +16,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { number } = await params;
-  const event = await getEventByNumber(parseInt(number, 10));
+  const event = await getEventByNumberServer(parseInt(number, 10));
   if (!event) return { title: "Event Not Found" };
 
   const description = event.description || `${event.name} — COC Concertz`;
@@ -111,11 +113,11 @@ const STATUS_CONFIG = {
 
 export default async function EventPage({ params }: Props) {
   const { number } = await params;
-  const event = await getEventByNumber(parseInt(number, 10));
+  const event = await getEventByNumberServer(parseInt(number, 10));
 
   if (!event) notFound();
 
-  const allArtists = await getArtists();
+  const allArtists = await getArtistsServer();
 
   // Map artistId -> Artist for fast lookup
   const artistMap = new Map<string, Artist>(
