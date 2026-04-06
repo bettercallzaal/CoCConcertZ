@@ -67,6 +67,9 @@ export default function AdminDashboardPage() {
   } | null>(null);
   const [platformStats, setPlatformStats] = useState<PlatformStats | null>(null);
   const [platformStatsLoading, setPlatformStatsLoading] = useState(true);
+  const [subscribers, setSubscribers] = useState<{ email: string; subscribedAt?: string }[]>([]);
+  const [subscribersLoading, setSubscribersLoading] = useState(true);
+  const [exportLoading, setExportLoading] = useState(false);
 
   useEffect(() => {
     async function load() {
@@ -144,6 +147,78 @@ export default function AdminDashboardPage() {
     }
     loadPlatformStats();
   }, []);
+
+  // Load recent subscribers
+  useEffect(() => {
+    async function loadSubscribers() {
+      try {
+        const snap = await getDocs(collection(db, "subscribers"));
+        const docs = snap.docs.map((d) => {
+          const data = d.data();
+          return {
+            email: data.email ?? d.id,
+            subscribedAt: data.subscribedAt
+              ? (typeof data.subscribedAt.toDate === "function"
+                  ? data.subscribedAt.toDate().toISOString()
+                  : String(data.subscribedAt))
+              : undefined,
+          };
+        });
+        // Sort newest first (those with subscribedAt), then rest
+        docs.sort((a, b) => {
+          if (a.subscribedAt && b.subscribedAt) {
+            return new Date(b.subscribedAt).getTime() - new Date(a.subscribedAt).getTime();
+          }
+          if (a.subscribedAt) return -1;
+          if (b.subscribedAt) return 1;
+          return 0;
+        });
+        setSubscribers(docs);
+      } catch (err) {
+        console.error("Failed to load subscribers", err);
+      } finally {
+        setSubscribersLoading(false);
+      }
+    }
+    loadSubscribers();
+  }, []);
+
+  async function handleExportCSV() {
+    setExportLoading(true);
+    try {
+      const snap = await getDocs(collection(db, "subscribers"));
+      const rows: string[] = ["email,subscribedAt"];
+      snap.docs.forEach((d) => {
+        const data = d.data();
+        const email = data.email ?? d.id;
+        let subscribedAt = "";
+        if (data.subscribedAt) {
+          subscribedAt =
+            typeof data.subscribedAt.toDate === "function"
+              ? data.subscribedAt.toDate().toISOString()
+              : String(data.subscribedAt);
+        }
+        // Escape fields
+        const escapedEmail = `"${String(email).replace(/"/g, '""')}"`;
+        const escapedDate = `"${String(subscribedAt).replace(/"/g, '""')}"`;
+        rows.push(`${escapedEmail},${escapedDate}`);
+      });
+      const csv = rows.join("\n");
+      const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = `coc-concertz-subscribers-${new Date().toISOString().slice(0, 10)}.csv`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Failed to export CSV", err);
+    } finally {
+      setExportLoading(false);
+    }
+  }
 
   // Load setlist when live event changes
   useEffect(() => {
@@ -1094,6 +1169,165 @@ export default function AdminDashboardPage() {
           Data Tools
         </h2>
         <SeedArtists />
+      </div>
+
+      {/* Subscribers */}
+      <div style={{ marginBottom: "40px" }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "12px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.2em",
+            color: "var(--text-dim)",
+            marginBottom: "16px",
+          }}
+        >
+          Subscribers
+        </h2>
+        <Card>
+          <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            {/* Header row: count + export button */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "16px",
+                flexWrap: "wrap",
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                <span style={labelStyle}>Total Subscribers</span>
+                <span style={valueStyle}>
+                  {subscribersLoading ? "—" : subscribers.length.toLocaleString()}
+                </span>
+              </div>
+              <button
+                onClick={handleExportCSV}
+                disabled={exportLoading || subscribersLoading || subscribers.length === 0}
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "12px",
+                  fontWeight: 700,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.2em",
+                  padding: "12px 28px",
+                  border: "2px solid",
+                  borderRadius: 0,
+                  cursor:
+                    exportLoading || subscribersLoading || subscribers.length === 0
+                      ? "not-allowed"
+                      : "pointer",
+                  opacity:
+                    exportLoading || subscribersLoading || subscribers.length === 0
+                      ? 0.5
+                      : 1,
+                  transition: "all 0.15s ease",
+                  background: "rgba(255,214,0,0.08)",
+                  color: "var(--yellow)",
+                  borderColor: "var(--yellow)",
+                }}
+              >
+                {exportLoading ? "Exporting..." : "EXPORT CSV"}
+              </button>
+            </div>
+
+            {/* Recent subscribers list */}
+            {!subscribersLoading && subscribers.length > 0 && (
+              <div>
+                <span
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "10px",
+                    textTransform: "uppercase",
+                    letterSpacing: "0.2em",
+                    color: "var(--text-dim)",
+                    display: "block",
+                    marginBottom: "8px",
+                  }}
+                >
+                  Recent Subscribers
+                </span>
+                <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+                  {subscribers.slice(0, 5).map((sub, i) => (
+                    <div
+                      key={sub.email + i}
+                      style={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: "16px",
+                        padding: "8px 12px",
+                        background: "rgba(255,255,255,0.02)",
+                        border: "1px solid rgba(255,255,255,0.06)",
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: "12px",
+                          color: "var(--cyan)",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          whiteSpace: "nowrap",
+                          minWidth: 0,
+                        }}
+                      >
+                        {sub.email}
+                      </span>
+                      {sub.subscribedAt && (
+                        <span
+                          style={{
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "10px",
+                            color: "var(--text-dim)",
+                            flexShrink: 0,
+                          }}
+                        >
+                          {new Date(sub.subscribedAt).toLocaleDateString("en-US", {
+                            year: "numeric",
+                            month: "short",
+                            day: "numeric",
+                          })}
+                        </span>
+                      )}
+                    </div>
+                  ))}
+                </div>
+                {subscribers.length > 5 && (
+                  <p
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: "10px",
+                      color: "var(--text-dim)",
+                      marginTop: "8px",
+                    }}
+                  >
+                    +{(subscribers.length - 5).toLocaleString()} more — export CSV for full list
+                  </p>
+                )}
+              </div>
+            )}
+
+            {subscribersLoading && (
+              <div
+                style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-dim)" }}
+              >
+                Loading...
+              </div>
+            )}
+
+            {!subscribersLoading && subscribers.length === 0 && (
+              <div
+                style={{ fontFamily: "var(--font-mono)", fontSize: "12px", color: "var(--text-dim)" }}
+              >
+                No subscribers yet.
+              </div>
+            )}
+          </div>
+        </Card>
       </div>
 
       {/* Upcoming shows */}
