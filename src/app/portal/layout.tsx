@@ -55,9 +55,16 @@ export default function PortalLayout({
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "var(--black)" }}>
       <PortalSidebar />
-      <main style={{ flex: 1, overflow: "auto" }}>
+      <main style={{ flex: 1, overflow: "auto" }} className="portal-main">
         {children}
       </main>
+      <style>{`
+        @media (max-width: 768px) {
+          .portal-main {
+            padding-top: 64px;
+          }
+        }
+      `}</style>
     </div>
   );
 }

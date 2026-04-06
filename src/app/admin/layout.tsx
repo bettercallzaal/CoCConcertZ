@@ -55,9 +55,16 @@ export default function AdminLayout({
   return (
     <div style={{ display: "flex", minHeight: "100vh", background: "var(--black)" }}>
       <AdminSidebar />
-      <main style={{ flex: 1, overflow: "auto" }}>
+      <main style={{ flex: 1, overflow: "auto" }} className="admin-main">
         {children}
       </main>
+      <style>{`
+        @media (max-width: 768px) {
+          .admin-main {
+            padding-top: 64px;
+          }
+        }
+      `}</style>
     </div>
   );
 }
