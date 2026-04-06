@@ -20,6 +20,7 @@ import NowPlaying from "@/components/home/NowPlaying";
 import LiveChat from "@/components/home/LiveChat";
 import LiveMode from "@/components/home/LiveMode";
 import ShowRecap from "@/components/home/ShowRecap";
+import EmailSignup from "@/components/home/EmailSignup";
 
 export default function Home() {
   return (
@@ -68,6 +69,8 @@ export default function Home() {
           <UpcomingShows />
           <div className="section-divider" />
           <PastShows />
+          <div className="section-divider" />
+          <EmailSignup />
           <div className="section-divider" />
           <Community />
           <div className="section-divider" />
