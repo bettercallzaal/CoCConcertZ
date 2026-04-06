@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { createEvent, updateEvent } from "@/lib/db";
-import { uploadFile, getStoragePath } from "@/lib/storage";
+import { uploadFile } from "@/lib/storage";
 import type { Event } from "@/lib/types";
 import { Button, Input, Textarea, FileUpload } from "@/components/ui";
 
@@ -90,28 +90,15 @@ export function EventForm({ event, onSuccess, onCancel }: EventFormProps) {
 
     setSaving(true);
     try {
-      // Determine an ID for storage paths — use existing id or a temp placeholder
-      const storageId = event?.id ?? `temp-${Date.now()}`;
-
       let flyerUrl = event?.flyerUrl;
       let bannerUrl = event?.bannerUrl;
 
       if (flyerFile) {
-        const path = getStoragePath(
-          "events",
-          storageId,
-          `flyer-${flyerFile.name}`
-        );
-        flyerUrl = await uploadFile(path, flyerFile);
+        flyerUrl = await uploadFile(flyerFile, "coc-concertz/events");
       }
 
       if (bannerFile) {
-        const path = getStoragePath(
-          "events",
-          storageId,
-          `banner-${bannerFile.name}`
-        );
-        bannerUrl = await uploadFile(path, bannerFile);
+        bannerUrl = await uploadFile(bannerFile, "coc-concertz/events");
       }
 
       const payload = {

@@ -1,26 +1,17 @@
-import {
-  ref,
-  uploadBytes,
-  getDownloadURL,
-  deleteObject,
-} from "firebase/storage";
-import { storage } from "./firebase";
+/**
+ * Cloudinary upload helper — replaces Firebase Storage.
+ * Calls the internal /api/upload route which handles the SDK call server-side.
+ */
+export async function uploadFile(
+  file: File,
+  folder: string = "coc-concertz"
+): Promise<string> {
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("folder", folder);
 
-export async function uploadFile(path: string, file: File): Promise<string> {
-  const storageRef = ref(storage, path);
-  await uploadBytes(storageRef, file);
-  return getDownloadURL(storageRef);
-}
-
-export async function deleteFile(path: string): Promise<void> {
-  const storageRef = ref(storage, path);
-  await deleteObject(storageRef);
-}
-
-export function getStoragePath(
-  type: "events" | "artists" | "sets",
-  id: string,
-  filename: string
-): string {
-  return `${type}/${id}/${filename}`;
+  const res = await fetch("/api/upload", { method: "POST", body: formData });
+  if (!res.ok) throw new Error("Upload failed");
+  const data = await res.json();
+  return data.url as string;
 }
