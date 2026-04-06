@@ -1,165 +1,254 @@
-# COC Concertz — Metaverse Concert Landing Page
+# COC Concertz — Metaverse Concert Platform
 
-A landing page and Farcaster Mini App for COC Concertz, a live metaverse concert experience hosted in StiloWorld on Spatial.io.
+A full-stack concert platform and Farcaster Mini App for COC Concertz, a live metaverse concert experience hosted in StiloWorld on Spatial.io. Built with Next.js, Firebase, and a cyberpunk design system.
 
 ## Live Site
 
 **https://cocconcertz.com**
 
-## What's Built
+---
 
-### Branding & Design
-- Scattered floating logo constellation in the hero — 7 logo pieces at varying sizes, rotations, and opacities, each drifting independently with unique float animations
-- Glitch overlay effect on the center logo piece (hue-shifted pseudo-elements)
-- "THE ZAO × COC" hero anchor text — establishes the cross-community collaboration identity
-- Staggered cinematic page-load entrance: badge → logos scatter in with blur → anchor text → subtitle → paragraph → CTA (all sequenced with animation-delay)
-- Sticky nav logo appears on scroll (IntersectionObserver) with golden drop-shadow
-- Logo in footer with hover glow
-- Favicon and apple-touch-icon using the logo
-- Gig poster x cyberpunk aesthetic with halftone backgrounds, clipped corners, grain overlay, scanlines
-- Diagonal slash section transitions with yellow/cyan gradient lines between major sections
-- Fonts: Bebas Neue (display), IBM Plex Mono (mono), Satoshi (body)
-- Color palette: gold (#FFD600), cyan (#00F0FF), deep black (#050505)
+## Platform Overview
 
-### Core Site
-- Live countdown timer to next show (auto-advances through upcoming shows)
-- Countdown "LIVE NOW" state — when timer hits zero, countdown numbers are replaced with a pulsing "JOIN LIVE NOW" button linking to the venue, and status badge swaps to "LIVE NOW"
-- Countdown numbers with pulsing yellow/cyan text-shadow glow and animated gradient sweep bar on the bottom edge
+### Public Site
+- Cyberpunk-themed homepage with floating logo constellation, grain overlay, scanlines, halftone backgrounds
+- Live countdown timer to next show (auto-advances through upcoming events)
+- "LIVE NOW" state — countdown becomes "JOIN NOW" button, status badge pulses
 - Spatial.io metaverse venue embed with Twitch stream toggle
-- Venue tap-to-expand on mobile — starts at 30vh with a "TAP TO EXPAND VENUE" button, toggles to 80vh with smooth animation
-- Event schedule with "Today" / "Live Now" dynamic badges
-- ConcertZ #4 promoted with pulsing glow RSVP button in the final CTA section
-- Past shows archive (ConcertZ #1, #2, #3) ordered newest first with visual hierarchy — newest card is most prominent with yellow accent border and gradient background, older shows progressively fade
-- Past show flyer images on #3 and #2 cards
-- Artist lineup with tabbed panels per concert (CONCERTZ #1, CONCERTZ #2, CONCERTZ #3)
-- YouTube video embeds with clickable song lists for all past performances
-  - ConcertZ #1: AttaBotty (8 videos), Clejan (14 videos)
-  - ConcertZ #2: Fellenz, Stilo World WaveWarZ, AttaBotty
-- Community links (The ZAO, Community of Communities)
-- Share section with "CAST ON FARCASTER" as hero-sized primary button with glow animation, X/Twitter and Copy Link as smaller secondary actions
-- "How to Join" steps for new metaverse visitors
-- Responsive design for mobile and desktop
-- Scroll-reveal animations on all sections
+- Artist lineup with tabbed panels per concert (ConcertZ #1-4)
+- ConcertZ #4 artist cards pull live from Firestore — artist profile edits appear on the site
+- Upcoming and past shows connected to Firestore (admin-managed)
+- Live visitor count with real-time Firestore presence
+- Announcement banner system (admin-controlled, dismissible)
+- Share section (Farcaster composeCast, X/Twitter, clipboard copy)
+- Scroll-reveal animations, responsive design
+
+### Public Artist Pages (`/artists/[slug]`)
+- Shareable profile pages for each artist
+- Dynamic SEO metadata (title, description, OG tags)
+- Artist's custom accent and background colors
+- Bio, social links, performance history across events
+- Setlist display with song/video links
+- Upcoming performance CTA with RSVP button
+
+### Public Event Pages (`/events/[number]`)
+- Dedicated page per concert with flyer/banner image
+- Lineup grid linking to artist profiles
+- RSVP button (upcoming) or "JOIN NOW" (live)
+- Venue links (Spatial.io + stream)
+- Dynamic SEO metadata with flyer as OG image
+
+### Admin Dashboard (`/admin`)
+- **Event Management** — full CRUD for events (name, date, description, venue, RSVP link, status, flyer/banner)
+- **GO LIVE / END SHOW** — one-click toggle to flip an event to live mode
+- **Announcement Banner** — type a message, it shows across the public site instantly
+- **Invite System** — send invites by email with role assignment (admin/artist/fan), track pending/accepted/revoked
+- **User Management** — view all users, switch roles
+- **Seed Artists** — one-click button to pre-populate artist profiles
+
+### Artist Portal (`/portal`)
+- Per-artist passcode login (unique 5-letter code per artist)
+- **Profile Editor** — stage name, bio, social links (Twitter, Farcaster, Audius, Spotify, YouTube, website), wallet address
+- **Setlist Manager** — add songs and videos per event, with platform selection
+- **Card Customizer** — choose accent color and background color with live preview
+- **Preview Link** — "View your public profile" opens their shareable artist page
+- Changes go live on the homepage and artist pages immediately
 
 ### Farcaster Mini App
-- `fc:miniapp` embed meta tag with `launch_frame` action for feed discovery
+- `fc:miniapp` embed meta tag with `launch_frame` action
 - `/.well-known/farcaster.json` manifest with signed account association (FID 19640)
-- Mini App SDK integration — `sdk.actions.ready()` called unconditionally to dismiss splash screen, with `sdk.context` for Farcaster detection and try/catch error handling
-- Stream fallback — "Watch Live on Twitch" button inside Farcaster (nested iframes blocked by Twitch)
-- Native `composeCast` share to `/cocconcertz` channel
-- Splash screen with spec-compliant 200x200px logo and yellow (#FFD600) background
-- Spec-compliant 1024x1024 PNG icon (no alpha) for app store discovery
-- 3:2 aspect ratio embed preview image (1280x853) for feed cards
-- Manifest includes: imageUrl, buttonTitle, primaryCategory (music), tags, heroImageUrl, OG metadata
+- Mini App SDK — `sdk.actions.ready()`, context detection, native `composeCast`
+- Stream fallback for Twitch inside Farcaster frames
+- Spec-compliant icons (1024x1024 PNG), splash screen, embed preview image
 
 ### SEO & Meta
-- Open Graph + Twitter Card meta tags with flyer image
-- `og:site_name` for branding in embeds
-- JSON-LD structured data (Event schema with performers + image)
-- Single H1 for proper heading hierarchy
+- Open Graph + Twitter Card meta tags with ConcertZ #4 artwork
+- JSON-LD structured data (Event schema)
+- Dynamic metadata on artist and event pages
 - robots.txt + sitemap.xml
 - Canonical URL, meta description, theme-color
 
+---
+
 ## Tech Stack
 
-- **HTML/CSS/JS** — single-page static site, no build step
-- **Spatial.io** — metaverse venue embed
-- **Twitch** — live stream embed
-- **YouTube** — performance video embeds
-- **Farcaster Mini App SDK** — via esm.sh CDN
-- **Luma** — event RSVP
-- **Vercel** — deployment with custom headers and CORS
+- **Framework:** Next.js 16 (App Router, TypeScript)
+- **Styling:** Tailwind CSS + CSS custom properties
+- **Auth:** Passcode-based (admin + per-artist codes via env vars, httpOnly cookies)
+- **Database:** Firebase Firestore
+- **Hosting:** Vercel (auto-deploy on push to `main`)
+- **Venue:** Spatial.io (metaverse embed)
+- **Stream:** Twitch (live stream embed)
+- **Video:** YouTube (performance embeds with click-to-play song lists)
+- **Events:** Luma (RSVP links)
+- **Farcaster:** Mini App SDK via esm.sh
 
-## Deploy
+---
 
-Static site on Vercel — auto-deploys on push to `main`. Custom domain via Porkbun.
+## Architecture
 
-## Future Ideas
+```
+src/
+├── app/
+│   ├── page.tsx                    # Public homepage
+│   ├── login/page.tsx              # Passcode login
+│   ├── admin/                      # Admin dashboard
+│   │   ├── page.tsx                # Dashboard (stats, live controls, announcements)
+│   │   ├── events/page.tsx         # Event CRUD
+│   │   ├── invites/page.tsx        # Invite management
+│   │   └── users/page.tsx          # User management
+│   ├── portal/                     # Artist portal
+│   │   ├── page.tsx                # Portal home (quick links, shows)
+│   │   ├── profile/page.tsx        # Edit profile
+│   │   ├── sets/page.tsx           # Manage setlists
+│   │   └── card/page.tsx           # Customize card appearance
+│   ├── artists/[slug]/page.tsx     # Public artist profiles
+│   ├── events/[number]/page.tsx    # Public event pages
+│   └── api/auth/                   # Auth API (passcode verify, cookie mgmt)
+├── components/
+│   ├── home/                       # Homepage sections (14 components)
+│   ├── admin/                      # Admin components
+│   ├── portal/                     # Portal components
+│   ├── layout/                     # Sidebars
+│   └── ui/                         # Primitives (Button, Input, Card, Badge, Modal)
+├── lib/
+│   ├── firebase.ts                 # Firebase client SDK init
+│   ├── firebase-admin.ts           # Firebase Admin SDK init
+│   ├── db.ts                       # Firestore CRUD helpers
+│   ├── storage.ts                  # Firebase Storage helpers
+│   └── types.ts                    # TypeScript types
+├── context/
+│   └── AuthContext.tsx              # Auth provider (role, artistSlug)
+└── middleware.ts                    # Route protection stub
+```
 
-### High Priority
-- [ ] Media gallery — let fans upload/share photos and videos from events
-- [ ] Confetti or visual effect when countdown hits zero / show goes live
-- [ ] Calendar export (.ics download) for upcoming shows
-- [ ] QR code for easy mobile access to the venue
-- [x] Convert logo to 1024x1024 PNG (no alpha) for Farcaster spec compliance
-- [ ] Add Farcaster mini app screenshots (1284x2778px, up to 3) for app store listing
-- [x] Create 3:2 aspect ratio embed image for optimal feed card previews
-- [ ] Farcaster notifications via webhookUrl for show reminders
-- [ ] Google Analytics or Plausible analytics integration
-- [ ] Loading skeleton / shimmer while Spatial embed initializes
+---
 
-### Content & Events
-- [ ] Dynamic event schedule pulled from a CMS (Notion, Airtable, Sanity)
-- [ ] Paragraph newsletter integration for recaps and announcements
-- [ ] Newsletter signup for show alerts
-- [ ] FAQ section for first-time metaverse visitors
-- [ ] Press kit page with logos, bios, and media assets
-- [ ] Testimonials or quotes from attendees
-- [ ] Artist profile pages with full bios, photos, social links, and discography
-- [ ] Setlist pages for each past concert with timestamps
-- [ ] Post-show recap pages with highlights, stats, and community photos
+## Auth System
 
-### Design & UX
-- [ ] Background video or looping visuals behind the hero logo
-- [ ] Particle effects or Three.js animated background (stars, music notes)
-- [ ] Sound toggle — ambient music on the landing page
-- [ ] Animated gradient border on event cards
-- [ ] Custom cursor effect matching the cyberpunk theme
-- [ ] Dark/light mode toggle (light mode with inverted gold-on-white)
-- [ ] Parallax scrolling effects between sections
-- [x] Micro-interactions on CTA buttons (pulsing glow on RSVP)
-- [ ] Animated waveform visualizer in the hero or countdown section
+Passcode-based authentication via httpOnly cookies:
 
-### Web3 & Blockchain
-- [ ] POAP integration (Proof of Attendance Protocol) for attendees
-- [ ] On-chain ticket minting (NFT event passes on Base)
-- [ ] Token-gated access to exclusive content or backstage areas
-- [ ] NFT gallery showcasing event collectibles and artist drops
-- [ ] Tipping / donations via crypto during live shows
-- [ ] Wallet connect for Base / Farcaster users
-- [ ] On-chain event history (transparent attendance records)
-- [ ] Merch purchases with crypto payments
+| Role | How it works |
+|------|-------------|
+| **Admin** | Single passcode in `ADMIN_PASSCODE` env var |
+| **Artist** | Per-artist passcodes in `ARTIST_PASSCODES` env var (JSON: `{"code":"slug"}`) |
 
-### Farcaster Mini App Enhancements
-- [ ] Farcaster notifications for show reminders (webhookUrl + server)
-- [ ] In-app voting / polls during live concerts via composeCast
-- [ ] Leaderboard for most active community members
-- [ ] Share extension — receive casts shared into the app
-- [ ] Deep links to specific artist pages or past shows
-- [ ] Farcaster social graph — show which friends are attending
-- [ ] Farcaster-hosted manifest (redirect to eliminate caching issues)
-- [ ] Mini app analytics via Farcaster Developer Rewards dashboard
-- [ ] Farcaster channel integration — pull recent casts from /cocconcertz into site
+On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-slug` cookies (30-day expiry), and the AuthContext provides `role` and `artistSlug` to the app.
 
-### Platform Expansion
-- [ ] Spotify/Apple Music embeds for featured artists
-- [ ] Discord bot that announces shows and links to the venue
-- [ ] Multiple venue pages for different Spatial spaces
-- [ ] Merch store integration (Shopify, Printful)
-- [ ] Podcast page for recorded DJ sets or interviews
-- [ ] Partner/sponsor showcase section
-- [ ] PWA with push notifications and offline support
-- [ ] Multi-language support (EN, ES, PT)
-- [ ] Telegram or WhatsApp group integration
-- [ ] Referral system — share and earn rewards or early access
+---
 
-### Infrastructure
-- [ ] Migrate to Next.js for dynamic pages and SSR
-- [ ] CMS integration for managing events and artists
-- [ ] Edge functions for geo-targeted content (show local times)
-- [ ] Lighthouse score optimization (target 95+)
-- [ ] Image optimization (WebP conversion, responsive srcset)
-- [ ] Error monitoring (Sentry)
-- [ ] A/B testing on hero CTA variants
-- [ ] CI/CD with GitHub Actions (lint, preview deploys)
-- [ ] Staging environment for testing before production
+## Event Data
+
+### Firestore Collections
+- `events` — name, number, date, venue, rsvpLink, status, flyer/banner URLs, artist assignments, announcement
+- `artists` — stageName, slug, bio, socialLinks, cardCustomization, linkedEvents
+- `sets` — songs, videos, notes per artist per event
+- `invites` — email, role, status
+- `users` — role, email, displayName
+- `stats/visitors` — real-time visitor count
+
+### Concert History
+| # | Date | Artists |
+|---|------|---------|
+| 1 | March 29, 2025 | AttaBotty, Clejan |
+| 2 | October 11, 2025 | Tom Fellenz, Stilo World, AttaBotty |
+| 3 | March 7, 2026 | Duo Do Musica, Joseph Goats, Stilo World |
+| 4 | April 11, 2026 | Joseph Goats, Stilo, Tom Fellenz |
+| 5 | May 9, 2026 | TBA |
+
+---
+
+## Show Day Checklist
+
+1. Go to `cocconcertz.com/admin`
+2. Click **GO LIVE** on the event
+3. Post an announcement: "ConcertZ #4 is LIVE — join now!"
+4. After the show, click **END SHOW**
+5. Clear the announcement
+
+---
 
 ## Local Development
 
 ```bash
-python3 -m http.server 8001
-# Open http://localhost:8001
+# Install dependencies
+npm install
+
+# Set up environment variables
+cp .env.local.example .env.local
+# Fill in Firebase credentials and passcodes
+
+# Run dev server
+npm run dev
+# Open http://localhost:3000
+
+# Seed artists (requires Firebase Admin credentials)
+npx tsx scripts/seed.ts
 ```
+
+### Environment Variables
+
+```
+# Firebase Client SDK
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=
+NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID=
+NEXT_PUBLIC_FIREBASE_APP_ID=
+
+# Firebase Admin SDK
+FIREBASE_ADMIN_PROJECT_ID=
+FIREBASE_ADMIN_CLIENT_EMAIL=
+FIREBASE_ADMIN_PRIVATE_KEY=
+
+# Auth
+ADMIN_PASSCODE=
+ARTIST_PASSCODES={"code1":"artist-slug-1","code2":"artist-slug-2"}
+```
+
+---
+
+## Design System
+
+- **Colors:** Gold (#FFD600), Cyan (#00F0FF), Deep Black (#050505)
+- **Fonts:** Bebas Neue (display), IBM Plex Mono (mono), Satoshi (body)
+- **Textures:** Film grain overlay, scanlines, halftone dot backgrounds
+- **Effects:** Floating animations, glitch overlays, scroll-reveal, pulsing glows
+- **Components:** Cut-corner cards (`clip-path`), cyberpunk badges, status indicators
+
+---
+
+## Future Roadmap
+
+### Phase 2: Live Experience
+- [ ] Live chat (Firebase Realtime Database)
+- [ ] Emoji reactions overlay during shows
+- [ ] Song request queue with upvoting
+- [ ] Farcaster Mini App upgrades (Quick Auth, push notifications, haptics)
+
+### Phase 3: Web3 & Monetization
+- [ ] Wallet connection (wagmi/RainbowKit)
+- [ ] Tipping system (ETH/USDC on Base + off-chain Respect)
+- [ ] 0xSplits revenue distribution (80% artist / 10% treasury / 10% curator)
+- [ ] Attendance POAPs (ERC-1155 on Base)
+- [ ] Coinbase Onramp for fiat users
+
+### Phase 4: Production & Engagement
+- [ ] OBS WebSocket integration (scene switching from admin)
+- [ ] Multistream management (YouTube/Twitch/Kick)
+- [ ] Chat aggregation across platforms
+- [ ] Prediction market voting (WaveWarZ battles)
+- [ ] Reputation system and fan tier badges
+
+### Phase 5: Advanced
+- [ ] NFT tickets via Unlock Protocol
+- [ ] Token-gated VIP features
+- [ ] AI features via OpenRouter (live captions, song ID, moderation)
+- [ ] Synchronized listening rooms
+- [ ] Clip creation and replay system
+
+---
 
 ## License
 
