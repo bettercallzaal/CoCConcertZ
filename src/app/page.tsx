@@ -7,6 +7,7 @@ import HowToJoin from "@/components/home/HowToJoin";
 import UpcomingShows from "@/components/home/UpcomingShows";
 import PastShows from "@/components/home/PastShows";
 import Community from "@/components/home/Community";
+import Team from "@/components/home/Team";
 import FanGallery from "@/components/home/FanGallery";
 import ArtistLineup from "@/components/home/ArtistLineup";
 import ShareSection from "@/components/home/ShareSection";
@@ -21,6 +22,7 @@ import LiveChat from "@/components/home/LiveChat";
 import LiveMode from "@/components/home/LiveMode";
 import ShowRecap from "@/components/home/ShowRecap";
 import EmailSignup from "@/components/home/EmailSignup";
+import VideoHighlights from "@/components/home/VideoHighlights";
 
 export default function Home() {
   return (
@@ -70,9 +72,13 @@ export default function Home() {
           <div className="section-divider" />
           <PastShows />
           <div className="section-divider" />
+          <VideoHighlights />
+          <div className="section-divider" />
           <EmailSignup />
           <div className="section-divider" />
           <Community />
+          <div className="section-divider" />
+          <Team />
           <div className="section-divider" />
           <FanGallery />
         </div>

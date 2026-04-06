@@ -15,6 +15,10 @@ export default function Community() {
           <img src="/images/coc-logo-circle.jpeg" alt="Community of Communities" style={{ height: 40, width: 40, borderRadius: "50%", objectFit: "cover" }} />
           COMMUNITY OF COMMUNITIES
         </a>
+        <a href="https://t.me/cocommunities" target="_blank" rel="noopener" aria-label="Join on Telegram" className="reveal reveal-delay-3">
+          <span style={{ fontSize: 28, lineHeight: 1, display: "flex", alignItems: "center", justifyContent: "center", width: 40, height: 40 }}>✈</span>
+          TELEGRAM
+        </a>
       </div>
     </section>
   );
