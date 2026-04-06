@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useState } from "react";
-import { Button, Input } from "@/components/ui";
+import { Button, Input, FileUpload } from "@/components/ui";
+import { uploadFile } from "@/lib/storage";
 import { updateArtist } from "@/lib/db";
 import type { Artist } from "@/lib/types";
 
@@ -32,6 +33,8 @@ export function CardCustomizer({ artist, onSaved }: CardCustomizerProps) {
 
   const [accentColor, setAccentColor] = useState(cc.primaryColor ?? "#FFD600");
   const [bgColor, setBgColor] = useState(cc.backgroundColor ?? "#0a0a0a");
+  const [bgImage, setBgImage] = useState<string | undefined>(cc.backgroundImage);
+  const [bgImageFile, setBgImageFile] = useState<File | null>(null);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -42,10 +45,18 @@ export function CardCustomizer({ artist, onSaved }: CardCustomizerProps) {
     setSuccess(false);
 
     try {
+      // Upload new background image if selected
+      let resolvedBgImage = bgImage;
+      if (bgImageFile) {
+        resolvedBgImage = await uploadFile(bgImageFile, "coc-concertz/cards");
+        setBgImage(resolvedBgImage);
+      }
+
       const customization: Artist["cardCustomization"] = {
         ...cc,
         primaryColor: accentColor,
         backgroundColor: bgColor,
+        backgroundImage: resolvedBgImage,
       };
 
       await updateArtist(artist.id, { cardCustomization: customization });
@@ -114,6 +125,16 @@ export function CardCustomizer({ artist, onSaved }: CardCustomizerProps) {
             style={{ flex: 1 }}
           />
         </div>
+      </div>
+
+      {/* Background image */}
+      <div>
+        <FileUpload
+          label="Background Image"
+          accept="image/*"
+          currentUrl={bgImage}
+          onUpload={(file) => setBgImageFile(file)}
+        />
       </div>
 
       {/* Feedback */}

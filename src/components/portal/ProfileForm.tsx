@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { createArtist, updateArtist } from "@/lib/db";
+import { uploadFile } from "@/lib/storage";
 import type { Artist } from "@/lib/types";
-import { Input, Textarea, Button } from "@/components/ui";
+import { Input, Textarea, Button, FileUpload } from "@/components/ui";
 
 interface ProfileFormProps {
   artist: Artist | null;
@@ -45,6 +46,10 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
   // Wallet
   const [walletAddress, setWalletAddress] = useState(artist?.walletAddress ?? "");
 
+  // Profile photo
+  const [profilePhoto, setProfilePhoto] = useState<string | undefined>(artist?.profilePhoto);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -65,12 +70,19 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
     try {
       const slug = makeSlug(trimmedName);
 
+      // Upload new photo if selected
+      let resolvedPhoto = profilePhoto;
+      if (photoFile) {
+        resolvedPhoto = await uploadFile(photoFile, "coc-concertz/artists");
+        setProfilePhoto(resolvedPhoto);
+      }
+
       const data: Omit<Artist, "id" | "createdAt"> = {
         userId: artist?.userId ?? artistSlug ?? "passcode-user",
         stageName: trimmedName,
         slug,
         bio: bio.trim(),
-        profilePhoto: artist?.profilePhoto,
+        profilePhoto: resolvedPhoto,
         socialLinks: {
           twitter: twitter.trim() || undefined,
           farcaster: farcaster.trim() || undefined,
@@ -121,6 +133,14 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
             placeholder="Tell the crowd about yourself..."
             style={{ minHeight: "120px" }}
           />
+          <div style={{ maxWidth: "360px" }}>
+            <FileUpload
+              label="Profile Photo"
+              accept="image/*"
+              currentUrl={profilePhoto}
+              onUpload={(file) => setPhotoFile(file)}
+            />
+          </div>
         </div>
       </div>
 
