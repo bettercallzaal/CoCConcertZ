@@ -21,7 +21,7 @@ const HARDCODED_EVENTS = [
     desc: "Next metaverse concert — don't miss it",
     date: "MAY 9, 2026 @ 4PM EST",
     isNextUp: false,
-    rsvpLink: "",
+    rsvpLink: "https://luma.com/dwrdi3gg",
   },
 ];
 
