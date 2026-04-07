@@ -1,5 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { adminDb } from "@/lib/firebase-admin";
+
+export const dynamic = "force-dynamic";
+
+async function getAdminDb() {
+  const { adminDb } = await import("@/lib/firebase-admin");
+  return adminDb;
+}
 
 function getAuth(request: NextRequest) {
   const role = request.cookies.get("coc-role")?.value;
@@ -20,6 +26,8 @@ export async function PUT(request: NextRequest) {
   if (!artistId) {
     return NextResponse.json({ error: "artistId required" }, { status: 400 });
   }
+
+  const adminDb = await getAdminDb();
 
   // Verify artist can only update their own profile
   if (role === "artist") {
@@ -50,6 +58,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Forbidden" }, { status: 403 });
   }
 
+  const adminDb = await getAdminDb();
   const ref = adminDb.collection("artists").doc();
   await ref.set({
     ...data,
