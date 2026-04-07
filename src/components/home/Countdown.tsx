@@ -199,17 +199,40 @@ export default function Countdown() {
           0%, 100% { box-shadow: 0 0 20px rgba(255,214,0,0.2), 0 0 60px rgba(255,214,0,0.1); }
           50% { box-shadow: 0 0 30px rgba(255,214,0,0.4), 0 0 80px rgba(255,214,0,0.2), 0 0 4px rgba(0,240,255,0.2); }
         }
+        .rsvp-btn {
+          display: inline-block;
+          padding: 20px 60px;
+          background: var(--yellow);
+          color: #000;
+          text-decoration: none;
+          font-family: var(--font-display);
+          font-size: 1.5rem;
+          font-weight: 700;
+          letter-spacing: 4px;
+          text-transform: uppercase;
+          margin-top: 40px;
+          clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+          transition: all 0.25s ease;
+          animation: rsvp-glow 1.5s ease-in-out infinite;
+        }
+        .rsvp-btn:hover {
+          background: var(--cyan);
+          transform: translate(-3px, -3px) scale(1.03);
+          box-shadow: 6px 6px 0 var(--yellow);
+        }
         @media (max-width: 768px) {
           .next-show { padding: 40px 16px; }
           .countdown { gap: 12px; }
           .countdown-item .number { font-size: 2rem; }
           .countdown-item { min-width: 60px; }
           .countdown-separator { font-size: 1.8rem; }
+          .rsvp-btn { padding: 16px 40px; font-size: 1.2rem; letter-spacing: 3px; margin-top: 32px; }
         }
         @media (max-width: 380px) {
           .countdown { gap: 8px; }
           .countdown-item .number { font-size: 1.5rem; }
           .countdown-separator { font-size: 1.4rem; }
+          .rsvp-btn { padding: 14px 32px; font-size: 1rem; letter-spacing: 2px; }
         }
       `}</style>
 
@@ -225,27 +248,32 @@ export default function Countdown() {
       {isLive ? (
         <a className="live-cta" href="#venue">JOIN LIVE NOW</a>
       ) : (
-        <div className="countdown">
-          <div className="countdown-item">
-            <span className="number">{timeLeft.d}</span>
-            <span className="label">Days</span>
+        <>
+          <div className="countdown">
+            <div className="countdown-item">
+              <span className="number">{timeLeft.d}</span>
+              <span className="label">Days</span>
+            </div>
+            <span className="countdown-separator">:</span>
+            <div className="countdown-item">
+              <span className="number">{timeLeft.h}</span>
+              <span className="label">Hours</span>
+            </div>
+            <span className="countdown-separator">:</span>
+            <div className="countdown-item">
+              <span className="number">{timeLeft.m}</span>
+              <span className="label">Min</span>
+            </div>
+            <span className="countdown-separator">:</span>
+            <div className="countdown-item">
+              <span className="number">{timeLeft.s}</span>
+              <span className="label">Sec</span>
+            </div>
           </div>
-          <span className="countdown-separator">:</span>
-          <div className="countdown-item">
-            <span className="number">{timeLeft.h}</span>
-            <span className="label">Hours</span>
-          </div>
-          <span className="countdown-separator">:</span>
-          <div className="countdown-item">
-            <span className="number">{timeLeft.m}</span>
-            <span className="label">Min</span>
-          </div>
-          <span className="countdown-separator">:</span>
-          <div className="countdown-item">
-            <span className="number">{timeLeft.s}</span>
-            <span className="label">Sec</span>
-          </div>
-        </div>
+          <a className="rsvp-btn" href="https://luma.com/0ksej24k" target="_blank" rel="noopener">
+            RSVP NOW — FREE
+          </a>
+        </>
       )}
     </section>
   );
