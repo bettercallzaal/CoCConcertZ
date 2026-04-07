@@ -12,6 +12,7 @@ const HARDCODED_EVENTS = [
     desc: "Live in StiloWorld — Joseph Goats, Stilo, Tom Fellenz",
     date: "APR 11, 2026 @ 4PM EST",
     isNextUp: true,
+    rsvpLink: "https://luma.com/0ksej24k",
   },
   {
     id: "hc-2",
@@ -20,6 +21,7 @@ const HARDCODED_EVENTS = [
     desc: "Next metaverse concert — don't miss it",
     date: "MAY 9, 2026 @ 4PM EST",
     isNextUp: false,
+    rsvpLink: "",
   },
 ];
 
@@ -57,34 +59,46 @@ export default function UpcomingShows() {
       <h2>UPCOMING SHOWS</h2>
       <ul className="schedule-list">
         {useFirestore
-          ? events.map((event, i) => (
-              <li
-                key={event.id}
-                className={`reveal reveal-delay-${i + 1}${i === 0 ? " next-up" : ""}`}
-              >
-                <div className="event-info">
-                  <span className="event-tag">
-                    {event.status === "live" ? "LIVE NOW" : i === 0 ? "Next Up" : "Announced"}
-                  </span>
-                  <span className="event-name">+COC CONCERTZ #{event.number}</span>
-                  <span className="event-desc">{event.description}</span>
-                </div>
-                <span className="event-date">{formatEventDate(event.date)}</span>
-              </li>
-            ))
-          : HARDCODED_EVENTS.map((event) => (
-              <li
-                key={event.id}
-                className={`reveal reveal-delay-${event.isNextUp ? "1" : "2"}${event.isNextUp ? " next-up" : ""}`}
-              >
-                <div className="event-info">
-                  <span className="event-tag">{event.tag}</span>
-                  <span className="event-name">{event.name}</span>
-                  <span className="event-desc">{event.desc}</span>
-                </div>
-                <span className="event-date">{event.date}</span>
-              </li>
-            ))}
+          ? events.map((event, i) => {
+              const inner = (
+                <>
+                  <div className="event-info">
+                    <span className="event-tag">
+                      {event.status === "live" ? "LIVE NOW" : i === 0 ? "Next Up" : "Announced"}
+                    </span>
+                    <span className="event-name">+COC CONCERTZ #{event.number}</span>
+                    <span className="event-desc">{event.description}</span>
+                  </div>
+                  <span className="event-date">{formatEventDate(event.date)}</span>
+                </>
+              );
+              return event.rsvpLink ? (
+                <li key={event.id} className={`reveal reveal-delay-${i + 1}${i === 0 ? " next-up" : ""}`}>
+                  <a href={event.rsvpLink} target="_blank" rel="noopener" className="event-link">{inner}</a>
+                </li>
+              ) : (
+                <li key={event.id} className={`reveal reveal-delay-${i + 1}${i === 0 ? " next-up" : ""}`}>{inner}</li>
+              );
+            })
+          : HARDCODED_EVENTS.map((event) => {
+              const inner = (
+                <>
+                  <div className="event-info">
+                    <span className="event-tag">{event.tag}</span>
+                    <span className="event-name">{event.name}</span>
+                    <span className="event-desc">{event.desc}</span>
+                  </div>
+                  <span className="event-date">{event.date}</span>
+                </>
+              );
+              return event.rsvpLink ? (
+                <li key={event.id} className={`reveal reveal-delay-${event.isNextUp ? "1" : "2"}${event.isNextUp ? " next-up" : ""}`}>
+                  <a href={event.rsvpLink} target="_blank" rel="noopener" className="event-link">{inner}</a>
+                </li>
+              ) : (
+                <li key={event.id} className={`reveal reveal-delay-${event.isNextUp ? "1" : "2"}${event.isNextUp ? " next-up" : ""}`}>{inner}</li>
+              );
+            })}
       </ul>
     </section>
   );

@@ -175,7 +175,17 @@ body::after {
   background: var(--yellow);
   transition: width 0.2s;
 }
-.schedule-list li:hover { border-color: var(--yellow); }
+.schedule-list li:hover { border-color: var(--yellow); cursor: pointer; }
+.event-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  width: 100%;
+}
 .schedule-list li:hover::before { width: 5px; }
 .schedule-list li.next-up::before {
   background: var(--cyan);
