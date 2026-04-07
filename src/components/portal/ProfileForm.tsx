@@ -2,7 +2,6 @@
 
 import React, { useState } from "react";
 import { useAuth } from "@/context/AuthContext";
-import { createArtist, updateArtist } from "@/lib/db";
 import { uploadFile } from "@/lib/storage";
 import type { Artist } from "@/lib/types";
 import { Input, Textarea, Button, FileUpload } from "@/components/ui";
@@ -97,10 +96,21 @@ export function ProfileForm({ artist, onSaved }: ProfileFormProps) {
       };
 
       if (artist) {
-        await updateArtist(artist.id, data);
+        const res = await fetch("/api/artists", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ artistId: artist.id, ...data }),
+        });
+        if (!res.ok) throw new Error(await res.text());
         onSaved?.({ ...artist, ...data });
       } else {
-        const created = await createArtist(data);
+        const res = await fetch("/api/artists", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        if (!res.ok) throw new Error(await res.text());
+        const created = await res.json();
         onSaved?.(created);
       }
 
