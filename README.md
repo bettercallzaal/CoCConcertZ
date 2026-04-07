@@ -61,6 +61,13 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **Subscriber Management** — view recent signups, export full list as CSV
 - **Seed Artists** — one-click button to pre-populate artist profiles
 
+### API Routes
+- `/api/auth` — passcode verification, cookie management, logout
+- `/api/artists` — artist profile create/update via Firebase Admin SDK (auth-verified)
+- `/api/upload` — Cloudinary image upload
+- `/api/og/artist` — dynamic OG image generation for artist social cards
+- `/api/og/countdown` — countdown social card generation
+
 ### Artist Portal (`/portal`)
 - Per-artist passcode login (unique 5-letter code per artist)
 - **Profile Editor** — stage name, bio, profile photo upload (Cloudinary), social links (Twitter, Farcaster, Audius, Spotify, YouTube, website), wallet address
@@ -80,7 +87,7 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - Open Graph + Twitter Card meta tags with ConcertZ #4 artwork
 - JSON-LD structured data (Event schema)
 - Dynamic metadata on artist and event pages
-- robots.txt + sitemap.xml
+- robots.txt + dynamic sitemap.xml (auto-generates entries for all artists and events)
 - Canonical URL, meta description, theme-color
 
 ---
@@ -90,7 +97,7 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **Framework:** Next.js 16 (App Router, TypeScript)
 - **Styling:** Tailwind CSS + CSS custom properties
 - **Auth:** Passcode-based (admin + per-artist codes via env vars, httpOnly cookies)
-- **Database:** Firebase Firestore (real-time via onSnapshot)
+- **Database:** Firebase Firestore (real-time via onSnapshot, admin SDK for server components)
 - **Image Storage:** Cloudinary (25GB free tier)
 - **Hosting:** Vercel (auto-deploy on push to `main`)
 - **OG Images:** Dynamic generation via Next.js `ImageResponse` (Edge runtime)
@@ -121,8 +128,10 @@ src/
 │   │   └── card/page.tsx           # Customize card appearance
 │   ├── artists/[slug]/page.tsx     # Public artist profiles
 │   ├── events/[number]/page.tsx    # Public event pages
+│   ├── sitemap.ts                  # Dynamic sitemap (artists + events)
 │   └── api/
 │       ├── auth/                   # Auth API (passcode verify, cookie mgmt)
+│       ├── artists/                # Artist profile CRUD (admin SDK)
 │       ├── upload/                 # Cloudinary image upload endpoint
 │       └── og/                     # Dynamic OG image generation
 │           ├── countdown/          # Countdown social card
@@ -136,7 +145,8 @@ src/
 ├── lib/
 │   ├── firebase.ts                 # Firebase client SDK init
 │   ├── firebase-admin.ts           # Firebase Admin SDK init
-│   ├── db.ts                       # Firestore CRUD helpers
+│   ├── db.ts                       # Firestore CRUD helpers (client-side)
+│   ├── db-server.ts                # Firestore helpers (admin SDK, server-side)
 │   ├── storage.ts                  # Firebase Storage helpers
 │   └── types.ts                    # TypeScript types
 ├── context/
@@ -156,6 +166,8 @@ Passcode-based authentication via httpOnly cookies:
 | **Artist** | Per-artist passcodes in `ARTIST_PASSCODES` env var (JSON: `{"code":"slug"}`) |
 
 On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-slug` cookies (30-day expiry), and the AuthContext provides `role` and `artistSlug` to the app.
+
+**Data access pattern:** Client components use the Firebase client SDK (`db.ts`) for real-time reads via `onSnapshot`. Server components and API routes use the Firebase Admin SDK (`db-server.ts`) for server-side data fetching — this is required because the client SDK cannot authenticate in Vercel serverless functions. Profile saves from the artist portal go through `/api/artists` (admin SDK) rather than writing directly to Firestore.
 
 ---
 
