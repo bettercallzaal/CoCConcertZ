@@ -39,7 +39,7 @@ const CONCERT4_FALLBACK_ARTISTS: Artist[] = [
     name: "JOSEPH GOATS",
     role: "Performer",
     bio: "Community artist from The ZAO, performing live at COC ConcertZ #4.",
-    link: { url: "https://www.thezao.com/community/josephgoats", label: "Joseph Goats on The ZAO" },
+    link: { url: "https://www.thezao.com/community/joseph-goats", label: "Joseph Goats on The ZAO" },
   },
   {
     name: "STILO",
@@ -186,7 +186,7 @@ const HARDCODED_CONCERTS: Concert[] = [
         name: "JOSEPH GOATS",
         role: "Headline Act",
         bio: "Live set from 4:45 – 5:15 PM EST.",
-        link: { url: "https://www.thezao.com/community/josephgoats", label: "Joseph Goats on The ZAO" },
+        link: { url: "https://www.thezao.com/community/joseph-goats", label: "Joseph Goats on The ZAO" },
       },
       {
         name: "STILO WORLD",
@@ -214,7 +214,7 @@ function SocialLinks({ links }: { links: FirestoreArtist["socialLinks"] }) {
   };
 
   return (
-    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10 }}>
+    <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 10, position: "relative", zIndex: 2 }}>
       {entries.map(([platform, url]) => (
         <a
           key={platform}
