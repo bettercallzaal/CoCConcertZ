@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { config as siteConfig } from "../../../../concertz.config";
+import { config as siteConfig } from "../../../../../concertz.config";
 
 const TEMPLATES: Record<string, string> = {
   "show-announcement": `You are writing a show announcement for an upcoming virtual concert.
