@@ -2,7 +2,7 @@ export const config = {
   site: {
     name: "COC Concertz",
     tagline: "Virtual Stages. Real Music.",
-    description: "COC Concertz hosts free live concerts inside the metaverse, giving fans a front-row experience from anywhere in the world.",
+    description: "COC Concertz hosts free live concertz inside the metaverse, giving fans a front-row experience from anywhere in the world.",
     url: "https://cocconcertz.com",
   },
   venue: {
