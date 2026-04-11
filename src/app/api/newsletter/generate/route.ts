@@ -54,14 +54,16 @@ async function callLLM(
   // Try MiniMax first
   if (minimaxKey) {
     try {
-      const res = await fetch("https://api.minimax.io/v1/chat/completions", {
+      const minimaxUrl = process.env.MINIMAX_API_URL || "https://api.minimax.io/v1/chat/completions";
+      const minimaxModel = process.env.MINIMAX_MODEL || "MiniMax-Text-01";
+      const res = await fetch(minimaxUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${minimaxKey}`,
         },
         body: JSON.stringify({
-          model: "MiniMax-Text-01",
+          model: minimaxModel,
           messages: [
             { role: "system", content: systemPrompt },
             { role: "user", content: userPrompt },
