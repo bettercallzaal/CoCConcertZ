@@ -21,4 +21,19 @@ export const config = {
   branding: {
     colors: { yellow: "#FFD600", cyan: "#00F0FF", black: "#050505", card: "#0a0a0a", border: "#1a1a1a" },
   },
+  newsletter: {
+    brands: {
+      coc: {
+        name: "COC Concertz",
+        voice: "You are a content writer for COC Concertz — a virtual concert series hosted inside the metaverse by the Community of Communities. The vibe is cyberpunk, hype, and community-first. 'Virtual Stages. Real Music.' Use energetic but not cheesy language. Reference the metaverse venue, the live chat, the energy of the virtual crowd.",
+        signature: "- COC Concertz Team",
+      },
+      zao: {
+        name: "The ZAO",
+        voice: "You are writing for The ZAO — an impact organization bringing profit margins, data, and IP rights back to independent artists. Write in lowercase casual with proper nouns capitalized. First person ('I'). No emojis, no hashtags. Momentum-focused: 'showed up', 'locked in', 'the quiet work compounds'. Short paragraphs.",
+        signature: "- BetterCallZaal on behalf of the ZABAL Team",
+      },
+    },
+    farcasterChannel: "cocconcertz",
+  },
 } as const;
