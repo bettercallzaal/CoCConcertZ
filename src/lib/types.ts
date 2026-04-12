@@ -93,3 +93,49 @@ export interface Invite {
   createdAt: Date;
   acceptedAt?: Date;
 }
+
+// Archive types
+export type UploadType = "simple" | "atomic_asset" | "show_bundle";
+export type ArchiveFileType = "image" | "video" | "audio" | "document";
+
+export interface UDLLicense {
+  preset: "community-share" | "collectible" | "premium" | "open";
+  commercialUse?: boolean;
+  derivativeWorks?: boolean;
+  attribution?: boolean;
+}
+
+export interface ArchiveUpload {
+  id: string;
+  arweave_tx_id: string;
+  upload_type: UploadType;
+  file_type: ArchiveFileType;
+  file_size_bytes: number;
+  title: string;
+  description: string;
+  tags: string[];
+  show_id: string | null;
+  artist_slugs: string[];
+  uploaded_by_wallet: string;
+  udl_license: UDLLicense | null;
+  manifest_children: string[] | null;
+  created_at: string;
+}
+
+export interface ArchiveFund {
+  id: string;
+  wallet_address: string;
+  balance_ar: number;
+  total_spent_ar: number;
+  total_uploads: number;
+  last_topped_up: string;
+}
+
+export interface TokenGateConfig {
+  id: string;
+  token_address: string;
+  chain_id: number;
+  min_balance: string;
+  gate_type: string;
+  active: boolean;
+}
