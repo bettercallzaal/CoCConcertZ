@@ -36,4 +36,18 @@ export const config = {
     },
     farcasterChannel: "cocconcertz",
   },
+  archive: {
+    arweaveGateway: "https://arweave.net",
+    tokenGate: {
+      tokenAddress: process.env.ZABAL_TOKEN_ADDRESS || "",
+      chainId: 8453,
+      minBalance: process.env.ZABAL_MIN_BALANCE || "100000000",
+    },
+    udlPresets: {
+      "community-share": { commercialUse: false, derivativeWorks: true, attribution: true },
+      collectible: { commercialUse: false, derivativeWorks: false, attribution: true },
+      premium: { commercialUse: true, derivativeWorks: false, attribution: true },
+      open: { commercialUse: true, derivativeWorks: true, attribution: false },
+    },
+  },
 } as const;
