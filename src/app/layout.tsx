@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Bebas_Neue, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/context/AuthContext";
+import { WalletProvider } from "@/context/WalletContext";
 
 const bebasNeue = Bebas_Neue({
   weight: "400",
@@ -48,7 +49,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={`${bebasNeue.variable} ${ibmPlexMono.variable} font-sans`} style={{ fontFamily: "'Satoshi', sans-serif" }}>
         <div className="halftone-bg" />
-        <AuthProvider>{children}</AuthProvider>
+        <WalletProvider>
+          <AuthProvider>{children}</AuthProvider>
+        </WalletProvider>
       </body>
     </html>
   );
