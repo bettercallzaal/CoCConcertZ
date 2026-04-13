@@ -293,7 +293,7 @@ export function TemplateInputs({
       return topic.trim() !== "";
     }
     if (template === "youtube-description") {
-      return selectedEventId !== "" && transcript.trim() !== "";
+      return transcript.trim() !== "";
     }
     if (template === "custom") {
       return customPrompt.trim() !== "";
@@ -337,15 +337,18 @@ export function TemplateInputs({
     }
 
     if (template === "youtube-description") {
-      const event = events.find((e) => e.id === selectedEventId);
-      if (!event) return;
-      const eventArtistIds = event.artists.map((ea) => ea.artistId);
-      const mentionHandles = buildMentionHandles(artists, eventArtistIds);
-      const eventContext = formatEventContext(event, artists);
+      const event = selectedEventId ? events.find((e) => e.id === selectedEventId) : null;
+      let eventContext: string | undefined;
+      let mentionHandles: Record<string, Record<string, string>> = {};
+      let allArtistContext: string | undefined;
 
-      // Build all artist context for the selected event
-      const eventArtists = artists.filter((a) => eventArtistIds.includes(a.id));
-      const allArtistContext = eventArtists.map((a) => formatArtistContext(a)).join("\n\n---\n\n");
+      if (event) {
+        const eventArtistIds = event.artists.map((ea) => ea.artistId);
+        mentionHandles = buildMentionHandles(artists, eventArtistIds);
+        eventContext = formatEventContext(event, artists);
+        const eventArtists = artists.filter((a) => eventArtistIds.includes(a.id));
+        allArtistContext = eventArtists.map((a) => formatArtistContext(a)).join("\n\n---\n\n");
+      }
 
       const parts: string[] = [];
       parts.push(`Segment type: ${segmentType}`);
@@ -462,7 +465,7 @@ export function TemplateInputs({
       {template === "youtube-description" && (
         <>
           <div style={fieldWrapStyle}>
-            <label style={labelStyle}>Event</label>
+            <label style={labelStyle}>Event<span style={optionalBadgeStyle}>(optional)</span></label>
             <FocusSelect value={selectedEventId} onChange={setSelectedEventId}>
               <option value="">— Select a show —</option>
               {events.map((event) => (
