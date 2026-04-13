@@ -5,7 +5,7 @@ import type { Event, Artist } from "@/lib/types";
 import { Button } from "@/components/ui";
 
 interface Props {
-  template: "show-announcement" | "artist-spotlight" | "show-recap" | "community-update" | "custom";
+  template: "show-announcement" | "artist-spotlight" | "show-recap" | "community-update" | "youtube-description" | "custom";
   events: Event[];
   artists: Artist[];
   generating: boolean;
@@ -260,6 +260,9 @@ export function TemplateInputs({
   const [topic, setTopic] = useState<string>("");
   const [keyPoints, setKeyPoints] = useState<string>("");
   const [customPrompt, setCustomPrompt] = useState<string>("");
+  const [transcript, setTranscript] = useState<string>("");
+  const [videoDuration, setVideoDuration] = useState<string>("");
+  const [segmentType, setSegmentType] = useState<string>("full-show");
 
   // ---------------------------------------------------------------------------
   // Derived data
@@ -288,6 +291,9 @@ export function TemplateInputs({
     }
     if (template === "community-update") {
       return topic.trim() !== "";
+    }
+    if (template === "youtube-description") {
+      return selectedEventId !== "" && transcript.trim() !== "";
     }
     if (template === "custom") {
       return customPrompt.trim() !== "";
@@ -327,6 +333,32 @@ export function TemplateInputs({
       const parts: string[] = [`Topic: ${topic.trim()}`];
       if (keyPoints.trim()) parts.push(`Key Points:\n${keyPoints.trim()}`);
       onGenerate({ customPrompt: parts.join("\n\n") });
+      return;
+    }
+
+    if (template === "youtube-description") {
+      const event = events.find((e) => e.id === selectedEventId);
+      if (!event) return;
+      const eventArtistIds = event.artists.map((ea) => ea.artistId);
+      const mentionHandles = buildMentionHandles(artists, eventArtistIds);
+      const eventContext = formatEventContext(event, artists);
+
+      // Build all artist context for the selected event
+      const eventArtists = artists.filter((a) => eventArtistIds.includes(a.id));
+      const allArtistContext = eventArtists.map((a) => formatArtistContext(a)).join("\n\n---\n\n");
+
+      const parts: string[] = [];
+      parts.push(`Segment type: ${segmentType}`);
+      if (videoDuration.trim()) parts.push(`Video duration: ${videoDuration.trim()}`);
+      parts.push(`\nTRANSCRIPT:\n${transcript.trim()}`);
+      if (notes.trim()) parts.push(`\nAdditional notes: ${notes.trim()}`);
+
+      onGenerate({
+        eventContext,
+        artistContext: allArtistContext,
+        mentionHandles,
+        customPrompt: parts.join("\n"),
+      });
       return;
     }
 
@@ -421,6 +453,67 @@ export function TemplateInputs({
               value={keyPoints}
               onChange={setKeyPoints}
               placeholder="List the main points to cover, one per line…"
+            />
+          </div>
+        </>
+      )}
+
+      {/* YouTube Description */}
+      {template === "youtube-description" && (
+        <>
+          <div style={fieldWrapStyle}>
+            <label style={labelStyle}>Event</label>
+            <FocusSelect value={selectedEventId} onChange={setSelectedEventId}>
+              <option value="">— Select a show —</option>
+              {events.map((event) => (
+                <option key={event.id} value={event.id}>
+                  ConcertZ #{event.number} — {event.name}
+                </option>
+              ))}
+            </FocusSelect>
+          </div>
+
+          <div style={fieldWrapStyle}>
+            <label style={labelStyle}>Segment Type</label>
+            <FocusSelect value={segmentType} onChange={setSegmentType}>
+              <option value="full-show">Full Show</option>
+              <option value="artist-set">Artist Set</option>
+              <option value="intro">Intro</option>
+              <option value="outro">Outro</option>
+            </FocusSelect>
+          </div>
+
+          <div style={fieldWrapStyle}>
+            <label style={labelStyle}>
+              Video Duration
+              <span style={optionalBadgeStyle}>(e.g. 1:47:30)</span>
+            </label>
+            <FocusInput
+              value={videoDuration}
+              onChange={setVideoDuration}
+              placeholder="1:47:30"
+            />
+          </div>
+
+          <div style={fieldWrapStyle}>
+            <label style={labelStyle}>Transcript</label>
+            <FocusTextarea
+              value={transcript}
+              onChange={setTranscript}
+              placeholder="Paste the show transcript here..."
+              style={{ minHeight: "200px" }}
+            />
+          </div>
+
+          <div style={fieldWrapStyle}>
+            <label style={labelStyle}>
+              Notes
+              <span style={optionalBadgeStyle}>(optional)</span>
+            </label>
+            <FocusTextarea
+              value={notes}
+              onChange={setNotes}
+              placeholder="Any extra context — song titles, corrections, highlights to emphasize..."
             />
           </div>
         </>

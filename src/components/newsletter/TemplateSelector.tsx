@@ -7,6 +7,7 @@ export type Template =
   | "artist-spotlight"
   | "show-recap"
   | "community-update"
+  | "youtube-description"
   | "custom";
 
 interface TemplateSelectorProps {
@@ -45,6 +46,12 @@ const TEMPLATES: TemplateDefinition[] = [
     label: "Community Update",
     description: "News, milestones, announcements",
     icon: "👥",
+  },
+  {
+    id: "youtube-description",
+    label: "YouTube Description",
+    description: "SEO-optimized description + timestamps + tags from transcript",
+    icon: "▶",
   },
   {
     id: "custom",

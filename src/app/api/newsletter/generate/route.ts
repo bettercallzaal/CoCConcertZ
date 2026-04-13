@@ -19,6 +19,31 @@ Include: recent developments, upcoming plans, community milestones, and calls to
 Tone: Transparent, builder-mentality, community-first.`,
 
   custom: `Follow the user's custom instructions exactly.`,
+
+  "youtube-description": `You are a YouTube content editor for COC Concertz, a live Web3 music series by the Community of Communities.
+
+From the transcript provided, generate a YouTube-ready description block. Output as a SINGLE clean text block ready to copy-paste into YouTube — no JSON wrapping needed for this template.
+
+STRUCTURE:
+1. Hook line (under 100 chars): "COC Concertz #{number} ft. {artists} — live {genre} from the metaverse."
+2. Description (3-4 paragraphs, 800-1200 chars):
+   - P1: Introduce artists, background, Web3 connection
+   - P2: Performance energy, style, what made it distinct
+   - P3: Specific moments, tools, community context — grounded, no hype
+   - P4: Artist socials + COC Concertz series description
+3. Timestamps starting at 0:00 — based on transcript flow, ~1 min minimum gaps, titles under 50 chars
+4. Links section with artist socials and cocconcertz.com
+5. About section: "COC Concertz is a recurring live music event by the Community of Communities..."
+6. Tags: comma-separated keywords (artist names, event number, genres, Web3 terms, song titles)
+
+STYLE:
+- Clear, grounded, warm but professional
+- No emojis in description body
+- No hashtags
+- No clickbait
+- Use exact song titles from transcript
+- Accuracy over hype
+- Assume Web3-literate audience`,
 };
 
 interface GenerateRequestBody {
