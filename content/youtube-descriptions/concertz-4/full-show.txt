@@ -1,10 +1,10 @@
 COC Concertz #4 ft. Joseph Goats, Tom Fellenz, Stilo World — live music from the metaverse
 
-COC Concertz #4 brings together three musicians deep in the Web3 music space — Joseph Goats, Tom Fellenz, and Stilo World. All three are in active transition: rebranding, refocusing, and sharpening how they show up as artists and builders. Joseph Goats is a Venezuelan singer-songwriter who recently rebranded from Jose, performing original Spanish-language songs rooted in indigenous community work with the Waha people of the Venezuelan Amazon. Tom Fellenz is a guitarist and composer who returned to acoustic playing through metaverse stages, now focused on vineyard performances and consulting at OV Systems. Stilo World is a Caribbean-influenced hip-hop and R&B artist based in Los Angeles who just released his debut album Ambition and has hosted 150+ consecutive weekly VR concerts.
+COC Concertz #4 brings together three musicians deep in the Web3 music space — Joseph Goats, Tom Fellenz, and Stilo World. All three are in active transition: rebranding, refocusing, and sharpening how they show up as artists and builders. Joseph Goats is a Venezuelan singer-songwriter who recently rebranded from Jose, performing original Spanish-language songs rooted in indigenous community work with the Huöttöja people of the Venezuelan Amazon. Tom Fellenz is a guitarist and composer who returned to acoustic playing through metaverse stages, now focused on vineyard performances and consulting at OV Systems. Stilo World is a Caribbean-influenced hip-hop and R&B artist based in Los Angeles who just released his debut album Ambition and has hosted 150+ consecutive weekly VR concerts.
 
-Joseph Goats performs three songs live from Caracas on a rainy day with the Venezuelan Amazon rainforest as his backdrop — No Winter Slam, Kama, and Compass (Brujula). Between songs, he shares a Giveth fundraiser for the Waha community seeking $300 for a solar panel and fridge. Tom Fellenz plays five acoustic originals — Setting the Scene, From Above, Another Page Turned, In Quieter Times, and A Tale of Fall — each carrying years of personal reflection and a journey back to the guitar catalyzed by a technical failure at EasyCorner in December 2021 and the Metaverse Music Festival in March 2022. Stilo World presents the full Ambition album as a recorded live performance while watching from VR with the audience, covering Together, Hero, I Want You to Stay, Paradise, Mama, Bonita, Save Me, and Nothing to Lose.
+Joseph Goats performs three songs live from Caracas on a rainy day with the Venezuelan Amazon rainforest as his backdrop — No Winters Land, Calma, and Compass (Brujula). Between songs, he shares a Giveth fundraiser for the Huöttöja community seeking $300 for a solar panel and fridge. Tom Fellenz plays five acoustic originals — Setting the Scene, From Above, Another Page Turned, In Quieter Times, and A Tale of Fall — each carrying years of personal reflection and a journey back to the guitar catalyzed by a technical failure at EasyCorner in December 2021 and the Metaverse Music Festival in March 2022. Stilo World presents the full Ambition album as a recorded live performance while watching from VR with the audience, covering Together, Hero, I Want You to Stay, Paradise, Mama, Bonita, Save Me, and Nothing to Lose.
 
-The show runs across X Space, Twitch, TikTok, and a Spatial.io metaverse venue simultaneously, with discussion throughout touching on vibe coding, the COC artist portal, Wave Wars benefit battles, monetization tools for independent musicians, and the broader question of how Web3 can support long-term artist sustainability. Co-hosted with Th Revolution from the Community of Communities.
+The show runs across X Space, Twitch, TikTok, and a Spatial.io metaverse venue simultaneously, with discussion throughout touching on vibe coding, the COC artist portal, WaveWarZ benefit battles, monetization tools for independent musicians, and the broader question of how Web3 can support long-term artist sustainability. Co-hosted with Th Revolution from the Community of Communities.
 
 0:00 Welcome and Host Intro
 0:27 Tom Fellenz Introduction and Rebrand
@@ -14,11 +14,11 @@ The show runs across X Space, Twitch, TikTok, and a Spatial.io metaverse venue s
 10:00 Building as a Musician in Web3
 14:40 Duo Crowdfunding Milestone
 15:25 Joseph Goats Set Begins
-17:34 Waha Community Fundraiser Context
-19:00 No Winter Slam
-24:00 Wave Wars Benefit Battle Discussion
+17:34 Huöttöja Community Fundraiser Context
+19:00 No Winters Land
+24:00 WaveWarZ Benefit Battle Discussion
 25:30 Finding Your Musical Note
-28:00 Kama
+28:00 Calma
 35:30 Compass (Brujula)
 40:00 Joseph Goats Closing and Earth Day
 42:30 Tom Fellenz Set Begins
@@ -52,4 +52,4 @@ Stilo World: https://stiloworld.com
 
 COC Concertz is a recurring live music event by the Community of Communities, bringing musicians, builders, and listeners together across livestream platforms and metaverse environments. Virtual Stages. Real Music.
 
-COC Concertz, COC Concertz 4, Community of Communities, Web3 music, live music, metaverse concert, Joseph Goats, Tom Fellenz, Stilo World, acoustic guitar, hip-hop, R&B, Venezuelan music, Waha community, Giveth, Wave Wars, Decentraland, vibe coding, DAO music, creator economy, rebrand, social impact music, No Winter Slam, Kama, Compass, Brujula, Setting the Scene, From Above, Another Page Turned, In Quieter Times, A Tale of Fall, Ambition album, Together, Hero, Paradise, Bonita, Save Me, Nothing to Lose, Spatial.io, on-chain music
+COC Concertz, COC Concertz 4, Community of Communities, Web3 music, live music, metaverse concert, Joseph Goats, Tom Fellenz, Stilo World, acoustic guitar, hip-hop, R&B, Venezuelan music, Huöttöja community, Giveth, WaveWarZ, Decentraland, vibe coding, DAO music, creator economy, rebrand, social impact music, No Winters Land, Calma, Compass, Brujula, Setting the Scene, From Above, Another Page Turned, In Quieter Times, A Tale of Fall, Ambition album, Together, Hero, Paradise, Bonita, Save Me, Nothing to Lose, Spatial.io, on-chain music
