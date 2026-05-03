@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 
 const upcomingShows = [
   { name: "+COC CONCERTZ #4", date: "2026-04-11T20:00:00Z", display: "April 11, 2026 \u00b7 4:00 PM EST" },
-  { name: "+COC CONCERTZ #5: A DAY IN THE LIFE OF GODCLOUD", date: "2026-05-09T20:00:00Z", display: "May 9, 2026 \u00b7 4:00 PM EST" },
+  { name: "+COC CONCERTZ #5: A METAVERSE MUSICAL EXPERIENCE", date: "2026-05-09T20:00:00Z", display: "May 9, 2026 \u00b7 4:00 PM EST" },
 ];
 
 function getNextShow() {

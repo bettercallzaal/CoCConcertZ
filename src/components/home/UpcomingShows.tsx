@@ -17,8 +17,8 @@ const HARDCODED_EVENTS = [
   {
     id: "hc-2",
     tag: "Next Up",
-    name: "+COC CONCERTZ #5: A DAY IN THE LIFE OF GODCLOUD",
-    desc: "GodCloud takes over StiloWorld - Web3's first finger drummer, live",
+    name: "+COC CONCERTZ #5: A METAVERSE MUSICAL EXPERIENCE",
+    desc: "GodCloud headlines a metaverse musical experience in Stilo World",
     date: "MAY 9, 2026 @ 4PM EST",
     isNextUp: true,
     rsvpLink: "https://luma.com/dwrdi3gg",

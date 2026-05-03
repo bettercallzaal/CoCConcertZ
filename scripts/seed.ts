@@ -64,13 +64,13 @@ const events = [
     artists: [],
   },
   {
-    name: "+COC Concertz #5: A Day in the Life of GodCloud",
+    name: "+COC ConcertZ #5: A Metaverse Musical Experience",
     number: 5,
     date: new Date("2026-05-09T20:00:00Z"),
     description:
-      "GODCLOUD - Web3's first finger drummer, multi-instrumentalist, and CTO of Malaspalabras Records (George Lopez x Andy Vargas of Santana) - takes over StiloWorld for one night. Trip-hop, urban sci-fi, and a behind-the-scenes Q&A on building onchain music careers.",
+      "GODCLOUD - Web3's first finger drummer, multi-instrumentalist, and CTO of Malaspalabras Records (George Lopez x Andy Vargas of Santana) - takes over Stilo World for one night. A Day in the Life: trip-hop, urban sci-fi, and a behind-the-scenes Q&A on building onchain music careers.",
     rsvpLink: "https://luma.com/dwrdi3gg",
-    venue: { spatialLink: "https://www.spatial.io/s/STILO-WORLD-DESIGN-BY-CYBERNERDBABY-63c48d8dbacec9c570e6acbb?share=1395970456673833349" },
+    venue: { spatialLink: "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0?share=865562415562507517" },
     status: "upcoming",
     flyerUrl: "",
     bannerUrl: "",
