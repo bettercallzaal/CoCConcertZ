@@ -2,8 +2,19 @@
 
 import React, { useEffect, useState } from "react";
 import { getEvents, getArtists, getUsers, getInvites, updateEvent, getSetsForEvent, getArtist } from "@/lib/db";
-import { collection, doc, getDoc, getDocs, setDoc, deleteDoc, onSnapshot, getCountFromServer } from "firebase/firestore";
+import { collection, doc, getCountFromServer, getDoc, getDocs, onSnapshot } from "firebase/firestore";
+// getDocs is used for chat read; getCountFromServer for gallery; onSnapshot for live nowPlaying.
+// Other writes go through /api/admin/* per firestore.rules.
 import { db } from "@/lib/firebase";
+
+type SubscriberRow = { id: string; email: string; subscribedAt: string | null };
+
+async function fetchSubscribers(): Promise<SubscriberRow[]> {
+  const res = await fetch("/api/admin/subscribers", { cache: "no-store" });
+  if (!res.ok) throw new Error(`subscribers fetch failed: ${res.status}`);
+  const { items } = (await res.json()) as { count: number; items: SubscriberRow[] };
+  return items;
+}
 import type { Event, Artist, User, Invite, SetItem, Song } from "@/lib/types";
 import { Card } from "@/components/ui";
 import { SeedArtists } from "@/components/admin/SeedArtists";
@@ -117,25 +128,26 @@ export default function AdminDashboardPage() {
     load();
   }, []);
 
-  // Load platform-wide stats
+  // Load platform-wide stats. Subscribers are admin-gated so come from
+  // /api/admin/subscribers; visitors/gallery are public read.
   useEffect(() => {
     async function loadPlatformStats() {
       try {
-        const [subscribersSnap, gallerySnap, visitorsSnap] = await Promise.all([
-          getCountFromServer(collection(db, "subscribers")),
+        const [subscribersList, gallerySnap, visitorsSnap, events, artists] = await Promise.all([
+          fetchSubscribers(),
           getCountFromServer(collection(db, "gallery")),
           getDoc(doc(db, "stats", "visitors")),
+          getEvents(),
+          getArtists(),
         ]);
 
-        const [events, artists] = await Promise.all([getEvents(), getArtists()]);
-
         setPlatformStats({
-          subscribers: subscribersSnap.data().count,
+          subscribers: subscribersList.length,
           events: events.length,
           artists: artists.length,
           galleryPhotos: gallerySnap.data().count,
           siteVisitors: visitorsSnap.exists()
-            ? (visitorsSnap.data().count ?? visitorsSnap.data().total ?? visitorsSnap.data().peak ?? 0)
+            ? (typeof visitorsSnap.data().count === "number" ? visitorsSnap.data().count : 0)
             : 0,
         });
       } catch (err) {
@@ -148,23 +160,16 @@ export default function AdminDashboardPage() {
     loadPlatformStats();
   }, []);
 
-  // Load recent subscribers
+  // Load recent subscribers via Admin SDK route — client SDK is denied
+  // by firestore.rules.
   useEffect(() => {
     async function loadSubscribers() {
       try {
-        const snap = await getDocs(collection(db, "subscribers"));
-        const docs = snap.docs.map((d) => {
-          const data = d.data();
-          return {
-            email: data.email ?? d.id,
-            subscribedAt: data.subscribedAt
-              ? (typeof data.subscribedAt.toDate === "function"
-                  ? data.subscribedAt.toDate().toISOString()
-                  : String(data.subscribedAt))
-              : undefined,
-          };
-        });
-        // Sort newest first (those with subscribedAt), then rest
+        const items = await fetchSubscribers();
+        const docs = items.map((i) => ({
+          email: i.email,
+          subscribedAt: i.subscribedAt ?? undefined,
+        }));
         docs.sort((a, b) => {
           if (a.subscribedAt && b.subscribedAt) {
             return new Date(b.subscribedAt).getTime() - new Date(a.subscribedAt).getTime();
@@ -186,21 +191,11 @@ export default function AdminDashboardPage() {
   async function handleExportCSV() {
     setExportLoading(true);
     try {
-      const snap = await getDocs(collection(db, "subscribers"));
+      const items = await fetchSubscribers();
       const rows: string[] = ["email,subscribedAt"];
-      snap.docs.forEach((d) => {
-        const data = d.data();
-        const email = data.email ?? d.id;
-        let subscribedAt = "";
-        if (data.subscribedAt) {
-          subscribedAt =
-            typeof data.subscribedAt.toDate === "function"
-              ? data.subscribedAt.toDate().toISOString()
-              : String(data.subscribedAt);
-        }
-        // Escape fields
-        const escapedEmail = `"${String(email).replace(/"/g, '""')}"`;
-        const escapedDate = `"${String(subscribedAt).replace(/"/g, '""')}"`;
+      items.forEach((i) => {
+        const escapedEmail = `"${i.email.replace(/"/g, '""')}"`;
+        const escapedDate = `"${(i.subscribedAt ?? "").replace(/"/g, '""')}"`;
         rows.push(`${escapedEmail},${escapedDate}`);
       });
       const csv = rows.join("\n");
@@ -263,11 +258,12 @@ export default function AdminDashboardPage() {
   async function handlePlaySong(song: Song, artistName: string) {
     setNowPlayingLoading(true);
     try {
-      await setDoc(doc(db, "live", "nowPlaying"), {
-        songTitle: song.title,
-        artistName,
-        timestamp: new Date(),
+      const res = await fetch("/api/admin/live/now-playing", {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ songTitle: song.title, artistName }),
       });
+      if (!res.ok) throw new Error(`status ${res.status}`);
     } catch (err) {
       console.error("Failed to set now playing", err);
     } finally {
@@ -278,7 +274,8 @@ export default function AdminDashboardPage() {
   async function handleClearNowPlaying() {
     setNowPlayingLoading(true);
     try {
-      await deleteDoc(doc(db, "live", "nowPlaying"));
+      const res = await fetch("/api/admin/live/now-playing", { method: "DELETE" });
+      if (!res.ok) throw new Error(`status ${res.status}`);
     } catch (err) {
       console.error("Failed to clear now playing", err);
     } finally {
@@ -322,13 +319,13 @@ export default function AdminDashboardPage() {
     try {
       const eventId = lastCompletedEvent.id;
 
-      // 1. Get peak visitor count from stats/visitors
+      // 1. Get current visitor count from stats/visitors (public read).
       let visitorCount = 0;
       try {
         const visitorsSnap = await getDoc(doc(db, "stats", "visitors"));
         if (visitorsSnap.exists()) {
           const vData = visitorsSnap.data();
-          visitorCount = vData.peak ?? vData.count ?? vData.total ?? 0;
+          visitorCount = typeof vData.count === "number" ? vData.count : 0;
         }
       } catch {
         // stats doc may not exist — leave as 0
@@ -365,7 +362,12 @@ export default function AdminDashboardPage() {
         artists: artistNames,
         generatedAt: new Date().toISOString(),
       };
-      await setDoc(doc(db, "recaps", eventId), recap);
+      const res = await fetch(`/api/admin/recaps/${eventId}`, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(recap),
+      });
+      if (!res.ok) throw new Error(`recap save failed: ${res.status}`);
       setRecapData(recap);
     } catch (err) {
       console.error("Failed to generate recap", err);

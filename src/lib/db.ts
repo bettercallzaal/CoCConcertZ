@@ -3,17 +3,34 @@ import {
   doc,
   getDoc,
   getDocs,
-  setDoc,
-  updateDoc,
-  deleteDoc,
   query,
   where,
   orderBy,
-  serverTimestamp,
   Timestamp,
 } from "firebase/firestore";
 import { db } from "./firebase";
 import type { Event, Artist, SetItem, Invite, User, UserRole } from "./types";
+
+// All read paths use the Firebase client SDK (allowed by firestore.rules).
+// All write paths route through Admin SDK API endpoints — clients never
+// write Firestore directly. Function signatures are unchanged so callers
+// don't need to know.
+
+async function postJson<T>(
+  url: string,
+  init: { method: string; body?: unknown }
+): Promise<T> {
+  const res = await fetch(url, {
+    method: init.method,
+    headers: init.body !== undefined ? { "content-type": "application/json" } : undefined,
+    body: init.body !== undefined ? JSON.stringify(init.body) : undefined,
+  });
+  if (!res.ok) {
+    const text = await res.text().catch(() => "");
+    throw new Error(`${init.method} ${url} failed: ${res.status} ${text}`);
+  }
+  return res.json() as Promise<T>;
+}
 
 // ============================================================================
 // EVENTS
@@ -63,38 +80,29 @@ export async function getEventByNumber(num: number): Promise<Event | null> {
 export async function createEvent(
   data: Omit<Event, "id" | "createdAt" | "updatedAt">
 ): Promise<Event> {
-  const newRef = doc(collection(db, "events"));
-  const eventData = {
-    ...data,
-    date: data.date instanceof Date ? new Date(data.date) : data.date,
-    createdAt: serverTimestamp(),
-    updatedAt: serverTimestamp(),
+  const created = await postJson<Event & { date: string; createdAt: string; updatedAt: string }>(
+    "/api/admin/events",
+    { method: "POST", body: { ...data, date: data.date instanceof Date ? data.date.toISOString() : data.date } }
+  );
+  return {
+    ...created,
+    date: new Date(created.date),
+    createdAt: new Date(created.createdAt),
+    updatedAt: new Date(created.updatedAt),
   };
-  await setDoc(newRef, eventData);
-  const created = await getEvent(newRef.id);
-  if (!created) throw new Error("Failed to create event");
-  return created;
 }
 
 export async function updateEvent(
   id: string,
   data: Partial<Omit<Event, "id" | "createdAt">>
 ): Promise<void> {
-  const updateData: Record<string, any> = {
-    ...data,
-    updatedAt: serverTimestamp(),
-  };
-  if (data.date) {
-    updateData.date =
-      data.date instanceof Date ? new Date(data.date) : data.date;
-  }
-  const docRef = doc(db, "events", id);
-  await updateDoc(docRef, updateData);
+  const body: Record<string, unknown> = { ...data };
+  if (data.date instanceof Date) body.date = data.date.toISOString();
+  await postJson(`/api/admin/events/${id}`, { method: "PATCH", body });
 }
 
 export async function deleteEvent(id: string): Promise<void> {
-  const docRef = doc(db, "events", id);
-  await deleteDoc(docRef);
+  await postJson(`/api/admin/events/${id}`, { method: "DELETE" });
 }
 
 // ============================================================================
@@ -152,23 +160,21 @@ export async function getArtistByUserId(userId: string): Promise<Artist | null> 
 export async function createArtist(
   data: Omit<Artist, "id" | "createdAt">
 ): Promise<Artist> {
-  const newRef = doc(collection(db, "artists"));
-  const artistData = {
-    ...data,
-    createdAt: serverTimestamp(),
-  };
-  await setDoc(newRef, artistData);
-  const created = await getArtist(newRef.id);
-  if (!created) throw new Error("Failed to create artist");
-  return created;
+  const created = await postJson<Artist & { createdAt: string }>("/api/artists", {
+    method: "POST",
+    body: data,
+  });
+  return { ...created, createdAt: new Date(created.createdAt) };
 }
 
 export async function updateArtist(
   id: string,
   data: Partial<Omit<Artist, "id" | "createdAt">>
 ): Promise<void> {
-  const docRef = doc(db, "artists", id);
-  await updateDoc(docRef, data);
+  await postJson("/api/artists", {
+    method: "PUT",
+    body: { artistId: id, ...data },
+  });
 }
 
 // ============================================================================
@@ -201,30 +207,19 @@ export async function getSetsForArtist(artistId: string): Promise<SetItem[]> {
   } as SetItem));
 }
 
-export async function createSet(
-  data: Omit<SetItem, "id">
-): Promise<SetItem> {
-  const newRef = doc(collection(db, "sets"));
-  await setDoc(newRef, data);
-  const created = await getDoc(newRef);
-  if (!created.exists()) throw new Error("Failed to create set");
-  return {
-    ...created.data(),
-    id: created.id,
-  } as SetItem;
+export async function createSet(data: Omit<SetItem, "id">): Promise<SetItem> {
+  return postJson<SetItem>("/api/admin/sets", { method: "POST", body: data });
 }
 
 export async function updateSet(
   id: string,
   data: Partial<Omit<SetItem, "id">>
 ): Promise<void> {
-  const docRef = doc(db, "sets", id);
-  await updateDoc(docRef, data);
+  await postJson(`/api/admin/sets/${id}`, { method: "PATCH", body: data });
 }
 
 export async function deleteSet(id: string): Promise<void> {
-  const docRef = doc(db, "sets", id);
-  await deleteDoc(docRef);
+  await postJson(`/api/admin/sets/${id}`, { method: "DELETE" });
 }
 
 // ============================================================================
@@ -232,48 +227,40 @@ export async function deleteSet(id: string): Promise<void> {
 // ============================================================================
 
 export async function getInvites(): Promise<Invite[]> {
-  const q = query(collection(db, "invites"), orderBy("createdAt", "desc"));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      ...data,
-      id: doc.id,
-      createdAt: (data.createdAt as Timestamp).toDate(),
-      acceptedAt: data.acceptedAt ? (data.acceptedAt as Timestamp).toDate() : undefined,
-    } as Invite;
-  });
+  const res = await fetch("/api/admin/invites/list", { cache: "no-store" });
+  if (!res.ok) throw new Error(`getInvites failed: ${res.status}`);
+  const { items } = (await res.json()) as {
+    items: (Omit<Invite, "createdAt" | "acceptedAt"> & {
+      createdAt: string | null;
+      acceptedAt: string | null;
+    })[];
+  };
+  return items.map((i) => ({
+    ...i,
+    createdAt: i.createdAt ? new Date(i.createdAt) : new Date(),
+    acceptedAt: i.acceptedAt ? new Date(i.acceptedAt) : undefined,
+  }));
 }
 
 export async function createInvite(
   data: Omit<Invite, "id" | "createdAt">
 ): Promise<Invite> {
-  const newRef = doc(collection(db, "invites"));
-  const inviteData = {
-    ...data,
-    createdAt: serverTimestamp(),
-  };
-  await setDoc(newRef, inviteData);
-  const created = await getDoc(newRef);
-  if (!created.exists()) throw new Error("Failed to create invite");
-  const createdData = created.data();
+  const created = await postJson<Invite & { createdAt: string; acceptedAt?: string }>(
+    "/api/admin/invites",
+    { method: "POST", body: data }
+  );
   return {
-    ...createdData,
-    id: created.id,
-    createdAt: (createdData.createdAt as Timestamp).toDate(),
-    acceptedAt: createdData.acceptedAt
-      ? (createdData.acceptedAt as Timestamp).toDate()
-      : undefined,
-  } as Invite;
+    ...created,
+    createdAt: new Date(created.createdAt),
+    acceptedAt: created.acceptedAt ? new Date(created.acceptedAt) : undefined,
+  };
 }
 
 export async function updateInvite(
   id: string,
   data: Partial<Omit<Invite, "id" | "createdAt">>
 ): Promise<void> {
-  const updateData: Record<string, any> = { ...data };
-  const docRef = doc(db, "invites", id);
-  await updateDoc(docRef, updateData);
+  await postJson(`/api/admin/invites/${id}`, { method: "PATCH", body: data });
 }
 
 // ============================================================================
@@ -281,23 +268,27 @@ export async function updateInvite(
 // ============================================================================
 
 export async function getUsers(): Promise<User[]> {
-  const q = query(collection(db, "users"), orderBy("createdAt", "desc"));
-  const snapshot = await getDocs(q);
-  return snapshot.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      ...data,
-      uid: doc.id,
-      createdAt: (data.createdAt as Timestamp).toDate(),
-      lastLogin: (data.lastLogin as Timestamp).toDate(),
-    } as User;
-  });
+  const res = await fetch("/api/admin/users", { cache: "no-store" });
+  if (!res.ok) throw new Error(`getUsers failed: ${res.status}`);
+  const { items } = (await res.json()) as {
+    items: (Omit<User, "createdAt" | "lastLogin"> & {
+      createdAt: string | null;
+      lastLogin: string | null;
+    })[];
+  };
+  return items.map((u) => ({
+    ...u,
+    createdAt: u.createdAt ? new Date(u.createdAt) : new Date(),
+    lastLogin: u.lastLogin ? new Date(u.lastLogin) : new Date(),
+  }));
 }
 
 export async function updateUserRole(
   uid: string,
   role: UserRole
 ): Promise<void> {
-  const docRef = doc(db, "users", uid);
-  await updateDoc(docRef, { role });
+  await postJson(`/api/admin/users/${uid}/role`, {
+    method: "PATCH",
+    body: { role },
+  });
 }

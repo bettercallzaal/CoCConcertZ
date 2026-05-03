@@ -2,14 +2,7 @@
 
 import React, { useState } from "react";
 import { db } from "@/lib/firebase";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  addDoc,
-  serverTimestamp,
-} from "firebase/firestore";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 
 type Status = "idle" | "loading" | "success" | "duplicate" | "error";
 
@@ -37,14 +30,17 @@ export default function EmailSignup() {
     setErrorMsg("");
 
     try {
-      // Check for duplicate
-      const q = query(
-        collection(db, "subscribers"),
-        where("email", "==", trimmed.toLowerCase())
-      );
-      const snapshot = await getDocs(q);
+      // Dedupe via /api/subscribers/check (Admin SDK) — client SDK reads
+      // on `subscribers` are denied by firestore.rules.
+      const checkRes = await fetch("/api/subscribers/check", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ email: trimmed.toLowerCase() }),
+      });
+      if (!checkRes.ok) throw new Error(`check ${checkRes.status}`);
+      const { exists } = (await checkRes.json()) as { exists: boolean };
 
-      if (!snapshot.empty) {
+      if (exists) {
         setStatus("duplicate");
         return;
       }

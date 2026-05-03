@@ -1,5 +1,4 @@
 import { initializeApp, getApps, type FirebaseApp } from "firebase/app";
-import { getAuth, connectAuthEmulator } from "firebase/auth";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 const requiredEnv = {
@@ -35,7 +34,6 @@ const firebaseConfig = {
 const app: FirebaseApp =
   getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 
-export const auth = getAuth(app);
 export const db = getFirestore(app);
 
 // App Check skeleton — wire up once a reCAPTCHA v3 site key is provisioned.
@@ -49,7 +47,7 @@ export const db = getFirestore(app);
 //   });
 // }
 
-// Local Firestore/Auth emulator wiring. Opt in via:
+// Local Firestore emulator. Opt in via:
 //   NEXT_PUBLIC_USE_FIREBASE_EMULATOR=true
 // in `.env.local`. Guarded so we only connect once per app instance.
 if (
@@ -61,11 +59,8 @@ if (
     w.__cocFirebaseEmulator = true;
     try {
       connectFirestoreEmulator(db, "127.0.0.1", 8080);
-      connectAuthEmulator(auth, "http://127.0.0.1:9099", {
-        disableWarnings: true,
-      });
     } catch (err) {
-      console.warn("Firebase emulator connect skipped:", err);
+      console.warn("Firestore emulator connect skipped:", err);
     }
   }
 }
