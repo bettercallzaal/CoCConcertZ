@@ -268,6 +268,49 @@ ARTIST_PASSCODES={"code1":"artist-slug-1","code2":"artist-slug-2"}
 
 ---
 
+## Firebase Setup
+
+The Firestore configuration lives at the repo root: `firebase.json`, `firestore.rules`, `firestore.indexes.json`. The schema and rule rationale are documented in `docs/firebase-inventory.md`.
+
+### Deploy rules and indexes
+
+```bash
+# One-time
+npm install -g firebase-tools
+firebase login
+firebase use <project-id>
+
+# Each deploy
+npm run firebase:deploy:rules
+```
+
+### Local emulator
+
+```bash
+# Start Firestore + Auth emulators on 127.0.0.1:8080 / 9099 (UI on :4000)
+npm run firebase:emulator
+
+# Point the dev server at the emulator
+echo "NEXT_PUBLIC_USE_FIREBASE_EMULATOR=true" >> .env.local
+npm run dev
+```
+
+The client SDK auto-connects to the emulator when `NEXT_PUBLIC_USE_FIREBASE_EMULATOR=true`.
+
+### App Check status
+
+Skeleton in place but **not active**. The init block in `src/lib/firebase.ts` is commented out. Follow `docs/app-check-setup.md` to flip it on once a reCAPTCHA v3 site key is provisioned. Until then, the public-write collections (`chat`, `gallery`, `subscribers`) are protected by rule-level validation only.
+
+### Backups
+
+Daily Firestore export to a Cloud Storage bucket via `.github/workflows/firestore-backup.yml`. The workflow header has the one-time GCP setup steps (bucket, service account, GitHub secrets). Bucket lifecycle is recommended at 30 days.
+
+### Required env vars
+
+See `.env.local.example`. The Firebase Admin SDK throws at module load if any of `FIREBASE_ADMIN_PROJECT_ID`, `FIREBASE_ADMIN_CLIENT_EMAIL`, `FIREBASE_ADMIN_PRIVATE_KEY` is missing — set them in Vercel before the first deploy.
+
+---
+
 ## Design System
 
 - **Colors:** Gold (#FFD600), Cyan (#00F0FF), Deep Black (#050505)

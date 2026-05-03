@@ -1,0 +1,153 @@
+rules_version = '2';
+
+// COC ConcertZ — production Firestore rules.
+//
+// Auth model: passcode-cookie (`coc-role`). Firebase Auth is NOT used for
+// end-user auth, so `request.auth` is always null in client requests.
+// All authenticated writes (admin/artist) go through `/api/*` Admin SDK
+// routes which bypass these rules entirely.
+//
+// Cloudinary cloud name is hard-coded ("dzzqdbo9k") to keep gallery images
+// pointed at our account. If `NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME` ever
+// changes, update the regex in match /gallery/{id} below.
+//
+// PUBLIC-WRITE collections rely on rule-level validation only — without
+// App Check, anyone with the project ID can spam them. See
+// docs/app-check-setup.md for the next step.
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // -- Helpers ---------------------------------------------------------
+
+    function isString(v, maxLen) {
+      return v is string && v.size() >= 1 && v.size() <= maxLen;
+    }
+
+    function isOptionalString(v, maxLen) {
+      return v == null || (v is string && v.size() <= maxLen);
+    }
+
+    function isCloudinaryUrl(v) {
+      return v is string
+        && v.matches('^https://res\\.cloudinary\\.com/dzzqdbo9k/.*');
+    }
+
+    function timestampIsRequestTime(v) {
+      // serverTimestamp() resolves to request.time on the server, so this
+      // forces clients to use serverTimestamp() and prevents back-dating.
+      return v == request.time;
+    }
+
+    // -- events / artists / sets / live / recaps -------------------------
+    // Read-only from clients. All writes must go through /api/*.
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /artists/{artistId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /sets/{setId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /live/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /recaps/{eventId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // -- chat (public create, validated) ---------------------------------
+    // Path is `chat/{eventId}/messages/{messageId}`.
+    // Document fields written by LiveChat.tsx: { name, text, timestamp }.
+
+    match /chat/{eventId} {
+      allow read: if true;
+      allow write: if false;
+
+      match /messages/{messageId} {
+        allow read: if true;
+
+        allow create: if
+          request.resource.data.keys().hasOnly(['name', 'text', 'timestamp'])
+          && isString(request.resource.data.name, 40)
+          && isString(request.resource.data.text, 500)
+          && timestampIsRequestTime(request.resource.data.timestamp);
+
+        allow update, delete: if false;
+      }
+    }
+
+    // -- gallery (public create, validated) ------------------------------
+    // Document fields written by FanGallery.tsx: { url, name, caption, createdAt }.
+    // Brief mentions imageUrl/submittedBy; actual code uses url/name. Rules
+    // match the code. If the schema is renamed later, update both.
+
+    match /gallery/{photoId} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.keys().hasOnly(['url', 'name', 'caption', 'createdAt'])
+        && isCloudinaryUrl(request.resource.data.url)
+        && isString(request.resource.data.name, 40)
+        && isOptionalString(request.resource.data.caption, 280)
+        && timestampIsRequestTime(request.resource.data.createdAt);
+
+      allow update, delete: if false;
+    }
+
+    // -- subscribers (public create only, no read) -----------------------
+    // Document fields written by EmailSignup.tsx: { email, subscribedAt }.
+    // Note: EmailSignup.tsx also issues a `getDocs where email ==` query
+    // for client-side dedupe — that read is denied here. Move that dedupe
+    // to an API route (or accept duplicates) before deploying these rules.
+
+    match /subscribers/{subscriberId} {
+      allow read: if false;
+
+      allow create: if
+        request.resource.data.keys().hasOnly(['email', 'subscribedAt'])
+        && request.resource.data.email is string
+        && request.resource.data.email.size() <= 254
+        && request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')
+        && timestampIsRequestTime(request.resource.data.subscribedAt);
+
+      allow update, delete: if false;
+    }
+
+    // -- stats/{statId} (public read, no client write) ------------------
+    // VisitorCount.tsx now increments via /api/stats/visit (Admin SDK),
+    // so clients never need to write here.
+
+    match /stats/{statId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // -- invites / users (admin-only — deny all client access) -----------
+
+    match /invites/{inviteId} {
+      allow read, write: if false;
+    }
+
+    match /users/{userId} {
+      allow read, write: if false;
+    }
+
+    // -- Default deny ----------------------------------------------------
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

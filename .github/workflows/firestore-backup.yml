@@ -1,0 +1,80 @@
+# Daily Firestore export to Cloud Storage.
+#
+# ===== One-time GCP setup =====================================================
+#
+# 1. Enable APIs in the Firebase/GCP project:
+#      gcloud services enable firestore.googleapis.com cloudresourcemanager.googleapis.com
+#
+# 2. Create a Cloud Storage bucket in the same region as Firestore
+#    (Firestore export rejects cross-region buckets):
+#      gcloud storage buckets create gs://cocconcertz-firestore-backups \
+#        --location=us-central1 --uniform-bucket-level-access
+#
+#    Add a 30-day lifecycle rule so backups don't accumulate forever:
+#      gcloud storage buckets update gs://cocconcertz-firestore-backups \
+#        --lifecycle-file=- <<'EOF'
+#      { "rule": [
+#          { "action": { "type": "Delete" },
+#            "condition": { "age": 30 } } ] }
+#      EOF
+#
+# 3. Create a service account for the backup job:
+#      gcloud iam service-accounts create firestore-backup \
+#        --display-name="GitHub Actions Firestore backup"
+#
+#    Grant it the two roles it needs:
+#      gcloud projects add-iam-policy-binding cocconcertz \
+#        --member="serviceAccount:firestore-backup@cocconcertz.iam.gserviceaccount.com" \
+#        --role="roles/datastore.importExportAdmin"
+#
+#      gcloud storage buckets add-iam-policy-binding \
+#        gs://cocconcertz-firestore-backups \
+#        --member="serviceAccount:firestore-backup@cocconcertz.iam.gserviceaccount.com" \
+#        --role="roles/storage.admin"
+#
+# 4. Generate a key and add it to GitHub:
+#      gcloud iam service-accounts keys create key.json \
+#        --iam-account=firestore-backup@cocconcertz.iam.gserviceaccount.com
+#
+#    Then in GitHub → repo Settings → Secrets and variables → Actions, add:
+#      - GCP_SA_KEY     : contents of key.json (paste the whole JSON)
+#      - GCP_PROJECT_ID : cocconcertz   (or whatever the actual project id is)
+#      - BACKUP_BUCKET  : cocconcertz-firestore-backups
+#
+#    Delete key.json from your laptop after pasting.
+#
+# ===== End setup ==============================================================
+
+name: Firestore daily backup
+
+on:
+  schedule:
+    - cron: "0 9 * * *" # 09:00 UTC daily
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Authenticate to GCP
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Set up gcloud
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+
+      - name: Export Firestore
+        run: |
+          set -euo pipefail
+          STAMP=$(date -u +%Y-%m-%d-%H%M)
+          DEST="gs://${{ secrets.BACKUP_BUCKET }}/$STAMP"
+          echo "Exporting to $DEST"
+          gcloud firestore export "$DEST" \
+            --project="${{ secrets.GCP_PROJECT_ID }}"

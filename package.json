@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "firebase:emulator": "firebase emulators:start --only firestore,auth",
+    "firebase:deploy:rules": "firebase deploy --only firestore:rules,firestore:indexes"
   },
   "dependencies": {
     "@ardrive/turbo-sdk": "^1.41.0",
@@ -15,6 +17,7 @@
     "cloudinary": "^2.9.0",
     "firebase": "^12.11.0",
     "firebase-admin": "^13.7.0",
+    "@firebase/app-check": "^0.10.0",
     "mammoth": "^1.12.0",
     "next": "16.2.2",
     "react": "19.2.4",

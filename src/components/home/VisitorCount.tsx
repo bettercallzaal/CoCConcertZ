@@ -2,8 +2,12 @@
 
 import { useEffect, useState, useRef } from "react";
 import { db } from "@/lib/firebase";
-import { doc, onSnapshot, setDoc, increment, getDoc } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
+// Increment/decrement go through /api/stats/visit (Admin SDK) so the
+// client never writes to Firestore directly. This lets firestore.rules
+// keep `stats` read-only for clients (eliminates the abuse vector where
+// anyone could spam the increment from the browser).
 export default function VisitorCount() {
   const [count, setCount] = useState<number | null>(null);
   const decrementedRef = useRef(false);
@@ -11,25 +15,22 @@ export default function VisitorCount() {
   useEffect(() => {
     const statsRef = doc(db, "stats", "visitors");
 
-    // Increment on mount
     async function incrementVisitor() {
       try {
-        const snap = await getDoc(statsRef);
-        if (snap.exists()) {
-          await setDoc(statsRef, { count: increment(1) }, { merge: true });
-        } else {
-          await setDoc(statsRef, { count: 1 });
-        }
+        await fetch("/api/stats/visit", { method: "POST", keepalive: true });
       } catch {
         // Silently fail — non-critical UI
       }
     }
 
-    async function decrementVisitor() {
+    function decrementVisitor() {
       if (decrementedRef.current) return;
       decrementedRef.current = true;
       try {
-        await setDoc(statsRef, { count: increment(-1) }, { merge: true });
+        // keepalive lets the request finish even after the page unloads.
+        fetch("/api/stats/visit", { method: "DELETE", keepalive: true }).catch(
+          () => {}
+        );
       } catch {
         // Silently fail
       }
@@ -37,14 +38,13 @@ export default function VisitorCount() {
 
     incrementVisitor();
 
-    // Listen for real-time count updates
     const unsubscribe = onSnapshot(
       statsRef,
       (snap) => {
         if (snap.exists()) {
           const data = snap.data();
           const raw = typeof data?.count === "number" ? data.count : 0;
-          setCount(Math.max(1, raw)); // always show at least 1 (the current user)
+          setCount(Math.max(1, raw));
         }
       },
       () => {
@@ -52,7 +52,6 @@ export default function VisitorCount() {
       }
     );
 
-    // Decrement when navigating away
     function handleBeforeUnload() {
       decrementVisitor();
     }
@@ -65,7 +64,6 @@ export default function VisitorCount() {
     };
   }, []);
 
-  // Don't render until we have a count
   if (count === null) return null;
 
   return (
