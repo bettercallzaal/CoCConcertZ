@@ -44,8 +44,8 @@ async function run() {
       rsvpLink: RSVP_LINK,
       venue: { spatialLink: SPATIAL },
       status: "upcoming",
-      flyerUrl: "",
-      bannerUrl: "",
+      flyerUrl: "/images/coc5-flyer.png",
+      bannerUrl: "/images/coc5-flyer.png",
       artists: [],
       createdAt: now,
       updatedAt: now,
@@ -69,6 +69,8 @@ async function run() {
       announcement: NEW_ANNOUNCEMENT,
       rsvpLink: RSVP_LINK,
       venue,
+      flyerUrl: "/images/coc5-flyer.png",
+      bannerUrl: "/images/coc5-flyer.png",
       updatedAt: now,
     });
   });

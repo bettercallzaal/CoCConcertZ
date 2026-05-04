@@ -25,14 +25,14 @@ export const metadata: Metadata = {
     description: "Free live concertz inside the metaverse. Experience immersive music from anywhere — no tickets, no lines, just vibes.",
     url: "https://cocconcertz.com",
     siteName: "COC Concertz",
-    images: [{ url: "/images/coc4.jpg", width: 1500, height: 843, type: "image/jpeg" }],
+    images: [{ url: "/images/coc5-flyer.png", width: 1023, height: 1023, type: "image/png" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "COC Concertz — Live Metaverse Concertz",
     description: "Free live concertz inside the metaverse. No tickets, no lines, just vibes.",
-    images: ["/images/coc4.jpg"],
+    images: ["/images/coc5-flyer.png"],
   },
   icons: {
     icon: "/images/coc-concertz-logo.jpeg",
