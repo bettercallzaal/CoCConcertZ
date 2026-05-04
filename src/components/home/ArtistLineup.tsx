@@ -33,6 +33,22 @@ interface Concert {
   bannerImage?: string;
 }
 
+// Hardcoded fallback data for ConcertZ #5
+const CONCERT5_FALLBACK_ARTISTS: Artist[] = [
+  {
+    name: "GODCLOUD",
+    role: "Headliner · Multi-instrumentalist",
+    bio: "Web3's first finger drummer, multi-instrumentalist, vocalist, and CTO of Malaspalabras Records (George Lopez x Andy Vargas of Santana). A Day in the Life: trip-hop, urban sci-fi, and a behind-the-scenes Q&A on building onchain music careers.",
+    link: { url: "https://www.thezao.com/community/godcloud", label: "GodCloud on The ZAO" },
+  },
+  {
+    name: "STILO",
+    role: "Venue Host · Stilo World",
+    bio: "Host of StiloWorld and 150+ consecutive weekly VR concerts. Hosting GodCloud's takeover for COC ConcertZ #5.",
+    link: { url: "https://www.thezao.com/community/stilo", label: "Stilo on The ZAO" },
+  },
+];
+
 // Hardcoded fallback data for ConcertZ #4
 const CONCERT4_FALLBACK_ARTISTS: Artist[] = [
   {
@@ -65,6 +81,9 @@ const STAGE_NAME_MAP: Record<string, string> = {
   "STILO WORLD": "STILO",
   "Tom Fellenz": "TOM FELLENZ",
   "TOM FELLENZ": "TOM FELLENZ",
+  "GodCloud": "GODCLOUD",
+  "GODCLOUD": "GODCLOUD",
+  "Godcloud": "GODCLOUD",
 };
 
 /** Merge Firestore artist data onto a hardcoded fallback artist card */
@@ -348,9 +367,10 @@ function ArtistCard({ artist, cardIndex = 0 }: { artist: Artist; cardIndex?: num
 }
 
 export default function ArtistLineup() {
-  const [activeTab, setActiveTab] = useState("concert4");
+  const [activeTab, setActiveTab] = useState("concert5");
   const [animationKey, setAnimationKey] = useState(0);
   const [concert4Artists, setConcert4Artists] = useState<Artist[]>(CONCERT4_FALLBACK_ARTISTS);
+  const [concert5Artists, setConcert5Artists] = useState<Artist[]>(CONCERT5_FALLBACK_ARTISTS);
 
   useEffect(() => {
     let cancelled = false;
@@ -365,12 +385,17 @@ export default function ArtistLineup() {
           fsMap.set(key, fsa);
         }
 
-        const merged = CONCERT4_FALLBACK_ARTISTS.map((fallback) => {
+        const merged4 = CONCERT4_FALLBACK_ARTISTS.map((fallback) => {
+          const fsArtist = fsMap.get(fallback.name);
+          return fsArtist ? mergeArtistData(fallback, fsArtist) : fallback;
+        });
+        const merged5 = CONCERT5_FALLBACK_ARTISTS.map((fallback) => {
           const fsArtist = fsMap.get(fallback.name);
           return fsArtist ? mergeArtistData(fallback, fsArtist) : fallback;
         });
 
-        setConcert4Artists(merged);
+        setConcert4Artists(merged4);
+        setConcert5Artists(merged5);
       })
       .catch(() => {
         // Firestore unavailable — keep fallback data, no error surface needed
@@ -386,6 +411,12 @@ export default function ArtistLineup() {
       label: "CONCERTZ #4",
       bannerImage: "/images/coc4.jpg",
       artists: concert4Artists,
+    },
+    {
+      id: "concert5",
+      label: "CONCERTZ #5",
+      bannerImage: "/images/coc5-flyer.png",
+      artists: concert5Artists,
     },
   ];
 

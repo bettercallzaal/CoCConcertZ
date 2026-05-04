@@ -3,8 +3,7 @@
 import { useState, useEffect } from "react";
 
 const upcomingShows = [
-  { name: "+COC CONCERTZ #4", date: "2026-04-11T20:00:00Z", display: "April 11, 2026 \u00b7 4:00 PM EST" },
-  { name: "+COC CONCERTZ #5: A METAVERSE MUSICAL EXPERIENCE", date: "2026-05-09T20:00:00Z", display: "May 9, 2026 \u00b7 4:00 PM EST" },
+  { name: "+COC CONCERTZ #5: A METAVERSE MUSICAL EXPERIENCE", date: "2026-05-09T20:00:00Z", display: "May 9, 2026 \u00b7 4:00 PM EST", rsvp: "https://luma.com/dwrdi3gg" },
 ];
 
 function getNextShow() {
@@ -270,7 +269,7 @@ export default function Countdown() {
               <span className="label">Sec</span>
             </div>
           </div>
-          <a className="rsvp-btn" href="https://luma.com/0ksej24k" target="_blank" rel="noopener">
+          <a className="rsvp-btn" href={nextShow.rsvp ?? "https://luma.com/dwrdi3gg"} target="_blank" rel="noopener">
             RSVP NOW — FREE
           </a>
         </>

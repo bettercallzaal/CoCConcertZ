@@ -6,19 +6,10 @@ import type { Event } from "@/lib/types";
 
 const HARDCODED_EVENTS = [
   {
-    id: "hc-1",
-    tag: "Next Up",
-    name: "+COC CONCERTZ #4",
-    desc: "Live in StiloWorld — Joseph Goats, Stilo, Tom Fellenz",
-    date: "APR 11, 2026 @ 4PM EST",
-    isNextUp: true,
-    rsvpLink: "https://luma.com/0ksej24k",
-  },
-  {
     id: "hc-2",
     tag: "Next Up",
     name: "+COC CONCERTZ #5: A METAVERSE MUSICAL EXPERIENCE",
-    desc: "GodCloud headlines a metaverse musical experience in Stilo World",
+    desc: "GodCloud headlines — A Day in the Life. Live in Stilo World.",
     date: "MAY 9, 2026 @ 4PM EST",
     isNextUp: true,
     rsvpLink: "https://luma.com/dwrdi3gg",
