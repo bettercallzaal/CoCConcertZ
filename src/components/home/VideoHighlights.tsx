@@ -10,6 +10,11 @@ interface VideoItem {
 }
 
 const VIDEOS: VideoItem[] = [
+  { id: "-SOwQ5xR714", title: "Intro", artist: "COC Concertz #4", concert: "#4" },
+  { id: "uvURHoFXoVs", title: "Live Performance", artist: "Joseph Goats", concert: "#4" },
+  { id: "iwkDtZHuQPE", title: "Live Performance", artist: "Tom Fellenz", concert: "#4" },
+  { id: "gGAQ_tkBMpQ", title: "Live Performance", artist: "Stilo World", concert: "#4" },
+  { id: "lqFhoBl2jHo", title: "Outro", artist: "COC Concertz #4", concert: "#4" },
   { id: "-ggYAdu4KRE", title: "AttaBotty Intro", artist: "AttaBotty", concert: "#1" },
   { id: "E0xE65RRKI0", title: "Attabotty Flyin", artist: "AttaBotty", concert: "#1" },
   { id: "4n1dFs5T4T4", title: "Clejan Intro", artist: "Clejan", concert: "#1" },

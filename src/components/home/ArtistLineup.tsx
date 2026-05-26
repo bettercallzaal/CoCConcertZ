@@ -36,9 +36,10 @@ interface Concert {
 // Placeholder for ConcertZ #6 - lineup curated by Iman, names announced closer to date
 const CONCERT6_FALLBACK_ARTISTS: Artist[] = [
   {
-    name: "ZAMBIAN SHOWCASE",
-    role: "Lineup TBA · Curated by Iman",
-    bio: "First international COC Concertz - a curated set from Iman's Zambia squad (the 45-builder hackathon cohort he ran in Zambia in May). Full artist names land closer to showtime.",
+    name: "IMAN AND ZAMBIA CREW",
+    role: "Headliners · Curated by Iman Afrikah",
+    bio: "First international COC Concertz - a curated set from Iman and his Zambia crew (the 45-builder hackathon cohort he ran in Zambia in May). Individual artist names land closer to showtime.",
+    link: { url: "https://x.com/Imanafrikah", label: "Iman Afrikah on X" },
   },
 ];
 
