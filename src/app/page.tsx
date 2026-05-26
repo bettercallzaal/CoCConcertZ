@@ -123,8 +123,8 @@ export default function Home() {
                   farcasterBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     sdk.actions.composeCast({
-                      text: "COC ConcertZ #5: A Day in the Life of GODCLOUD - Web3's first finger drummer takes over Stilo World. May 9, 4PM EST. Free RSVP:",
-                      embeds: ['https://luma.com/dwrdi3gg', 'https://cocconcertz.com/images/coc5-flyer.png'],
+                      text: "COC Concertz #6: Live from Zambia. First international showcase — Zambian artists curated by Iman, hosted in Stilo World. Sat Jun 13, 4PM EST. Free RSVP:",
+                      embeds: ['https://luma.com/njzxpsgn', 'https://cocconcertz.com/images/coc-banner-dark.jpeg'],
                       channelKey: 'cocconcertz'
                     });
                   });

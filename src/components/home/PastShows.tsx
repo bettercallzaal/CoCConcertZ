@@ -6,6 +6,22 @@ import type { Event } from "@/lib/types";
 
 const HARDCODED_EVENTS = [
   {
+    id: "hc-5",
+    name: "+COC CONCERTZ #5",
+    desc: "GodCloud headlines — A Day in the Life. Live in Stilo World.",
+    date: "MAY 9, 2026",
+    flyerUrl: "/images/coc5-flyer.png",
+    flyerAlt: "COC ConcertZ #5 Flyer",
+  },
+  {
+    id: "hc-4",
+    name: "+COC CONCERTZ #4",
+    desc: "Joseph Goats, Tom Fellenz, Stilo World — third StiloWorld show",
+    date: "APRIL 2026",
+    flyerUrl: "/images/coc4.jpg",
+    flyerAlt: "COC ConcertZ #4 Flyer",
+  },
+  {
     id: "hc-3",
     name: "+COC CONCERTZ #3",
     desc: "Web3 metaverse music experience in StiloWorld",

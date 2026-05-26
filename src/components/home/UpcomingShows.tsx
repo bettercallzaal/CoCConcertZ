@@ -6,13 +6,13 @@ import type { Event } from "@/lib/types";
 
 const HARDCODED_EVENTS = [
   {
-    id: "hc-2",
+    id: "hc-6",
     tag: "Next Up",
-    name: "+COC CONCERTZ #5: A METAVERSE MUSICAL EXPERIENCE",
-    desc: "GodCloud headlines — A Day in the Life. Live in Stilo World.",
-    date: "MAY 9, 2026 @ 4PM EST",
+    name: "+COC CONCERTZ #6: LIVE FROM ZAMBIA",
+    desc: "First international showcase — Zambian artists curated by Iman. Live in Stilo World.",
+    date: "JUN 13, 2026 @ 4PM EST",
     isNextUp: true,
-    rsvpLink: "https://luma.com/dwrdi3gg",
+    rsvpLink: "https://luma.com/njzxpsgn",
   },
 ];
 

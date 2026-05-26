@@ -33,6 +33,15 @@ interface Concert {
   bannerImage?: string;
 }
 
+// Placeholder for ConcertZ #6 - lineup curated by Iman, names announced closer to date
+const CONCERT6_FALLBACK_ARTISTS: Artist[] = [
+  {
+    name: "ZAMBIAN SHOWCASE",
+    role: "Lineup TBA · Curated by Iman",
+    bio: "First international COC Concertz - a curated set from Iman's Zambia squad (the 45-builder hackathon cohort he ran in Zambia in May). Full artist names land closer to showtime.",
+  },
+];
+
 // Hardcoded fallback data for ConcertZ #5
 const CONCERT5_FALLBACK_ARTISTS: Artist[] = [
   {
@@ -367,7 +376,7 @@ function ArtistCard({ artist, cardIndex = 0 }: { artist: Artist; cardIndex?: num
 }
 
 export default function ArtistLineup() {
-  const [activeTab, setActiveTab] = useState("concert5");
+  const [activeTab, setActiveTab] = useState("concert6");
   const [animationKey, setAnimationKey] = useState(0);
   const [concert4Artists, setConcert4Artists] = useState<Artist[]>(CONCERT4_FALLBACK_ARTISTS);
   const [concert5Artists, setConcert5Artists] = useState<Artist[]>(CONCERT5_FALLBACK_ARTISTS);
@@ -417,6 +426,12 @@ export default function ArtistLineup() {
       label: "CONCERTZ #5",
       bannerImage: "/images/coc5-flyer.png",
       artists: concert5Artists,
+    },
+    {
+      id: "concert6",
+      label: "CONCERTZ #6",
+      bannerImage: "/images/coc-banner-dark.jpeg",
+      artists: CONCERT6_FALLBACK_ARTISTS,
     },
   ];
 
