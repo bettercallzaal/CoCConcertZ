@@ -496,6 +496,201 @@ export default async function EventPage({ params }: Props) {
           </section>
         )}
 
+        {/* ── Recap ───────────────────────────────────────────────────────── */}
+        {event.status === "completed" && event.recap && (
+          <section style={{ marginBottom: "56px" }}>
+            <div
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: "0.65rem",
+                letterSpacing: "4px",
+                textTransform: "uppercase",
+                color: "var(--yellow)",
+                marginBottom: "8px",
+                opacity: 0.8,
+              }}
+            >
+              // Show Recap
+            </div>
+            <h2
+              style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(2rem, 5vw, 3rem)",
+                letterSpacing: "3px",
+                color: "#fff",
+                marginBottom: "20px",
+                marginTop: "4px",
+              }}
+            >
+              What Went Down
+            </h2>
+
+            <p
+              style={{
+                color: "var(--text)",
+                lineHeight: 1.85,
+                fontSize: "1.05rem",
+                marginBottom: "32px",
+                whiteSpace: "pre-wrap",
+              }}
+            >
+              {event.recap.summary}
+            </p>
+
+            {event.recap.highlights && event.recap.highlights.length > 0 && (
+              <>
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.7rem",
+                    letterSpacing: "3px",
+                    textTransform: "uppercase",
+                    color: "var(--cyan)",
+                    marginBottom: "12px",
+                  }}
+                >
+                  Moments
+                </div>
+                <ul
+                  style={{
+                    listStyle: "none",
+                    padding: 0,
+                    margin: "0 0 32px 0",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                  }}
+                >
+                  {event.recap.highlights.map((h, i) => (
+                    <li
+                      key={i}
+                      style={{
+                        color: "var(--text)",
+                        lineHeight: 1.6,
+                        fontSize: "0.95rem",
+                        paddingLeft: "20px",
+                        position: "relative",
+                      }}
+                    >
+                      <span
+                        style={{
+                          position: "absolute",
+                          left: 0,
+                          top: "10px",
+                          width: "8px",
+                          height: "8px",
+                          background: "var(--yellow)",
+                          opacity: 0.6,
+                        }}
+                      />
+                      {h}
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
+
+            {event.recap.videos && event.recap.videos.length > 0 && (
+              <>
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "0.7rem",
+                    letterSpacing: "3px",
+                    textTransform: "uppercase",
+                    color: "var(--cyan)",
+                    marginBottom: "12px",
+                  }}
+                >
+                  Watch
+                </div>
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                    gap: "12px",
+                    marginBottom: "32px",
+                  }}
+                >
+                  {event.recap.videos.map((v) => (
+                    <a
+                      key={v.youtubeId}
+                      href={`https://www.youtube.com/watch?v=${v.youtubeId}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{
+                        textDecoration: "none",
+                        background: "var(--card)",
+                        border: "1px solid rgba(255,214,0,0.2)",
+                        padding: "12px",
+                        display: "block",
+                      }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={`https://img.youtube.com/vi/${v.youtubeId}/mqdefault.jpg`}
+                        alt={v.title}
+                        style={{
+                          width: "100%",
+                          aspectRatio: "16/9",
+                          objectFit: "cover",
+                          marginBottom: "8px",
+                        }}
+                      />
+                      <div
+                        style={{
+                          fontFamily: "var(--font-display)",
+                          fontSize: "0.85rem",
+                          letterSpacing: "1px",
+                          textTransform: "uppercase",
+                          color: "var(--yellow)",
+                          lineHeight: 1.3,
+                          marginBottom: "2px",
+                        }}
+                      >
+                        {v.title}
+                      </div>
+                      {v.artist && (
+                        <div
+                          style={{
+                            fontFamily: "var(--font-mono)",
+                            fontSize: "0.7rem",
+                            color: "var(--text-dim)",
+                            letterSpacing: "1px",
+                          }}
+                        >
+                          {v.artist}
+                        </div>
+                      )}
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
+
+            {event.recap.transcriptUrls && event.recap.transcriptUrls.length > 0 && (
+              <div
+                style={{
+                  fontFamily: "var(--font-mono)",
+                  fontSize: "0.8rem",
+                  color: "var(--text-dim)",
+                  letterSpacing: "1px",
+                }}
+              >
+                Full transcripts:{" "}
+                {event.recap.transcriptUrls.map((u, i) => (
+                  <span key={u}>
+                    {i > 0 && " · "}
+                    <a href={u} target="_blank" rel="noopener noreferrer" style={{ color: "var(--cyan)" }}>
+                      segment {i + 1}
+                    </a>
+                  </span>
+                ))}
+              </div>
+            )}
+          </section>
+        )}
+
         {/* ── Lineup ──────────────────────────────────────────────────────── */}
         <section style={{ marginBottom: "56px" }}>
           <div
