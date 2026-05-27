@@ -26,7 +26,7 @@ const NEW_DESCRIPTION =
   "First international COC Concertz - a Zambian music showcase curated by Iman (lead of the 45-builder hackathon cohort run in Zambia, May 2026). Live performances inside Stilo World on Spatial. Lineup announced closer to showtime.";
 const NEW_ANNOUNCEMENT =
   "COC Concertz #6 - Live from Zambia. Sat Jun 13, 4PM EST. RSVP open.";
-const RSVP_LINK = "https://luma.com/njzxpsgn";
+const RSVP_LINK = "https://ticket.cocconcertz.com";
 const SPATIAL =
   "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0";
 const BANNER = "/images/coc-banner-dark.jpeg";

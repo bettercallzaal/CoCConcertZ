@@ -124,7 +124,7 @@ export default function Home() {
                     e.preventDefault();
                     sdk.actions.composeCast({
                       text: "COC Concertz #6: Live from Zambia. First international showcase — Zambian artists curated by Iman, hosted in Stilo World. Sat Jun 13, 4PM EST. Free RSVP:",
-                      embeds: ['https://luma.com/njzxpsgn', 'https://cocconcertz.com/images/coc-banner-dark.jpeg'],
+                      embeds: ['https://ticket.cocconcertz.com', 'https://cocconcertz.com/images/coc-banner-dark.jpeg'],
                       channelKey: 'cocconcertz'
                     });
                   });

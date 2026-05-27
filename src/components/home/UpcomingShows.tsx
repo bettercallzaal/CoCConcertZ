@@ -12,7 +12,7 @@ const HARDCODED_EVENTS = [
     desc: "First international showcase — Zambian artists curated by Iman. Live in Stilo World.",
     date: "JUN 13, 2026 @ 4PM EST",
     isNextUp: true,
-    rsvpLink: "https://luma.com/njzxpsgn",
+    rsvpLink: "https://ticket.cocconcertz.com",
   },
 ];
 
