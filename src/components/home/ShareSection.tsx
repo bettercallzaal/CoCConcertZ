@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 
 const SHARE = {
   url: "https://cocconcertz.com",
-  rsvp: "https://luma.com/njzxpsgn",
+  rsvp: "https://ticket.cocconcertz.com",
   flyer: "https://cocconcertz.com/images/coc-banner-dark.jpeg",
   text:
     "COC Concertz #6: Live from Zambia. First international showcase — Zambian artists curated by Iman, hosted in Stilo World.\n\nSat Jun 13, 4PM EST. Free RSVP:",
