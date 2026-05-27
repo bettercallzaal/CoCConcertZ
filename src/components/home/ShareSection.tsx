@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 
 const SHARE = {
   url: "https://cocconcertz.com",
-  rsvp: "https://luma.com/njzxpsgn",
+  rsvp: "https://ticket.cocconcertz.com",
   flyer: "https://cocconcertz.com/images/coc6-flyer.png",
   text:
     "COC Concertz #6: The African Experience. Iman Afrikah + Santana headline COC's first African showcase, hosted in Stilo World.\n\nSat Jun 13, 4PM EST. Free RSVP:",

@@ -12,7 +12,7 @@ const HARDCODED_EVENTS = [
     desc: "Iman Afrikah + Santana headline COC's first African showcase. Live in Stilo World.",
     date: "JUN 13, 2026 @ 4PM EST",
     isNextUp: true,
-    rsvpLink: "https://luma.com/njzxpsgn",
+    rsvpLink: "https://ticket.cocconcertz.com",
   },
 ];
 

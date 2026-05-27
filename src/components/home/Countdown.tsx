@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const upcomingShows = [
-  { name: "+COC CONCERTZ #6: THE AFRICAN EXPERIENCE", date: "2026-06-13T20:00:00Z", display: "June 13, 2026 \u00b7 4:00 PM EST", rsvp: "https://luma.com/njzxpsgn" },
+  { name: "+COC CONCERTZ #6: THE AFRICAN EXPERIENCE", date: "2026-06-13T20:00:00Z", display: "June 13, 2026 \u00b7 4:00 PM EST", rsvp: "https://ticket.cocconcertz.com" },
 ];
 
 function getNextShow() {
@@ -269,7 +269,7 @@ export default function Countdown() {
               <span className="label">Sec</span>
             </div>
           </div>
-          <a className="rsvp-btn" href={nextShow.rsvp ?? "https://luma.com/njzxpsgn"} target="_blank" rel="noopener">
+          <a className="rsvp-btn" href={nextShow.rsvp ?? "https://ticket.cocconcertz.com"} target="_blank" rel="noopener">
             RSVP NOW — FREE
           </a>
         </>

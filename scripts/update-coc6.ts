@@ -26,7 +26,7 @@ const NEW_DESCRIPTION =
   "COC's first African showcase. Iman Afrikah (Zambia-based producer, building on Base) and Santana co-headline live inside Stilo World on Spatial. Hosted by BetterCallZaal + ThyRevolution.";
 const NEW_ANNOUNCEMENT =
   "COC Concertz #6: The African Experience. Iman Afrikah + Santana, Sat Jun 13, 4PM EST. RSVP open.";
-const RSVP_LINK = "https://luma.com/njzxpsgn";
+const RSVP_LINK = "https://ticket.cocconcertz.com";
 const SPATIAL =
   "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0";
 const BANNER = "/images/coc6-flyer.png";
