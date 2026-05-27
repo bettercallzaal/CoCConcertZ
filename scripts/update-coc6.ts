@@ -21,15 +21,15 @@ if (getApps().length === 0) {
 
 const db = getFirestore();
 
-const NEW_NAME = "+COC Concertz #6: Live from Zambia";
+const NEW_NAME = "+COC Concertz #6: The African Experience";
 const NEW_DESCRIPTION =
-  "First international COC Concertz - a Zambian music showcase curated by Iman (lead of the 45-builder hackathon cohort run in Zambia, May 2026). Live performances inside Stilo World on Spatial. Lineup announced closer to showtime.";
+  "COC's first African showcase. Iman Afrikah (Zambia-based producer, building on Base) and Santana co-headline live inside Stilo World on Spatial. Hosted by BetterCallZaal + ThyRevolution.";
 const NEW_ANNOUNCEMENT =
-  "COC Concertz #6 - Live from Zambia. Sat Jun 13, 4PM EST. RSVP open.";
+  "COC Concertz #6: The African Experience. Iman Afrikah + Santana, Sat Jun 13, 4PM EST. RSVP open.";
 const RSVP_LINK = "https://luma.com/njzxpsgn";
 const SPATIAL =
   "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0";
-const BANNER = "/images/coc-banner-dark.jpeg";
+const BANNER = "/images/coc6-flyer.png";
 
 async function upsertSix() {
   const snap = await db.collection("events").where("number", "==", 6).get();

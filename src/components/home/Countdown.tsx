@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 
 const upcomingShows = [
-  { name: "+COC CONCERTZ #6: LIVE FROM ZAMBIA", date: "2026-06-13T20:00:00Z", display: "June 13, 2026 \u00b7 4:00 PM EST", rsvp: "https://luma.com/njzxpsgn" },
+  { name: "+COC CONCERTZ #6: THE AFRICAN EXPERIENCE", date: "2026-06-13T20:00:00Z", display: "June 13, 2026 \u00b7 4:00 PM EST", rsvp: "https://luma.com/njzxpsgn" },
 ];
 
 function getNextShow() {

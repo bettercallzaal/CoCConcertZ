@@ -8,8 +8,8 @@ const HARDCODED_EVENTS = [
   {
     id: "hc-6",
     tag: "Next Up",
-    name: "+COC CONCERTZ #6: LIVE FROM ZAMBIA",
-    desc: "First international showcase — Zambian artists curated by Iman. Live in Stilo World.",
+    name: "+COC CONCERTZ #6: THE AFRICAN EXPERIENCE",
+    desc: "Iman Afrikah + Santana headline COC's first African showcase. Live in Stilo World.",
     date: "JUN 13, 2026 @ 4PM EST",
     isNextUp: true,
     rsvpLink: "https://luma.com/njzxpsgn",

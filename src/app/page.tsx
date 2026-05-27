@@ -123,8 +123,8 @@ export default function Home() {
                   farcasterBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     sdk.actions.composeCast({
-                      text: "COC Concertz #6: Live from Zambia. First international showcase — Zambian artists curated by Iman, hosted in Stilo World. Sat Jun 13, 4PM EST. Free RSVP:",
-                      embeds: ['https://luma.com/njzxpsgn', 'https://cocconcertz.com/images/coc-banner-dark.jpeg'],
+                      text: "COC Concertz #6: The African Experience. Iman Afrikah + Santana headline COC's first African showcase, hosted in Stilo World. Sat Jun 13, 4PM EST. Free RSVP:",
+                      embeds: ['https://luma.com/njzxpsgn', 'https://cocconcertz.com/images/coc6-flyer.png'],
                       channelKey: 'cocconcertz'
                     });
                   });
