@@ -17,7 +17,7 @@ const HARDCODED_EVENTS = [
     id: "hc-4",
     name: "+COC CONCERTZ #4",
     desc: "Joseph Goats, Tom Fellenz, Stilo World — third StiloWorld show",
-    date: "APRIL 2026",
+    date: "APRIL 11, 2026",
     flyerUrl: "/images/coc4.jpg",
     flyerAlt: "COC ConcertZ #4 Flyer",
   },
@@ -40,10 +40,10 @@ const HARDCODED_EVENTS = [
   {
     id: "hc-1",
     name: "+COC CONCERTZ #1",
-    desc: "The first-ever COC Concertz metaverse show",
+    desc: "The first-ever COC Concertz metaverse show — AttaBotty, Clejan",
     date: "MARCH 29, 2025",
-    flyerUrl: null,
-    flyerAlt: null,
+    flyerUrl: "/images/coc1-flyer.svg",
+    flyerAlt: "COC ConcertZ #1 Flyer",
   },
 ];
 
