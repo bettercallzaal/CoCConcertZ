@@ -19,8 +19,8 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **"Now Playing" bar** — fixed bottom bar showing the current song and artist with animated equalizer bars, updated live by admin during shows
 - **Post-show recap cards** — auto-generated after shows with visitor count, chat messages, artists performed. Shareable, displayed on homepage for 7 days
 - Spatial.io metaverse venue embed with Twitch stream toggle
-- Artist lineup with tabbed panels per concert (ConcertZ #1-4) with staggered entrance animations and border glow effects
-- ConcertZ #4 artist cards pull live from Firestore — artist profile edits appear on the site
+- Artist lineup with tabbed panels per concert (ConcertZ #1-6) with staggered entrance animations and border glow effects, default tab is the upcoming show
+- All concert artist cards pull live from Firestore — artist profile edits appear on the site
 - Upcoming and past shows connected to Firestore (admin-managed)
 - Live visitor count with real-time Firestore presence
 - Announcement banner system (admin-controlled, dismissible)
@@ -48,6 +48,7 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - RSVP button (upcoming) or "JOIN NOW" (live)
 - Venue links (Spatial.io + stream)
 - Dynamic SEO metadata with flyer as OG image
+- **Show recap section** for completed events — summary paragraph, highlight bullets, YouTube clip grid (linking out), and optional transcript URL list. Recap content lives in `events/{id}.recap` as a structured field, populated by `scripts/seed-past-events.ts` or hand-edited in Firestore.
 
 ### Admin Dashboard (`/admin`)
 - **Event Management** — full CRUD for events (name, date, description, venue, RSVP link, status, flyer/banner)
@@ -187,13 +188,14 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 - `stats/visitors` — real-time visitor count
 
 ### Concert History
-| # | Date | Artists |
-|---|------|---------|
-| 1 | March 29, 2025 | AttaBotty, Clejan |
-| 2 | October 11, 2025 | Tom Fellenz, Stilo World, AttaBotty |
-| 3 | March 7, 2026 | Duo Do Musica, Joseph Goats, Stilo World |
-| 4 | April 11, 2026 | Joseph Goats, Stilo, Tom Fellenz |
-| 5 | May 9, 2026 | TBA |
+| # | Date | Theme | Artists | Status |
+|---|------|-------|---------|--------|
+| 1 | March 29, 2025 | The pilot | AttaBotty, Clejan | completed |
+| 2 | October 11, 2025 | Second installment | Tom Fellenz, Stilo World, AttaBotty | completed |
+| 3 | March 7, 2026 | + WaveWarZ battle | Dúo Dø Musica, Joseph Goats, Stilo World | completed |
+| 4 | April 11, 2026 | The rebrand show | Joseph Goats, Tom Fellenz, Stilo World | completed |
+| 5 | May 9, 2026 | A Day in the Life | GodCloud | completed (recap pending) |
+| 6 | June 13, 2026 | The African Experience | Iman Afrikah, Santana | upcoming |
 
 ---
 
@@ -265,6 +267,29 @@ CLOUDINARY_API_SECRET=
 ADMIN_PASSCODE=
 ARTIST_PASSCODES={"code1":"artist-slug-1","code2":"artist-slug-2"}
 ```
+
+---
+
+## Operational Scripts
+
+All scripts live in `scripts/` and are idempotent. Run with `npx tsx scripts/<name>.ts` after `.env.local` is in place.
+
+| Script | What it does |
+|--------|-------------|
+| `seed.ts` | One-shot artist seeding (legacy bootstrap) |
+| `seed-past-events.ts` | Upserts events #1-#4 with name, date, flyer, lineup links, and recap content |
+| `update-coc5.ts` | Patches the COC #5 event doc (GodCloud) and flips status |
+| `update-coc6.ts` | Upserts COC #6 (The African Experience) and marks #5 completed |
+| `seed-iman-crew.ts` | Original Iman crew artist doc (now renamed via setup-coc6-artists.ts) |
+| `setup-coc6-artists.ts` | Renames Iman doc to `iman-afrikah`, creates `santana`, links both to event #6, generates portal passcodes |
+| `seed-godcloud-artist.ts` | Original GodCloud artist seed |
+| `seed-duo-do.ts` | Stub artist doc for Dúo Dø Musica |
+| `seed-artist-socials.ts` | Bulk-merges public socials into existing artist docs (idempotent merge, never overwrites) |
+| `dedupe-fellenz.ts` | One-shot cleanup that merged the older `tom-fellenz` doc into the canonical `fellenz` doc |
+| `list-artists.ts` | Read-only inventory of the artists collection - slug, stageName, socials keys, linked event count |
+| `check-cloudinary-rule.ts` | Verifies the Cloudinary upload preset/rule used by the artist portal |
+
+The full event recap data model is in `src/lib/types.ts` as `EventRecap` (summary, highlights, videos, transcriptUrls) — render path is in `src/app/events/[number]/page.tsx`.
 
 ---
 
