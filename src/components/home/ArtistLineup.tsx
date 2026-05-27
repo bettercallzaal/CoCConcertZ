@@ -213,8 +213,9 @@ const HARDCODED_CONCERTS: Concert[] = [
     artists: [
       {
         name: "DÚO DØ MUSICA",
-        role: "Headline Act",
-        bio: "Opening live set from 4:15 – 4:45 PM EST.",
+        role: "Opening Act",
+        bio: "Latin music duo. Opened COC ConcertZ #3 with a live set 4:15 – 4:45 PM EST, leading into the English vs Spanish WaveWarZ Community Battle.",
+        link: { url: "https://www.thezao.com/community/duo-do-musica", label: "Dúo Dø Musica on The ZAO" },
       },
       {
         name: "JOSEPH GOATS",
