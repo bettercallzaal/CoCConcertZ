@@ -61,7 +61,7 @@ const EVENTS: EventSeed[] = [
     artistSlugs: ["attabotty", "clejan"],
     recap: {
       summary:
-        "The pilot. AttaBotty opened with an immersive audiovisual set blending lo-fi, EDM, and cinematic orchestra with 2D/3D animation. Clejan followed with a trap-violin set built around her signature classical-meets-hip-hop sound. Two artists, one Spatial venue, the genesis of the whole COC Concertz series.",
+        "The pilot. AttaBotty opened with an immersive audiovisual set blending lo-fi, EDM, and cinematic orchestra with 2D/3D animation. Clejan followed with a trap-violin set built around his signature classical-meets-hip-hop sound. Two artists, one Spatial venue, the genesis of the whole COC Concertz series.",
       highlights: [
         "First time COC ran live music inside a Spatial.io metaverse venue",
         "AttaBotty's audiovisual storytelling - sound design + live animation",
@@ -81,13 +81,13 @@ const EVENTS: EventSeed[] = [
     date: new Date("2025-10-11T20:00:00Z"),
     flyerUrl: "/images/concertz2-flyer.jpg",
     description:
-      "Second installment. Tom Fellenz opened with a 30-minute live set in the SaltyVerse Auditorium. Stilo World DJed an extended WaveWarZ set blending beats with Web3 culture. AttaBotty returned to close with another audiovisual set.",
+      "Second installment. Tom Fellenz opened with a 30-minute live set in the SaltyVerse Auditorium. Stilo World DJ'd an extended WaveWarZ set blending beats with Web3 culture. AttaBotty returned to close with another audiovisual set.",
     rsvpLink: "",
     spatialLink: SPATIAL,
     artistSlugs: ["fellenz", "stilo", "attabotty"],
     recap: {
       summary:
-        "Bigger crowd, bigger sound. Three artists, three sets, one venue. Tom Fellenz opened with a live performance, Stilo World DJed WaveWarZ (the English vs Spanish community battle format), and AttaBotty closed with a 30-minute audiovisual finale.",
+        "Bigger crowd, bigger sound. Three artists, three sets, one venue. Tom Fellenz opened with a live performance, Stilo World DJ'd WaveWarZ (the English vs Spanish community battle format), and AttaBotty closed with a 30-minute audiovisual finale.",
       highlights: [
         "First time WaveWarZ ran inside a COC Concertz",
         "Tom Fellenz solo live set in the SaltyVerse Auditorium",

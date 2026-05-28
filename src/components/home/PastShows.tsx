@@ -79,7 +79,7 @@ export default function PastShows() {
   }, []);
 
   return (
-    <section className="reveal" style={{ marginTop: 100 }}>
+    <section id="past-shows" className="reveal" style={{ marginTop: 100, scrollMarginTop: 90 }}>
       <span className="section-label">Archive</span>
       <h2>PAST SHOWS</h2>
       <div className="past-shows-grid">

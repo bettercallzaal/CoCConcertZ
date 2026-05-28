@@ -443,7 +443,7 @@ export default function ArtistLineup() {
   ];
 
   return (
-    <section className="reveal" style={{ marginTop: 100 }}>
+    <section id="artists" className="reveal" style={{ marginTop: 100, scrollMarginTop: 90 }}>
       <span className="section-label">Lineup</span>
       <h2>ARTISTS</h2>
       <div className="artists-tabs">
