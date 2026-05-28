@@ -53,7 +53,7 @@ const EVENTS: EventSeed[] = [
     number: 1,
     name: "+COC Concertz #1",
     date: new Date("2025-03-29T20:00:00Z"),
-    flyerUrl: "/images/coc1-flyer.svg",
+    flyerUrl: "/images/coc1-flyer.png",
     description:
       "The first-ever COC Concertz - AttaBotty and Clejan live in a Spatial metaverse venue. Proof of concept for what became the series.",
     rsvpLink: "",

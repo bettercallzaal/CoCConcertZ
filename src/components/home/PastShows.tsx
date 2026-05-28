@@ -42,7 +42,7 @@ const HARDCODED_EVENTS = [
     name: "+COC CONCERTZ #1",
     desc: "The first-ever COC Concertz metaverse show — AttaBotty, Clejan",
     date: "MARCH 29, 2025",
-    flyerUrl: "/images/coc1-flyer.svg",
+    flyerUrl: "/images/coc1-flyer.png",
     flyerAlt: "COC ConcertZ #1 Flyer",
   },
 ];

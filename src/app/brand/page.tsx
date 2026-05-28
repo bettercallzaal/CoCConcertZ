@@ -37,7 +37,7 @@ const LOGOS = [
 ];
 
 const FLYERS = [
-  { file: "coc1-flyer.svg", num: 1, date: "Mar 29, 2025", title: "AttaBotty + Clejan" },
+  { file: "coc1-flyer.png", num: 1, date: "Mar 29, 2025", title: "AttaBotty + Clejan" },
   { file: "concertz2-flyer.jpg", num: 2, date: "Oct 11, 2025", title: "Tom Fellenz / Stilo / AttaBotty" },
   { file: "concertz3-flyer.jpeg", num: 3, date: "Mar 7, 2026", title: "Dúo Dø / Joseph Goats / Stilo" },
   { file: "coc4.jpg", num: 4, date: "Apr 11, 2026", title: "The Rebrand Show" },
