@@ -25,8 +25,22 @@ export interface Event {
   description: string;
   announcement?: string;
   artists: EventArtist[];
+  recap?: EventRecap;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface EventRecap {
+  summary: string;
+  highlights?: string[];
+  videos?: RecapVideo[];
+  transcriptUrls?: string[];
+}
+
+export interface RecapVideo {
+  title: string;
+  youtubeId: string;
+  artist?: string;
 }
 
 export interface EventArtist {

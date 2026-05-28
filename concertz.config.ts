@@ -6,8 +6,8 @@ export const config = {
     url: "https://cocconcertz.com",
   },
   venue: {
-    spatialUrl: "https://www.spatial.io/s/STILO-WORLD-DESIGN-BY-CYBERNERDBABY-63c48d8dbacec9c570e6acbb?share=1395970456673833349",
-    spatialEmbedUrl: "https://www.spatial.io/embed/STILO-WORLD-DESIGN-BY-CYBERNERDBABY-63c48d8dbacec9c570e6acbb?share=1395970456673833349",
+    spatialUrl: "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0",
+    spatialEmbedUrl: "https://www.spatial.io/embed/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0",
     twitchChannel: "bettercallzaal",
   },
   communities: [

@@ -33,13 +33,18 @@ interface Concert {
   bannerImage?: string;
 }
 
-// Placeholder for ConcertZ #6 - lineup curated by Iman, names announced closer to date
+// Confirmed lineup for ConcertZ #6 - The African Experience
 const CONCERT6_FALLBACK_ARTISTS: Artist[] = [
   {
-    name: "IMAN AND ZAMBIA CREW",
-    role: "Headliners · Curated by Iman Afrikah",
-    bio: "First international COC Concertz - a curated set from Iman and his Zambia crew (the 45-builder hackathon cohort he ran in Zambia in May). Individual artist names land closer to showtime.",
+    name: "IMAN AFRIKAH",
+    role: "Headliner · Curator",
+    bio: "Producer, sound engineer, and live performer based in Lusaka, Zambia. Web3 musician building on Base. Curating COC's first African showcase and bringing his hackathon crew along for the night.",
     link: { url: "https://x.com/Imanafrikah", label: "Iman Afrikah on X" },
+  },
+  {
+    name: "SANTANA",
+    role: "Co-headliner",
+    bio: "Co-headlining COC's African Experience alongside Iman Afrikah.",
   },
 ];
 
@@ -208,8 +213,9 @@ const HARDCODED_CONCERTS: Concert[] = [
     artists: [
       {
         name: "DÚO DØ MUSICA",
-        role: "Headline Act",
-        bio: "Opening live set from 4:15 – 4:45 PM EST.",
+        role: "Opening Act",
+        bio: "Latin music duo. Opened COC ConcertZ #3 with a live set 4:15 – 4:45 PM EST, leading into the English vs Spanish WaveWarZ Community Battle.",
+        link: { url: "https://www.thezao.com/community/duo-do-musica", label: "Dúo Dø Musica on The ZAO" },
       },
       {
         name: "JOSEPH GOATS",
@@ -431,7 +437,7 @@ export default function ArtistLineup() {
     {
       id: "concert6",
       label: "CONCERTZ #6",
-      bannerImage: "/images/coc-banner-dark.jpeg",
+      bannerImage: "/images/coc6-flyer.png",
       artists: CONCERT6_FALLBACK_ARTISTS,
     },
   ];
