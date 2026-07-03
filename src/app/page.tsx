@@ -23,6 +23,8 @@ import LiveMode from "@/components/home/LiveMode";
 import ShowRecap from "@/components/home/ShowRecap";
 import EmailSignup from "@/components/home/EmailSignup";
 import VideoHighlights from "@/components/home/VideoHighlights";
+import BattleVote from "@/components/home/BattleVote";
+import WaveWarzHistory from "@/components/home/WaveWarzHistory";
 
 export default function Home() {
   return (
@@ -49,6 +51,9 @@ export default function Home() {
         {/* Next Show Countdown */}
         <Countdown />
 
+        {/* Live Battle Vote (renders only when a battle is live) */}
+        <BattleVote />
+
         {/* Post-Show Recap (shows for 7 days after a completed event) */}
         <ShowRecap />
 
@@ -65,6 +70,8 @@ export default function Home() {
           <About />
           <div className="section-divider" />
           <ArtistLineup />
+          <div className="section-divider" />
+          <WaveWarzHistory />
           <div className="section-divider" />
           <HowToJoin />
           <div className="section-divider" />

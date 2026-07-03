@@ -106,6 +106,28 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Live battle voting (BattleVote widget). Battle docs are admin-created;
+    // votes are public-create with the browser session id as the doc id -
+    // create-only + fixed id = one vote per session. Same App Check caveat
+    // as other public-write collections.
+    match /battles/{battleId} {
+      allow read: if true;
+      allow write: if false;
+
+      match /votes/{sessionId} {
+        allow read: if true;
+
+        allow create: if
+          request.resource.data.keys().hasOnly(['choice', 'createdAt'])
+          && request.resource.data.choice in ['a', 'b']
+          && timestampIsRequestTime(request.resource.data.createdAt)
+          && sessionId.size() >= 8 && sessionId.size() <= 64
+          && get(/databases/$(database)/documents/battles/$(battleId)).data.status == 'live';
+
+        allow update, delete: if false;
+      }
+    }
+
     // Flyer-contest entries (COC #7 thumbnail contest). Same public-write model
     // as gallery: Cloudinary URL + validated fields; `winner` is admin-only
     // (set via Admin SDK, which bypasses rules).
