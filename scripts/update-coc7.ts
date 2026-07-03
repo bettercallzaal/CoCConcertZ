@@ -24,26 +24,20 @@ if (getApps().length === 0) {
 
 const db = getFirestore();
 
-// ---- FILL THESE -----------------------------------------------------------
-const SHOW_DATE_UTC = "TBD"; // e.g. "2026-08-08T20:00:00Z" (4PM EST)
-const SHOW_DATE_DISPLAY = "TBD"; // e.g. "Sat Aug 8, 4PM EST"
-const LINEUP_TEXT = "TBD"; // e.g. "DJ Zaal + WaveWarZ crew battle"
-// ---------------------------------------------------------------------------
+const SHOW_DATE_UTC = "2026-07-18T20:00:00Z"; // Sat Jul 18, 4PM EST
+const SHOW_DATE_DISPLAY = "Sat Jul 18, 4PM EST";
+const LINEUP_TEXT = "Full WaveWarZ artist lineup announced the week of the show";
 
 const NEW_NAME = "+COC Concertz #7: WaveWarZ Takeover";
 const NEW_DESCRIPTION =
-  `The WaveWarZ crew takes over Stilo World. DJ Zaal on the decks with a full WaveWarZ community battle. ${LINEUP_TEXT}. Hosted by BetterCallZaal + ThyRevolution.`;
+  `The WaveWarZ crew takes over Stilo World. DJ Zaal on the decks with WaveWarZ artists live inside Spatial. ${LINEUP_TEXT}. Hosted by BetterCallZaal + ThyRevolution.`;
 const NEW_ANNOUNCEMENT =
-  `COC Concertz #7: WaveWarZ Takeover. DJ Zaal + WaveWarZ crew, ${SHOW_DATE_DISPLAY}. RSVP open.`;
+  `COC Concertz #7: WaveWarZ Takeover. DJ Zaal + WaveWarZ artists, ${SHOW_DATE_DISPLAY}. RSVP open.`;
 const RSVP_LINK = "https://ticket.cocconcertz.com";
 const SPATIAL =
   "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0";
-const BANNER = "/images/coc7-flyer.png";
-
-if ([SHOW_DATE_UTC, SHOW_DATE_DISPLAY, LINEUP_TEXT].some((v) => v === "TBD")) {
-  console.error("ERROR: fill the TBD constants at the top of update-coc7.ts first.");
-  process.exit(1);
-}
+// Placeholder until the community thumbnail lands - swap to /images/coc7-flyer.png
+const BANNER = "/images/wavewarz-battle.jpeg";
 
 async function upsertSeven() {
   const snap = await db.collection("events").where("number", "==", 7).get();

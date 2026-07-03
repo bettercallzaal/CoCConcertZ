@@ -123,8 +123,8 @@ export default function Home() {
                   farcasterBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     sdk.actions.composeCast({
-                      text: "COC Concertz #6: The African Experience. Iman Afrikah + Santana headline COC's first African showcase, hosted in Stilo World. Sat Jun 13, 4PM EST. Free RSVP:",
-                      embeds: ['https://ticket.cocconcertz.com', 'https://cocconcertz.com/images/coc6-flyer.png'],
+                      text: "COC Concertz #7: WaveWarZ Takeover. DJ Zaal + WaveWarZ artists live in Stilo World. Sat Jul 18, 4PM EST. Free RSVP:",
+                      embeds: ['https://ticket.cocconcertz.com', 'https://cocconcertz.com/images/wavewarz-battle.jpeg'],
                       channelKey: 'cocconcertz'
                     });
                   });

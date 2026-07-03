@@ -195,7 +195,8 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 | 3 | March 7, 2026 | + WaveWarZ battle | Dúo Dø Musica, Joseph Goats, Stilo World | completed |
 | 4 | April 11, 2026 | The rebrand show | Joseph Goats, Tom Fellenz, Stilo World | completed |
 | 5 | May 9, 2026 | A Day in the Life | GodCloud | completed (recap pending) |
-| 6 | June 13, 2026 | The African Experience | Iman Afrikah, Santana | upcoming |
+| 6 | June 13, 2026 | The African Experience | Iman Afrikah, Santana | completed (recap pending) |
+| 7 | July 18, 2026 | WaveWarZ Takeover | DJ Zaal + WaveWarZ artists (TBA week of show) | upcoming |
 
 ---
 

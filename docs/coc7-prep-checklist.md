@@ -2,11 +2,16 @@
 
 Branch: `feature/coc-7-wavewarz`. Pattern follows PR #2/#6 (the COC #6 rollover).
 
-## Blockers (need from Zaal)
+## Locked
 
-- [ ] Show date + time (assume 4PM EST unless changed)
-- [ ] Full lineup: DJ Zaal confirmed; which WaveWarZ crew artists? Battle format (e.g. English vs Spanish rematch)?
-- [ ] Flyer art -> save as `public/images/coc7-flyer.png` (+ root `images/` copy if keeping parity)
+- [x] Show date: Sat July 18, 2026, 4PM EST (2026-07-18T20:00:00Z)
+- [x] Lineup placeholder: DJ Zaal + WaveWarZ artists, full crew announced week of show
+- [x] Placeholder art: `/images/wavewarz-battle.jpeg` until community thumbnail lands
+
+## Still open
+
+- [ ] Crew lineup (week before show) -> update CONCERT7_FALLBACK_ARTISTS + Firestore artist docs
+- [ ] Community thumbnail -> save as `public/images/coc7-flyer.png`, swap refs in ShareSection, page.tsx, ArtistLineup, update-coc7.ts BANNER, rerun script
 - [ ] Luma event created? RSVP stays at ticket.cocconcertz.com or new link?
 
 ## Cleanup from #6 (overdue - show was June 13)

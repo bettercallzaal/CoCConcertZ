@@ -33,6 +33,22 @@ interface Concert {
   bannerImage?: string;
 }
 
+// ConcertZ #7 - WaveWarZ Takeover (full crew announced week of show)
+const CONCERT7_FALLBACK_ARTISTS: Artist[] = [
+  {
+    name: "DJ ZAAL",
+    role: "DJ · WaveWarZ",
+    bio: "BetterCallZaal on the decks. DJing the WaveWarZ Takeover live in Stilo World - beats, battles, and Web3 culture on Spatial.",
+    link: { url: "https://warpcast.com/bettercallzaal", label: "BetterCallZaal on Farcaster" },
+  },
+  {
+    name: "WAVEWARZ ARTISTS",
+    role: "Community Battle",
+    bio: "The WaveWarZ crew brings the community battle format back to COC Concertz. Full artist lineup announced the week of the show.",
+    image: { src: "/images/wavewarz-battle.jpeg", alt: "WaveWarZ Community Battle" },
+  },
+];
+
 // Confirmed lineup for ConcertZ #6 - The African Experience
 const CONCERT6_FALLBACK_ARTISTS: Artist[] = [
   {
@@ -383,7 +399,7 @@ function ArtistCard({ artist, cardIndex = 0 }: { artist: Artist; cardIndex?: num
 }
 
 export default function ArtistLineup() {
-  const [activeTab, setActiveTab] = useState("concert6");
+  const [activeTab, setActiveTab] = useState("concert7");
   const [animationKey, setAnimationKey] = useState(0);
   const [concert4Artists, setConcert4Artists] = useState<Artist[]>(CONCERT4_FALLBACK_ARTISTS);
   const [concert5Artists, setConcert5Artists] = useState<Artist[]>(CONCERT5_FALLBACK_ARTISTS);
@@ -439,6 +455,12 @@ export default function ArtistLineup() {
       label: "CONCERTZ #6",
       bannerImage: "/images/coc6-flyer.png",
       artists: CONCERT6_FALLBACK_ARTISTS,
+    },
+    {
+      id: "concert7",
+      label: "CONCERTZ #7",
+      bannerImage: "/images/wavewarz-battle.jpeg",
+      artists: CONCERT7_FALLBACK_ARTISTS,
     },
   ];
 
