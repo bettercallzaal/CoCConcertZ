@@ -6,23 +6,9 @@
  * FILL THE TBD CONSTANTS BELOW BEFORE RUNNING - the script refuses to run
  * while any TBD placeholder remains.
  */
-import { initializeApp, getApps, cert } from "firebase-admin/app";
-import { getFirestore } from "firebase-admin/firestore";
-import * as dotenv from "dotenv";
+import { adminDb } from "./lib/admin-init";
 
-dotenv.config({ path: ".env.local" });
-
-if (getApps().length === 0) {
-  initializeApp({
-    credential: cert({
-      projectId: process.env.FIREBASE_ADMIN_PROJECT_ID,
-      clientEmail: process.env.FIREBASE_ADMIN_CLIENT_EMAIL,
-      privateKey: process.env.FIREBASE_ADMIN_PRIVATE_KEY?.replace(/\\n/g, "\n"),
-    }),
-  });
-}
-
-const db = getFirestore();
+const db = adminDb();
 
 const SHOW_DATE_UTC = "2026-07-18T20:00:00Z"; // Sat Jul 18, 4PM EST
 const SHOW_DATE_DISPLAY = "Sat Jul 18, 4PM EST";
