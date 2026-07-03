@@ -106,6 +106,22 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Flyer-contest entries (COC #7 thumbnail contest). Same public-write model
+    // as gallery: Cloudinary URL + validated fields; `winner` is admin-only
+    // (set via Admin SDK, which bypasses rules).
+    match /contestEntries/{entryId} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.keys().hasOnly(['url', 'name', 'handle', 'createdAt'])
+        && isCloudinaryUrl(request.resource.data.url)
+        && isString(request.resource.data.name, 40)
+        && isOptionalString(request.resource.data.handle, 60)
+        && timestampIsRequestTime(request.resource.data.createdAt);
+
+      allow update, delete: if false;
+    }
+
     // -- subscribers (public create only, no read) -----------------------
     // Document fields written by EmailSignup.tsx: { email, subscribedAt }.
     // Note: EmailSignup.tsx also issues a `getDocs where email ==` query

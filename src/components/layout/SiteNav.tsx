@@ -11,6 +11,7 @@ const LINKS = [
   { href: "/", label: "Home" },
   { href: "/#past-shows", label: "Past Shows" },
   { href: "/#artists", label: "Artists" },
+  { href: "/contest", label: "Flyer Contest" },
   { href: "/brand", label: "Brand Kit" },
 ];
 
