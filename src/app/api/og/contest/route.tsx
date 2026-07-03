@@ -2,13 +2,16 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 
+// Social card for the /contest page - days-left countdown to the flyer deadline.
+const DEADLINE = new Date("2026-07-11T03:59:00Z"); // Fri Jul 10, 11:59 PM EST
+
 export async function GET() {
-  const eventDate = new Date("2026-07-18T20:00:00Z");
   const now = new Date();
   const diffDays = Math.max(
     0,
-    Math.ceil((eventDate.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
+    Math.ceil((DEADLINE.getTime() - now.getTime()) / (1000 * 60 * 60 * 24))
   );
+  const open = DEADLINE.getTime() > now.getTime();
 
   return new ImageResponse(
     (
@@ -27,22 +30,23 @@ export async function GET() {
       >
         <div
           style={{
-            fontSize: 32,
-            letterSpacing: "0.2em",
+            fontSize: 30,
+            letterSpacing: "0.25em",
             opacity: 0.6,
             marginBottom: 16,
           }}
         >
-          LIVE IN THE METAVERSE
+          COMMUNITY FLYER CONTEST
         </div>
         <div
           style={{
-            fontSize: 80,
+            fontSize: 72,
             fontWeight: 900,
             letterSpacing: "0.05em",
+            textAlign: "center",
           }}
         >
-          COC CONCERTZ #7
+          DESIGN THE COC #7 FLYER
         </div>
         <div
           style={{
@@ -52,26 +56,30 @@ export async function GET() {
             letterSpacing: "0.15em",
           }}
         >
-          JULY 18, 2026 · 4PM EST
+          WAVEWARZ TAKEOVER · JULY 18 · STILO WORLD
         </div>
         <div
           style={{
-            fontSize: 64,
+            fontSize: 56,
             fontWeight: 900,
             marginTop: 32,
           }}
         >
-          {diffDays > 0 ? `IN ${diffDays} DAY${diffDays !== 1 ? "S" : ""}` : "TODAY"}
+          {open
+            ? diffDays > 0
+              ? `${diffDays} DAY${diffDays !== 1 ? "S" : ""} LEFT TO SUBMIT`
+              : "FINAL HOURS TO SUBMIT"
+            : "SUBMISSIONS CLOSED"}
         </div>
         <div
           style={{
-            fontSize: 20,
-            opacity: 0.4,
+            fontSize: 22,
+            opacity: 0.5,
             marginTop: 40,
             letterSpacing: "0.3em",
           }}
         >
-          COCCONCERTZ.COM
+          COCCONCERTZ.COM/CONTEST
         </div>
       </div>
     ),
