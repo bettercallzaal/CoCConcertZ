@@ -23,6 +23,8 @@ import LiveMode from "@/components/home/LiveMode";
 import ShowRecap from "@/components/home/ShowRecap";
 import EmailSignup from "@/components/home/EmailSignup";
 import VideoHighlights from "@/components/home/VideoHighlights";
+import BattleVote from "@/components/home/BattleVote";
+import WaveWarzHistory from "@/components/home/WaveWarzHistory";
 
 export default function Home() {
   return (
@@ -49,6 +51,9 @@ export default function Home() {
         {/* Next Show Countdown */}
         <Countdown />
 
+        {/* Live Battle Vote (renders only when a battle is live) */}
+        <BattleVote />
+
         {/* Post-Show Recap (shows for 7 days after a completed event) */}
         <ShowRecap />
 
@@ -65,6 +70,8 @@ export default function Home() {
           <About />
           <div className="section-divider" />
           <ArtistLineup />
+          <div className="section-divider" />
+          <WaveWarzHistory />
           <div className="section-divider" />
           <HowToJoin />
           <div className="section-divider" />
@@ -123,8 +130,8 @@ export default function Home() {
                   farcasterBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     sdk.actions.composeCast({
-                      text: "COC Concertz #6: The African Experience. Iman Afrikah + Santana headline COC's first African showcase, hosted in Stilo World. Sat Jun 13, 4PM EST. Free RSVP:",
-                      embeds: ['https://ticket.cocconcertz.com', 'https://cocconcertz.com/images/coc6-flyer.png'],
+                      text: "COC Concertz #7: WaveWarZ Takeover. DJ Zaal + WaveWarZ artists live in Stilo World. Sat Jul 18, 4PM EST. Free RSVP:",
+                      embeds: ['https://ticket.cocconcertz.com', 'https://cocconcertz.com/images/wavewarz-battle.jpeg'],
                       channelKey: 'cocconcertz'
                     });
                   });

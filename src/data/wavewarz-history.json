@@ -1,0 +1,95 @@
+{
+  "fetchedAt": "2026-07-03T22:53:36.645Z",
+  "totalBattles": 415,
+  "totalVolumeSol": 88.21,
+  "recent": [
+    {
+      "battleId": 1783112316,
+      "date": "Jul 3, 2026",
+      "song1Title": "EAZE OF MIND",
+      "song2Title": "PKMN - Why You Take",
+      "song1Handle": "GodclouD",
+      "song2Handle": "PKMNCTO",
+      "winnerTitle": "EAZE OF MIND",
+      "totalVolumeSol": 0,
+      "marginPct": 0
+    },
+    {
+      "battleId": 1783048896,
+      "date": "Jul 3, 2026",
+      "song1Title": "Fuck yo feelingZ ",
+      "song2Title": "Young Buck",
+      "song1Handle": "GodclouD",
+      "song2Handle": "dopestilo",
+      "winnerTitle": "Fuck yo feelingZ ",
+      "totalVolumeSol": 0.4925,
+      "marginPct": 40
+    },
+    {
+      "battleId": 1783047771,
+      "date": "Jul 3, 2026",
+      "song1Title": "BelieveWavez x Nessy the Rilla x Hurric4n3Ike (432hz)",
+      "song2Title": "Full Capacity ft. Nessy ",
+      "song1Handle": "Hurric4n3Ike",
+      "song2Handle": "RoCkY2GriMeY",
+      "winnerTitle": "BelieveWavez x Nessy the Rilla x Hurric4n3Ike (432hz)",
+      "totalVolumeSol": 0.0689,
+      "marginPct": 43
+    },
+    {
+      "battleId": 1783046665,
+      "date": "Jul 3, 2026",
+      "song1Title": "Ambition ( Intro )",
+      "song2Title": "Stay",
+      "song1Handle": "dopestilo",
+      "song2Handle": "dopestilo",
+      "winnerTitle": "Stay",
+      "totalVolumeSol": 0.003,
+      "marginPct": 100
+    },
+    {
+      "battleId": 1783045527,
+      "date": "Jul 3, 2026",
+      "song1Title": "OldWavez *NIGHT* Edition x Hurric4n3Ike",
+      "song2Title": "I'll Aim Guns At You",
+      "song1Handle": "Hurric4n3Ike",
+      "song2Handle": "RoCkY2GriMeY",
+      "winnerTitle": "OldWavez *NIGHT* Edition x Hurric4n3Ike",
+      "totalVolumeSol": 0.0246,
+      "marginPct": 36
+    },
+    {
+      "battleId": 1783045037,
+      "date": "Jul 3, 2026",
+      "song1Title": "Ambition ( Intro )",
+      "song2Title": "Mamacita",
+      "song1Handle": "dopestilo",
+      "song2Handle": "dopestilo",
+      "winnerTitle": "Mamacita",
+      "totalVolumeSol": 0.0049,
+      "marginPct": 100
+    },
+    {
+      "battleId": 1783043474,
+      "date": "Jul 3, 2026",
+      "song1Title": "Fuck yo feelingZ ",
+      "song2Title": "X Back Jumpin' Ft. Zaya",
+      "song1Handle": "GodclouD",
+      "song2Handle": "RoCkY2GriMeY",
+      "winnerTitle": "Fuck yo feelingZ ",
+      "totalVolumeSol": 0.4147,
+      "marginPct": 96
+    },
+    {
+      "battleId": 1783042237,
+      "date": "Jul 3, 2026",
+      "song1Title": "Karma's Coming",
+      "song2Title": "Can't Be Friendz Remix ",
+      "song1Handle": "Stormbourne",
+      "song2Handle": "RoCkY2GriMeY",
+      "winnerTitle": "Karma's Coming",
+      "totalVolumeSol": 0.0108,
+      "marginPct": 45
+    }
+  ]
+}

@@ -6,11 +6,11 @@ import type { Event } from "@/lib/types";
 
 const HARDCODED_EVENTS = [
   {
-    id: "hc-6",
+    id: "hc-7",
     tag: "Next Up",
-    name: "+COC CONCERTZ #6: THE AFRICAN EXPERIENCE",
-    desc: "Iman Afrikah + Santana headline COC's first African showcase. Live in Stilo World.",
-    date: "JUN 13, 2026 @ 4PM EST",
+    name: "+COC CONCERTZ #7: WAVEWARZ TAKEOVER",
+    desc: "DJ Zaal + WaveWarZ artists take over Stilo World. Full lineup announced the week of the show.",
+    date: "JUL 18, 2026 @ 4PM EST",
     isNextUp: true,
     rsvpLink: "https://ticket.cocconcertz.com",
   },

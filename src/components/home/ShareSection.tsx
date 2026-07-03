@@ -5,9 +5,9 @@ import { useMemo, useState } from "react";
 const SHARE = {
   url: "https://cocconcertz.com",
   rsvp: "https://ticket.cocconcertz.com",
-  flyer: "https://cocconcertz.com/images/coc6-flyer.png",
+  flyer: "https://cocconcertz.com/images/wavewarz-battle.jpeg",
   text:
-    "COC Concertz #6: The African Experience. Iman Afrikah + Santana headline COC's first African showcase, hosted in Stilo World.\n\nSat Jun 13, 4PM EST. Free RSVP:",
+    "COC Concertz #7: WaveWarZ Takeover. DJ Zaal + WaveWarZ artists live in Stilo World.\n\nSat Jul 18, 4PM EST. Free RSVP:",
   channelKey: "cocconcertz",
 };
 
@@ -49,7 +49,7 @@ export default function ShareSection() {
     <section className="share-section reveal" aria-label="Share">
       <span className="section-label">Spread the Word</span>
       <h2>SHARE THE SHOW</h2>
-      <p>Help us pack StiloWorld for the African Experience. One click, share everywhere.</p>
+      <p>Help us pack Stilo World for the WaveWarZ Takeover. One click, share everywhere.</p>
 
       <pre
         style={{
