@@ -13,19 +13,19 @@ Branch: `feature/coc-7-wavewarz`. Pattern follows PR #2/#6 (the COC #6 rollover)
 - [ ] Crew lineup (week before show) -> update CONCERT7_FALLBACK_ARTISTS + Firestore artist docs
 - [ ] Community thumbnail -> winner from /contest page; save as `public/images/coc7-flyer.png`, swap refs in ShareSection, page.tsx, ArtistLineup, update-coc7.ts BANNER, rerun script. Mark winning contestEntries doc `winner: true` via Admin SDK
 - [ ] Luma event created? RSVP stays at ticket.cocconcertz.com or new link?
-- [ ] Deploy firestore.rules (`npm run firebase:deploy:rules`) - new contestEntries rule must ship BEFORE /contest goes live or submissions fail
+- [x] Deploy firestore.rules - DONE 2026-07-03 (contestEntries + battles/votes rules live)
 
 ## Org-lift build queue (from cross-repo scout 2026-07-03)
 
-- [x] /contest page - flyer contest submissions + countdown + winner badge (shipped, reused FanGallery Cloudinary+Firestore plumbing; patterns from zabalartsubmission + zpoidh)
-- [ ] Live battle voting widget for show night - anonymous vote buttons + real-time tally + PoolBar-style split bar. Data shapes from wavewarzapp `src/types/firestore.ts`, split-bar logic from `src/components/PoolBar.tsx`, table/stat-tile patterns from wwtracker `components/Battles.tsx`. Est 1-2 days. DECISION NEEDED: in-site free voting vs linking out to wavewarz.com SOL battles
-- [ ] Post-show socials automation - zabalnewsletterbuilder `lib/socials.ts` (7 platform variants) + `lib/voice.ts` guardrails; COC voice already in concertz.config.ts. Est 2-3 hours
-- [ ] WaveWarZ history section - ZAOscout `src/wavewarz-battles.ts` scraper for battle stats callout. Est half day
-- [ ] Recap video pipeline - spacetovideo (Deepgram transcribe + Remotion render) rebranded to COC palette. Medium-term, needs Deepgram key + test runs. Est 1-2 days setup
+- [x] /contest page - flyer contest submissions + countdown + winner badge (reused FanGallery Cloudinary+Firestore plumbing; patterns from zabalartsubmission + zpoidh)
+- [x] Live battle voting widget - BattleVote.tsx, anonymous one-vote-per-session, real-time tally, PoolBar split bar (wavewarzapp pattern). Show-night control: `npx tsx scripts/manage-battle.ts create|close|status`
+- [x] Socials generator - `npx tsx scripts/generate-socials.ts --theme "..." --highlight "..." --link <url>` -> 7 platform drafts in COC voice (zabalnewsletterbuilder pattern)
+- [x] WaveWarZ history section - WaveWarzHistory.tsx on homepage, baked snapshot (415+ battles, 88+ SOL) via `scripts/fetch-wavewarz-history.ts` (ZAOscout port). Re-run before shows to refresh
+- [ ] Recap video pipeline - runbook at docs/recap-video-pipeline.md; needs Deepgram key + COC-branded spacetovideo fork + test run on past show audio
 
 ## Cleanup from #6 (overdue - show was June 13)
 
-- [ ] Run `scripts/update-coc7.ts` (also flips #6 to completed in Firestore)
+- [x] Run `scripts/update-coc7.ts` - DONE 2026-07-03: #6 -> completed, #7 created in prod Firestore
 - [ ] COC #6 recap: summary, highlights, YouTube clips -> `events/{id}.recap` (pattern: `scripts/patch-coc5-recap.ts`)
 - [ ] COC #5 recap still marked "pending" in README Concert History - verify done or finish it
 - [ ] Clear any stale #6 announcement banner in admin
