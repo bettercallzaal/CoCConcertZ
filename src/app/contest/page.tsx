@@ -12,8 +12,15 @@ export const metadata: Metadata = {
       "Design the official flyer for COC Concertz #7. Submissions close July 10. Winner gets full credit everywhere the flyer runs.",
     url: "https://cocconcertz.com/contest",
     siteName: "COC Concertz",
-    images: [{ url: "/images/wavewarz-battle.jpeg" }],
+    images: [{ url: "/api/og/contest", width: 1200, height: 630 }],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Flyer Contest - COC Concertz #7: WaveWarZ Takeover",
+    description:
+      "Design the official flyer for COC Concertz #7. Submissions close July 10.",
+    images: ["/api/og/contest"],
   },
 };
 
