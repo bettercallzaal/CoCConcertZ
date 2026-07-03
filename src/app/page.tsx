@@ -26,9 +26,46 @@ import VideoHighlights from "@/components/home/VideoHighlights";
 import BattleVote from "@/components/home/BattleVote";
 import WaveWarzHistory from "@/components/home/WaveWarzHistory";
 
+// Structured data for the next show - update per event rollover (see
+// docs/coc7-prep-checklist.md). Was previously only in the legacy index.html.
+const eventJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "MusicEvent",
+  name: "COC Concertz #7: WaveWarZ Takeover",
+  startDate: "2026-07-18T16:00:00-04:00",
+  eventStatus: "https://schema.org/EventScheduled",
+  eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
+  location: {
+    "@type": "VirtualLocation",
+    url: "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0",
+  },
+  image: ["https://cocconcertz.com/images/wavewarz-battle.jpeg"],
+  description:
+    "The WaveWarZ crew takes over Stilo World. DJ Zaal on the decks with WaveWarZ artists live inside the metaverse. Free entry.",
+  organizer: {
+    "@type": "Organization",
+    name: "COC Concertz",
+    url: "https://cocconcertz.com",
+  },
+  performer: [{ "@type": "MusicGroup", name: "DJ Zaal" }],
+  isAccessibleForFree: true,
+  offers: {
+    "@type": "Offer",
+    url: "https://ticket.cocconcertz.com",
+    price: "0",
+    priceCurrency: "USD",
+    availability: "https://schema.org/InStock",
+  },
+};
+
 export default function Home() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventJsonLd) }}
+      />
+
       {/* Live Mode Takeover */}
       <LiveMode />
 
