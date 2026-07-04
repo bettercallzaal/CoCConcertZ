@@ -9,7 +9,7 @@ export default function HowToJoin() {
     <section className="reveal" style={{ marginTop: 100 }}>
       <span className="section-label">Getting Started</span>
       <h2>HOW TO JOIN</h2>
-      <p style={{ marginBottom: 24 }}>Getting into the metaverse is easy — and completely free.</p>
+      <p style={{ marginBottom: 24 }}>Getting into the metaverse is easy - and completely free.</p>
       <div className="steps">
         {steps.map((step, i) => (
           <div key={step.num} className={`step reveal reveal-delay-${i + 1}`}>

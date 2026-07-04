@@ -18,12 +18,12 @@ const ibmPlexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "COC Concertz — Live Metaverse Concertz",
-  description: "COC Concertz hosts free live concertz inside the metaverse. Experience immersive music from anywhere — no tickets, no lines, just vibes.",
+  title: "COC Concertz - Live Metaverse Concertz",
+  description: "COC Concertz hosts free live concertz inside the metaverse. Experience immersive music from anywhere - no tickets, no lines, just vibes.",
   metadataBase: new URL("https://cocconcertz.com"),
   openGraph: {
-    title: "COC Concertz — Live Metaverse Concertz",
-    description: "Free live concertz inside the metaverse. Experience immersive music from anywhere — no tickets, no lines, just vibes.",
+    title: "COC Concertz - Live Metaverse Concertz",
+    description: "Free live concertz inside the metaverse. Experience immersive music from anywhere - no tickets, no lines, just vibes.",
     url: "https://cocconcertz.com",
     siteName: "COC Concertz",
     images: [{ url: "/images/coc-banner-dark.jpeg", width: 1098, height: 366, type: "image/jpeg" }],
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "COC Concertz — Live Metaverse Concertz",
+    title: "COC Concertz - Live Metaverse Concertz",
     description: "Free live concertz inside the metaverse. No tickets, no lines, just vibes.",
     images: ["/images/coc-banner-dark.jpeg"],
   },

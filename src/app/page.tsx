@@ -79,8 +79,8 @@ export default function Home() {
       {/* Corner Decorations */}
       <div className="corner-decoration top-left" />
       <div className="corner-decoration bottom-right" />
-      <div className="side-text left">COC Concertz &mdash; Live in the Metaverse</div>
-      <div className="side-text right">Web3 Music &mdash; Free Entry &mdash; No Boundaries</div>
+      <div className="side-text left">COC Concertz - Live in the Metaverse</div>
+      <div className="side-text right">Web3 Music - Free Entry - No Boundaries</div>
 
       <main>
         {/* Hero */}
