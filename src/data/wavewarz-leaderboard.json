@@ -1,0 +1,1155 @@
+{
+  "fetchedAt": "2026-07-04",
+  "source": "wavewarz-intelligence.vercel.app/leaderboards (rendered DOM scrape)",
+  "mainEventArtists": [
+    {
+      "name": "Lui",
+      "wallet": "B97zbRCUf2jhPj6Cs2QXc9EGyWdNDvQ6ExUeB7sxrTSA",
+      "xHandle": "Cryptogodlui",
+      "events": 4,
+      "wins": 4,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 30.0261,
+      "earningsSol": 0.6497
+    },
+    {
+      "name": "One",
+      "wallet": "9HMK1zVyNJhnqtgog9knwrjHtqeX6N2fjcvojfw7y2WZ",
+      "xHandle": "OneGotBeats",
+      "events": 4,
+      "wins": 4,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 10.1842,
+      "earningsSol": 0.1883
+    },
+    {
+      "name": "STILOWORLD",
+      "wallet": "BVtreDeDWXNkkRWNLEEUKBCG4hauDmQnxcoVCBRJ1C4e",
+      "xHandle": "wifiiswater",
+      "events": 4,
+      "wins": 3,
+      "losses": 1,
+      "winRatePct": 75.0,
+      "volumeSol": 41.6257,
+      "earningsSol": 0.6447
+    },
+    {
+      "name": "Geek Myth",
+      "wallet": "23oqJnEJhJ3qLTq5MjKYPgLDYjfpRmvWWzMA3Zq6NGmg",
+      "xHandle": "GeEkMyTh_ETH",
+      "events": 3,
+      "wins": 3,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 30.8768,
+      "earningsSol": 0.3906
+    },
+    {
+      "name": "Cannon Jones 973",
+      "wallet": "D3FVLnnzTZnff7xdsfdpNmeALhNnDa3hhmJaaXHjWePD",
+      "xHandle": "cannonjones973",
+      "events": 4,
+      "wins": 3,
+      "losses": 1,
+      "winRatePct": 75.0,
+      "volumeSol": 15.5288,
+      "earningsSol": 0.2838
+    },
+    {
+      "name": "Aporkalypse",
+      "wallet": "CUh7ZWej4qG4daKHA44vV7zNNeonyctt45qHZykz9WGN",
+      "xHandle": "AporkALYPSE78",
+      "events": 6,
+      "wins": 3,
+      "losses": 3,
+      "winRatePct": 50.0,
+      "volumeSol": 13.475,
+      "earningsSol": 0.2384
+    },
+    {
+      "name": "TheTech",
+      "wallet": "Bx1o7mkirgPigHwAxVQaypoRHtL6JNdLHmcrzpfyk12f",
+      "xHandle": "TheTech1987",
+      "events": 3,
+      "wins": 2,
+      "losses": 1,
+      "winRatePct": 67.0,
+      "volumeSol": 4.6054,
+      "earningsSol": 0.0909
+    },
+    {
+      "name": "R3plic4nt",
+      "wallet": "HEB2RaxfivcLVWM8RNzp6vYppUApTZaPjQpVwx4v9hVt",
+      "xHandle": "r3plic4nt206",
+      "events": 2,
+      "wins": 2,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 1.4875,
+      "earningsSol": 0.0481
+    },
+    {
+      "name": "Rome",
+      "wallet": "7a6BrTcHq21CNgY6okuYyCJczTctJnqv1zUSRAjNqNAJ",
+      "xHandle": "Sir_Cut_Em_Up",
+      "events": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRatePct": 50.0,
+      "volumeSol": 7.3192,
+      "earningsSol": 0.1043
+    },
+    {
+      "name": "Preshzino Songz",
+      "wallet": "7gR78C7mq5Bg1iFBht7kxx8F88Gpx8oy3P3y7BQeeGYz",
+      "xHandle": "preshzinosongs",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 7.1514,
+      "earningsSol": 0.1293
+    },
+    {
+      "name": "$BONGA: VibeLord",
+      "wallet": "9xMBJbs3xZ1CwpR75U7b4vpTD3ou3HbVzuHiLRE21Jgo",
+      "xHandle": "BongaSolana",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 4.2564,
+      "earningsSol": 0.0564
+    },
+    {
+      "name": "Money Miller",
+      "wallet": "j2wHMZUPNrAuj1yoGtuE47pUcQQ4EvASnkWrS1kD6hs",
+      "xHandle": "ItsMoneyMiller",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 4.0502,
+      "earningsSol": 0.0651
+    },
+    {
+      "name": "Yoshiro Mare",
+      "wallet": "F9U1Q12LtVRadwMud97Mm6K4YCBSrEgS7ZBd9vMTB1t8",
+      "xHandle": "YoshiroMare",
+      "events": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRatePct": 50.0,
+      "volumeSol": 3.7601,
+      "earningsSol": 0.082
+    },
+    {
+      "name": "PROF!T",
+      "wallet": "BFM9h9WMxGCYxqexLB5w93iSd5uye9xCyxkjchZirG4X",
+      "xHandle": "profitvspr0phet",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 3.2087,
+      "earningsSol": 0.0859
+    },
+    {
+      "name": "Kata7yst",
+      "wallet": "8SgrA1gwqwwooBdi4QBrQKnN5HtDSaLE7nFQh9nZnEcj",
+      "xHandle": "kata7yst",
+      "events": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRatePct": 50.0,
+      "volumeSol": 3.1434,
+      "earningsSol": 0.0481
+    },
+    {
+      "name": "Stormi",
+      "wallet": "2J32aabxSnAPC4YpTC6jFX6EMPRkHeovPuMNtfLs8bXp",
+      "xHandle": "Stormiunleashed",
+      "events": 3,
+      "wins": 1,
+      "losses": 2,
+      "winRatePct": 33.0,
+      "volumeSol": 2.3757,
+      "earningsSol": 0.0591
+    },
+    {
+      "name": "BallOutCut",
+      "wallet": "EB6NHP31B8hM1f4zwzKVNUD66t3CYLfse6HhD9fim1wg",
+      "xHandle": "balloutcrypto",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 2.0328,
+      "earningsSol": 0.0362
+    },
+    {
+      "name": "Ramone",
+      "wallet": "3vEb4ECM4tqfG1CLrdXqgA56KA4UcuWx9mw7puiWWQKG",
+      "xHandle": "StupidOnSol",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 1.4993,
+      "earningsSol": 0.034
+    },
+    {
+      "name": "IndieZ",
+      "wallet": "BBQ5bY8aH6NkDB7R4dZzvT1P3MANJr8CnESpJnAnXrjm",
+      "xHandle": "polyraiders",
+      "events": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRatePct": 50.0,
+      "volumeSol": 1.1265,
+      "earningsSol": 0.0374
+    },
+    {
+      "name": "CHECK",
+      "wallet": "Bf75J5XaGQkqC7ndhNWrkhWfqJnJrLrHKa3dhr2Nh3Pe",
+      "xHandle": "CheckBanchero",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 1.0972,
+      "earningsSol": 0.0177
+    },
+    {
+      "name": "JayStreetz",
+      "wallet": "59x5Y37hR6LbFSLWKitY47H4LvnakVet6hVobm6c7anx",
+      "xHandle": "I_StreetzIsHERE",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 0.9893,
+      "earningsSol": 0.0135
+    },
+    {
+      "name": "JED XO",
+      "wallet": "AmDkgFg1dbLeGppfou612eeoygbRjuXZ1Kv5hfynSurs",
+      "xHandle": "1jedxo",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 0.73,
+      "earningsSol": 0.0209
+    },
+    {
+      "name": "Metaverse Slim",
+      "wallet": "ALrXTkpkyFuxMsdJEfEhZmc8u97TVNdY43Nhq8vv3a2e",
+      "xHandle": "MetaVerseSlim",
+      "events": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRatePct": 50.0,
+      "volumeSol": 0.3868,
+      "earningsSol": 0.0202
+    },
+    {
+      "name": "XTinct",
+      "wallet": "F9uiUuWW7PLHBF7e4LoyU2xyzbJNDdQr5sRbCTnaJ5TH",
+      "xHandle": "XTincT_io",
+      "events": 1,
+      "wins": 1,
+      "losses": 0,
+      "winRatePct": 100.0,
+      "volumeSol": 0.0834,
+      "earningsSol": 0.0027
+    },
+    {
+      "name": "Hurric4n3Ike",
+      "wallet": "62g5hYiSTqj185F26c3pT6EPx4Gs1P6gL72kGNzvkbjM",
+      "xHandle": "Hurric4n3Ike",
+      "events": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRatePct": 50.0,
+      "volumeSol": 0.0,
+      "earningsSol": 0.0
+    },
+    {
+      "name": "Hurric4n3Ike",
+      "wallet": "FNjYtwKVsbQzSmoBgLqa8ZGSJTzexQJi6xmV97iakq37",
+      "xHandle": "Hurric4n3Ike",
+      "events": 2,
+      "wins": 1,
+      "losses": 1,
+      "winRatePct": 50.0,
+      "volumeSol": 0.0,
+      "earningsSol": 0.0
+    },
+    {
+      "name": "ItzWonderfull",
+      "wallet": "Bb7QyyU2rhRDSaSJhS83k2iHfnHhwS5WbGNiNPYPbSTZ",
+      "xHandle": "NFTWonderfull",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 23.3014,
+      "earningsSol": 0.4247
+    },
+    {
+      "name": "LexiBanti",
+      "wallet": "4LyAbTzpEPo21tN9rNazkU5VmkNdPBJ7HttiAT2CuB8S",
+      "xHandle": "lexibanti",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 7.2453,
+      "earningsSol": 0.113
+    },
+    {
+      "name": "Krem",
+      "wallet": "CWvdGzpNbUDRJaUVGVwFnyMCwnLikfYqA45KGgWpC5NM",
+      "xHandle": "KremBeats",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 6.6729,
+      "earningsSol": 0.0943
+    },
+    {
+      "name": "RoCkY2GriMeY",
+      "wallet": "F4HRLiYo8uk9uuF9PV23czSHRy38sgj9uPBJdx4dmZnP",
+      "xHandle": "RoCkY2GriMeY__",
+      "events": 2,
+      "wins": 0,
+      "losses": 2,
+      "winRatePct": 0.0,
+      "volumeSol": 6.6244,
+      "earningsSol": 0.1303
+    },
+    {
+      "name": "DCOOP",
+      "wallet": "tFmYZ5Uerxs6JZQrZSaDzSPnSr1UpfZfigX13swzfjo",
+      "xHandle": "DCoopOfficial",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 5.2317,
+      "earningsSol": 0.0888
+    },
+    {
+      "name": "K1DDV3NOM",
+      "wallet": "7v6RxAhGZd6MzvCZ9gxsw5t4iHaGUmG7mn4cSzSLSChu",
+      "xHandle": "K1DDV3NOM",
+      "events": 2,
+      "wins": 0,
+      "losses": 2,
+      "winRatePct": 0.0,
+      "volumeSol": 4.9413,
+      "earningsSol": 0.0764
+    },
+    {
+      "name": "Benny J",
+      "wallet": "9jAbyHvSb9PZnDkcHiu6PDckis9XqdY9GrqndDSbxVjy",
+      "xHandle": "bennyj504",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 4.2575,
+      "earningsSol": 0.3846
+    },
+    {
+      "name": "Chief",
+      "wallet": "CcXSb6iaUFZwsrMFw2htXYdVDqxPTtn4EkoyJ78XLtys",
+      "xHandle": "Chiefatn",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 4.0143,
+      "earningsSol": 0.0842
+    },
+    {
+      "name": "GODCLOUD",
+      "wallet": "9xTn9ni1UPACiB1KQy6U8gd33nzM86BP3REje9gyBZmx",
+      "xHandle": "therealgodcloud",
+      "events": 2,
+      "wins": 0,
+      "losses": 2,
+      "winRatePct": 0.0,
+      "volumeSol": 3.8231,
+      "earningsSol": 0.0625
+    },
+    {
+      "name": "Visionz",
+      "wallet": "EMXDPJp9jTaDnSdzvwzpA5zdfgbf74mwjNQc5ZAmCSNA",
+      "xHandle": "NFTcubano",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 3.5711,
+      "earningsSol": 0.058
+    },
+    {
+      "name": "Wiz",
+      "wallet": "G7oRakt851BoY5HVQM7ryP8fma3LkSVHiavyQFbuQY66",
+      "xHandle": "DaWizardBeatz_",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 3.1779,
+      "earningsSol": 0.05
+    },
+    {
+      "name": "Crypto Beat Radio",
+      "wallet": "Dtoezry5LGFEx63AaGJyWBgn5GbobTmKZ4SrX9v6BmF4",
+      "xHandle": "CryptoBeatRadio",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 2.9903,
+      "earningsSol": 0.0355
+    },
+    {
+      "name": "Goose P\u00e4rk",
+      "wallet": "F11aszq1b1p3QvuYzmJXMwFMFYw7bxTbeQ42PfQyCzNE",
+      "xHandle": "gooseparks",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 2.9709,
+      "earningsSol": 0.0389
+    },
+    {
+      "name": "$$STUPID: Atchblockbaby",
+      "wallet": "Ciu7T1FhAthTBMC7dN7KQKyRGAr2BpPg5Snq6YxBsxSm",
+      "xHandle": "TheStupidMFs",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 2.8393,
+      "earningsSol": 0.0363
+    },
+    {
+      "name": "Davyd",
+      "wallet": "3FXptfW8c1w9CQk6FRAK97vVHBPisABdHvVr2DJAurwR",
+      "xHandle": "davyd_music",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 2.3648,
+      "earningsSol": 0.0335
+    },
+    {
+      "name": "Armand",
+      "wallet": "BFjm3Cocn1gdqRe9kA9k1Wf5P5ffPtohLttpqdyAhFBb",
+      "xHandle": "Po317317",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 2.3069,
+      "earningsSol": 0.0702
+    },
+    {
+      "name": "MOZAY CALLOWAY",
+      "wallet": "2tbquBjgrCUbsxTbCHYJM1BSc3MZD3W1HXGmD5y4R8tU",
+      "xHandle": "CeoMozay",
+      "events": 2,
+      "wins": 0,
+      "losses": 2,
+      "winRatePct": 0.0,
+      "volumeSol": 2.1277,
+      "earningsSol": 0.027
+    },
+    {
+      "name": "Dr. Bruce",
+      "wallet": "9rgpHm4iSXjdN9Psarw5Lz8ftqVcV5CnE1xjrYFhz1gW",
+      "xHandle": "badkarma617",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 1.8685,
+      "earningsSol": 0.0271
+    },
+    {
+      "name": "AYOTEMI",
+      "wallet": "13gQxwput7SSr7BQSxPiRvW45Q81KtKZikzWw4A75fkc",
+      "xHandle": "AyotemiMusic",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 0.7272,
+      "earningsSol": 0.0272
+    },
+    {
+      "name": "Pokemon CTO",
+      "wallet": "E8EWyASc4DnSxyAd2BHYyuz3jcjE5Gzb6PZo9aQsATRm",
+      "xHandle": "pokemon_cto",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 0.5468,
+      "earningsSol": 0.02
+    },
+    {
+      "name": "PKMN CTO",
+      "wallet": "3upVJtamyVx9h8zseHhGDHbtqZ7n15wUh6SzNJR2GFN4",
+      "xHandle": "PKMNCTO",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 0.3786,
+      "earningsSol": 0.0095
+    },
+    {
+      "name": "GESD1",
+      "wallet": "Cx5HiWEw8m87HMPV7zcis65y6KEtFV47h8sBnhsefaYD",
+      "xHandle": "Gesd01",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 0.3232,
+      "earningsSol": 0.0067
+    },
+    {
+      "name": "Steve Strange",
+      "wallet": "EeLCjvr7sEr439saKvYEMjwPJuMEG7XyGv2pTiuGs3hG",
+      "xHandle": "Scubadadoo",
+      "events": 1,
+      "wins": 0,
+      "losses": 1,
+      "winRatePct": 0.0,
+      "volumeSol": 0.2193,
+      "earningsSol": 0.0049
+    }
+  ],
+  "benefitBattles": {
+    "totalRaisedUsd": 1497,
+    "solRedirected": 0.0769,
+    "fiatUsd": 1491,
+    "battles": 10
+  },
+  "songsRaw": [
+    {
+      "cells": [
+        "Chart King",
+        "Fuck yo feelingZ \u2197@GodclouDElectronic",
+        "100",
+        "3W\u20131LV2 \u00b7 3WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "75%",
+        "1.05 SOL",
+        "1d ago"
+      ],
+      "link": "https://audius.co/GodclouD/fuck-yo-feelingz"
+    },
+    {
+      "cells": [
+        "High Momentum",
+        "Young Buck\u2197@dopestiloR&B/Soul",
+        "52",
+        "0W\u20131L",
+        "0%",
+        "0.1477 SOL",
+        "1d ago"
+      ],
+      "link": "https://audius.co/dopestilo/young-buck"
+    },
+    {
+      "cells": [
+        "Heating Up",
+        "EAZE OF MIND\u2197@GodclouDHip-Hop/Rap",
+        "49",
+        "2W\u20130LV2 \u00b7 2WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.2660 SOL",
+        "19h ago"
+      ],
+      "link": "https://audius.co/GodclouD/eaze-of-mind"
+    },
+    {
+      "cells": [
+        "4",
+        "PKMN - Why You Take\u2197@PKMNCTOHip-Hop/Rap",
+        "49",
+        "0W\u20132L",
+        "0%",
+        "0.0049 SOL",
+        "19h ago"
+      ],
+      "link": "https://audius.co/PKMNCTO/pkmn-why-you-take"
+    },
+    {
+      "cells": [
+        "5",
+        "X Back Jumpin' Ft. Zaya\u2197@RoCkY2GriMeYHip-Hop/Rap",
+        "27",
+        "0W\u20131L",
+        "0%",
+        "0.0079 SOL",
+        "1d ago"
+      ],
+      "link": "https://audius.co/RoCkY2GriMeY/x-back-jumpin-ft-zaya"
+    },
+    {
+      "cells": [
+        "6",
+        "OneWavez x Hurric4n3Ike\u2197@Hurric4n3IkeHip-Hop/Rap",
+        "21",
+        "1W\u20131LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "50%",
+        "0.0985 SOL",
+        "3d ago"
+      ],
+      "link": "https://audius.co/Hurric4n3Ike/onewavez-x-hurric4n3ike"
+    },
+    {
+      "cells": [
+        "7",
+        "High Frequency with PKMN\u2197@RoCkY2GriMeYR&B/Soul",
+        "18",
+        "0W\u20132L",
+        "0%",
+        "0.1034 SOL",
+        "2d ago"
+      ],
+      "link": "https://audius.co/RoCkY2GriMeY/high-frequency-with-pkmn"
+    },
+    {
+      "cells": [
+        "8",
+        "The Miss\u2197@_0xQuanHip-Hop/Rap",
+        "12",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.1477 SOL",
+        "2d ago"
+      ],
+      "link": "https://audius.co/_0xQuan/the-miss"
+    },
+    {
+      "cells": [
+        "9",
+        "BelieveWavez x Nessy the Rilla x Hurric4n3Ike (432hz)\u2197@Hurric4n3IkeHip-Hop/Rap",
+        "10",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0493 SOL",
+        "1d ago"
+      ],
+      "link": "https://audius.co/Hurric4n3Ike/believewavez-x-nessy-the-rilla-x-hurric4n3ike-432hz"
+    },
+    {
+      "cells": [
+        "10",
+        "Full Capacity ft. Nessy \u2197@RoCkY2GriMeYHip-Hop/Rap",
+        "10",
+        "0W\u20131L",
+        "0%",
+        "0.0197 SOL",
+        "1d ago"
+      ],
+      "link": "https://audius.co/RoCkY2GriMeY/full-capacity-ft-nessy"
+    },
+    {
+      "cells": [
+        "11",
+        "Money pose- Taji Kamikaze\u2197@CannonJones973Hip-Hop/Rap",
+        "9",
+        "0W\u20131L",
+        "0%",
+        "0.0493 SOL",
+        "2d ago"
+      ],
+      "link": "https://audius.co/CannonJones973/money-pose-taji-kamikaze"
+    },
+    {
+      "cells": [
+        "12",
+        "PKMNCTO - Let me Launch\u2197@PKMNCTOR&B/Soul",
+        "9",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0985 SOL",
+        "2d ago"
+      ],
+      "link": "https://audius.co/PKMNCTO/pkmncto-let-me-launch"
+    },
+    {
+      "cells": [
+        "13",
+        "Cannon Jones973 feat Khila k-Money to choke\u2197@CannonJones973Hip-Hop/Rap",
+        "8",
+        "0W\u20132L",
+        "0%",
+        "0.0986 SOL",
+        "2d ago"
+      ],
+      "link": "https://audius.co/CannonJones973/cannon-jones973-feat-khila-k-money-to-choke"
+    },
+    {
+      "cells": [
+        "14",
+        "Fri3nds\u2197@shawnsporterMetal",
+        "8",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.1217 SOL",
+        "2d ago"
+      ],
+      "link": "https://audius.co/shawnsporter/fri3nds"
+    },
+    {
+      "cells": [
+        "15",
+        "Resist This\u2197@StormbourneMetal",
+        "8",
+        "0W\u20131L",
+        "0%",
+        "0.0369 SOL",
+        "2d ago"
+      ],
+      "link": "https://audius.co/Stormbourne/resist-this"
+    },
+    {
+      "cells": [
+        "16",
+        "No Problems x Kammo x LUI\u2197@luiwritesR&B/Soul",
+        "8",
+        "0W\u20132L",
+        "0%",
+        "0.0197 SOL",
+        "1d ago"
+      ],
+      "link": "https://audius.co/luiwrites/no-problems-x-kammo-x-lui"
+    },
+    {
+      "cells": [
+        "17",
+        "Kora Vain\u2197@jaifeezySoundtrack",
+        "8",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0985 SOL",
+        "3d ago"
+      ],
+      "link": "https://audius.co/jaifeezy/kora-vain-3"
+    },
+    {
+      "cells": [
+        "18",
+        "Life Happens x JayStreetz x LUI\u2197@luiwritesR&B/Soul",
+        "7",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0493 SOL",
+        "1d ago"
+      ],
+      "link": "https://audius.co/luiwrites/life-happens-x-jaystreetz-x-lui"
+    },
+    {
+      "cells": [
+        "19",
+        "Breathe\u2197@StormbourneRock",
+        "6",
+        "0W\u20131L",
+        "0%",
+        "0.0000 SOL",
+        "20h ago"
+      ],
+      "link": "https://audius.co/Stormbourne/breathe"
+    },
+    {
+      "cells": [
+        "20",
+        "Feel This Way\u2197@dopestiloR&B/Soul",
+        "6",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0433 SOL",
+        "20h ago"
+      ],
+      "link": "https://audius.co/dopestilo/feel-this-way"
+    },
+    {
+      "cells": [
+        "21",
+        "I'm Feelin' Myself\u2197@srchappellFunk",
+        "6",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0542 SOL",
+        "3d ago"
+      ],
+      "link": "https://audius.co/srchappell/im-feelin-myself"
+    },
+    {
+      "cells": [
+        "22",
+        "PIMP Freestyle\u2197@Kata7ystHip-Hop/Rap",
+        "6",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0985 SOL",
+        "4d ago"
+      ],
+      "link": "https://audius.co/Kata7yst/pimp-freestyle"
+    },
+    {
+      "cells": [
+        "23",
+        "Whisper My Name Freestyle \u2197@RoCkY2GriMeYHip-Hop/Rap",
+        "6",
+        "0W\u20131L",
+        "0%",
+        "0.0542 SOL",
+        "4d ago"
+      ],
+      "link": "https://audius.co/RoCkY2GriMeY/whisper-my-name-freestyle"
+    },
+    {
+      "cells": [
+        "24",
+        "TWICE Demo\u2197@luiwritesR&B/Soul",
+        "5",
+        "1W\u20130LV2 \u00b7 1WV2 \u2014 Poll + Charts (SOL) + DJ Wavy. 2/3 wins. Mar 10, 2026+.",
+        "100%",
+        "0.0985 SOL",
+        "4d ago"
+      ],
+      "link": "https://audius.co/luiwrites/twice-demo"
+    },
+    {
+      "cells": [
+        "25",
+        "Its a Mood\u2197@luiwritesPop",
+        "5",
+        "0W\u20131L",
+        "0%",
+        "0.0493 SOL",
+        "4d ago"
+      ],
+      "link": "https://audius.co/luiwrites/its-a-mood"
+    }
+  ],
+  "tradersRaw": [
+    {
+      "cells": [
+        "1",
+        "B9B97zbR\u2026rTSA69W \u00b7 16L",
+        "46.8508 SOL$3,838.02",
+        "448",
+        "86",
+        "81.17647058823529%81%",
+        "-19.0162 SOL$1,557.80",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "2",
+        "D3D3FVLn\u2026WePD26W \u00b7 8L",
+        "45.6656 SOL$3,740.92",
+        "94",
+        "42",
+        "76.47058823529412%76%",
+        "-28.1144 SOL$2,303.14",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "3",
+        "5T5TLZJh\u2026PV71151W \u00b7 24L",
+        "41.4008 SOL$3,391.56",
+        "1179",
+        "175",
+        "86.28571428571429%86%",
+        "-10.3002 SOL$843.79",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "4",
+        "GLGLWX91\u2026mcQx75W \u00b7 11L",
+        "27.3875 SOL$2,243.58",
+        "570",
+        "152",
+        "87.20930232558139%87%",
+        "+1.4475 SOL$118.58",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "5",
+        "FNFNjYtw\u2026kq37451W \u00b7 152L",
+        "27.2805 SOL$2,234.82",
+        "2021",
+        "728",
+        "74.7927031509121%75%",
+        "-18.2335 SOL$1,493.69",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "6",
+        "4a4aY165\u2026W1Bk56W \u00b7 23L",
+        "21.3567 SOL$1,749.54",
+        "289",
+        "86",
+        "70.88607594936708%71%",
+        "-9.8193 SOL$804.40",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "7",
+        "2323oqJn\u2026NGmg17W \u00b7 8L",
+        "20.8453 SOL$1,707.65",
+        "80",
+        "27",
+        "68%68%",
+        "-13.9147 SOL$1,139.89",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "8",
+        "DnDn7uHm\u2026Vnai12W \u00b7 8L",
+        "18.8008 SOL$1,540.16",
+        "50",
+        "20",
+        "60%60%",
+        "-14.3192 SOL$1,173.03",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "9",
+        "G5G5BCLy\u2026txwr119W \u00b7 18L",
+        "16.4985 SOL$1,351.56",
+        "461",
+        "149",
+        "86.86131386861314%87%",
+        "-2.8827 SOL$236.15",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "10",
+        "6B6BKXGp\u2026jKko114W \u00b7 35L",
+        "12.3206 SOL$1,009.31",
+        "482",
+        "163",
+        "76.51006711409396%77%",
+        "-10.4262 SOL$854.11",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "11",
+        "2J2J32aa\u20268bXp40W \u00b7 14L",
+        "10.1075 SOL$828.00",
+        "337",
+        "60",
+        "74.07407407407408%74%",
+        "-5.8765 SOL$481.41",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "12",
+        "DADAWYxi\u2026uyDy33W \u00b7 40L",
+        "9.8783 SOL$809.23",
+        "253",
+        "73",
+        "45.20547945205479%45%",
+        "+0.7753 SOL$63.51",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "13",
+        "EDEDYGtb\u2026qEBx5W \u00b7 4L",
+        "8.5063 SOL$696.84",
+        "43",
+        "9",
+        "55.55555555555556%56%",
+        "-6.2781 SOL$514.30",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "14",
+        "BYBYshzR\u2026a8Ns4W \u00b7 0L",
+        "7.8042 SOL$639.32",
+        "28",
+        "4",
+        "100%100%",
+        "-6.5958 SOL$540.33",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "15",
+        "FeFeXBfG\u2026wZST7W \u00b7 4L",
+        "6.3454 SOL$519.82",
+        "70",
+        "13",
+        "63.63636363636363%64%",
+        "-4.8746 SOL$399.33",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "16",
+        "HEHEB2Ra\u20269hVt62W \u00b7 25L",
+        "5.9081 SOL$483.99",
+        "283",
+        "130",
+        "71.26436781609196%71%",
+        "-4.1205 SOL$337.55",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "17",
+        "CKCKiu6b\u20262Fo12W \u00b7 1L",
+        "4.057 SOL$332.35",
+        "7",
+        "3",
+        "66.66666666666666%67%",
+        "-2.443 SOL$200.13",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "18",
+        "9V9VLqnN\u2026cwN414W \u00b7 5L",
+        "2.9295 SOL$239.99",
+        "32",
+        "21",
+        "73.68421052631578%74%",
+        "-2.8705 SOL$235.15",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "19",
+        "ASASpsqT\u2026tRLb16W \u00b7 5L",
+        "2.2591 SOL$185.07",
+        "47",
+        "21",
+        "76.19047619047619%76%",
+        "-0.7889 SOL$64.62",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "20",
+        "F9F9uiUu\u2026J5TH16W \u00b7 8L",
+        "2.0344 SOL$166.66",
+        "73",
+        "25",
+        "66.66666666666666%67%",
+        "-1.6036 SOL$131.37",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "21",
+        "2c2cbHxq\u2026j6DD0W \u00b7 1L",
+        "2 SOL$163.84",
+        "20",
+        "1",
+        "0%0%",
+        "-2 SOL$163.84",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "22",
+        "EeEeLCjv\u2026s3hG27W \u00b7 12L",
+        "1.9559 SOL$160.23",
+        "94",
+        "39",
+        "69.23076923076923%69%",
+        "-1.7409 SOL$142.62",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "23",
+        "GqGqJKR9\u2026LZAX0W \u00b7 2L",
+        "1.7 SOL$139.26",
+        "7",
+        "2",
+        "0%0%",
+        "-1.7 SOL$139.26",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "24",
+        "CTCTxfUH\u2026eUej14W \u00b7 3L",
+        "1.5638 SOL$128.11",
+        "78",
+        "17",
+        "82.35294117647058%82%",
+        "+0.1042 SOL$8.53",
+        "\u2197"
+      ]
+    },
+    {
+      "cells": [
+        "25",
+        "j2j2wHMZ\u2026D6hs4W \u00b7 2L",
+        "1.4556 SOL$119.24",
+        "35",
+        "6",
+        "66.66666666666666%67%",
+        "-1.4454 SOL$118.41",
+        "\u2197"
+      ]
+    }
+  ]
+}
