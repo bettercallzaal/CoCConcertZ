@@ -18,6 +18,7 @@ async function fetchSubscribers(): Promise<SubscriberRow[]> {
 import type { Event, Artist, User, Invite, SetItem, Song } from "@/lib/types";
 import { Card } from "@/components/ui";
 import { SeedArtists } from "@/components/admin/SeedArtists";
+import { ShowNightPanel } from "@/components/admin/ShowNightPanel";
 
 interface Stats {
   events: number;
@@ -1034,6 +1035,24 @@ export default function AdminDashboardPage() {
           </Card>
         </div>
       )}
+
+      {/* Show Night: battle voting + push notifications */}
+      <div style={{ marginBottom: "40px" }}>
+        <h2
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "12px",
+            fontWeight: 700,
+            textTransform: "uppercase",
+            letterSpacing: "0.2em",
+            color: "var(--text-dim)",
+            marginBottom: "16px",
+          }}
+        >
+          Show Night
+        </h2>
+        <ShowNightPanel />
+      </div>
 
       {/* Announcement */}
       <div style={{ marginBottom: "40px" }}>
