@@ -46,3 +46,9 @@ next-env.d.ts
 .gitignore-next
 .gstack/
 .serena/
+
+# Capacitor iOS
+ios/App/Pods
+ios/App/output
+ios/App/App/public
+ios/DerivedData
