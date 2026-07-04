@@ -1,5 +1,17 @@
 # COC Concertz #7 Prep Checklist - WaveWarZ Takeover (DJ Zaal)
 
+## BLOCKER - image uploads are DOWN (found in QA 2026-07-03)
+
+`/api/upload` returns 500: the Cloudinary API key (cloud dzzqdbo9k, key 498841...)
+is rejected with "Request forbidden due to missing permissions" - it cannot even
+read account usage. Contest submissions AND fan gallery uploads are dead until
+fixed. Contest deadline is July 10, so this is urgent.
+
+Fix (Cloudinary console, ~2 min): Settings -> Access Keys - re-enable
+permissions on this key or generate a new unrestricted key pair, then update
+CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET in Vercel env and redeploy.
+Verify after: `curl -X POST https://www.cocconcertz.com/api/upload -F "file=@<img>" -F "folder=coc-concertz/gallery"` should return a URL, not 500.
+
 Branch: `feature/coc-7-wavewarz`. Pattern follows PR #2/#6 (the COC #6 rollover).
 
 ## Locked
