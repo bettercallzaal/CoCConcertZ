@@ -24,6 +24,7 @@ import ShowRecap from "@/components/home/ShowRecap";
 import EmailSignup from "@/components/home/EmailSignup";
 import VideoHighlights from "@/components/home/VideoHighlights";
 import BattleVote from "@/components/home/BattleVote";
+import BadgeClaim from "@/components/home/BadgeClaim";
 import WaveWarzHistory from "@/components/home/WaveWarzHistory";
 
 // Structured data for the next show - update per event rollover (see
@@ -90,6 +91,9 @@ export default function Home() {
 
         {/* Live Battle Vote (renders only when a battle is live) */}
         <BattleVote />
+
+        {/* Attendance badge (renders during a live show + 7-day recap window) */}
+        <BadgeClaim />
 
         {/* Post-Show Recap (shows for 7 days after a completed event) */}
         <ShowRecap />
