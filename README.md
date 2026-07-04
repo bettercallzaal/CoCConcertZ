@@ -30,6 +30,10 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **Team section** — Zaal & Thy Rev cards with roles, bios, and social links
 - **Telegram link** in community section
 - Share section (Farcaster composeCast, X/Twitter, clipboard copy)
+- **Live battle voting** — anonymous one-vote-per-session battle widget with real-time split bar, renders while a battle is live (WaveWarZ format)
+- **Attendance badge** — free per-session claim during a live show + 7-day recap window, voter tier unlocked by battle participation
+- **WaveWarZ history section** — stat tiles + recent battles from a baked scraper snapshot
+- **Flyer contest** (`/contest`) — community submissions with countdown, entry grid, winner badge, dynamic OG card
 - Scroll-reveal animations, responsive design
 - Mobile-responsive hamburger menus for admin and portal sidebars
 
@@ -61,6 +65,7 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **Platform Stats** — subscriber count, events, artists, gallery photos, visitors at a glance
 - **Subscriber Management** — view recent signups, export full list as CSV
 - **Seed Artists** — one-click button to pre-populate artist profiles
+- **Show Night panel** — battle create/close with live tally, and push-notification sends with subscriber count (no terminal needed)
 
 ### API Routes
 - `/api/auth` — passcode verification, cookie management, logout
@@ -83,6 +88,11 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - Mini App SDK — `sdk.actions.ready()`, context detection, native `composeCast`
 - Stream fallback for Twitch inside Farcaster frames
 - Spec-compliant icons (1024x1024 PNG), splash screen, embed preview image
+- **Push notifications** — `/api/webhook/farcaster` captures tokens (full JFS verification: ed25519 signature + Optimism KeyRegistry), sends via admin panel or `scripts/send-notification.ts`
+
+### iOS App (Capacitor)
+- `ios/` Xcode project wrapping the production site — TestFlight path in `docs/testflight-runbook.md`
+- Content updates ship via normal Vercel deploys, no resubmission
 
 ### SEO & Meta
 - Open Graph + Twitter Card meta tags with ConcertZ #4 artwork
@@ -186,6 +196,10 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 - `live/nowPlaying` — current song and artist during live shows
 - `recaps/{eventId}` — auto-generated post-show recap data
 - `stats/visitors` — real-time visitor count
+- `battles/{id}` + `votes/{sessionId}` — live battle voting (one vote per browser session)
+- `badgeClaims` — attendance badge claims (`${eventNumber}-${sessionId}`, visitor/voter tiers)
+- `contestEntries` — flyer contest submissions
+- `notificationTokens/{fid}` — mini app push tokens (Admin SDK only)
 
 ### Concert History
 | # | Date | Theme | Artists | Status |
@@ -231,9 +245,9 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 # Install dependencies
 npm install
 
-# Set up environment variables
-cp .env.local.example .env.local
-# Fill in Firebase credentials and passcodes
+# Set up environment variables - one command, no key copying
+npx vercel link --yes --project co-c-concert-z && npx vercel env pull .env.local
+# (or manually: cp .env.local.example .env.local and fill in credentials)
 
 # Run dev server
 npm run dev
@@ -289,6 +303,12 @@ All scripts live in `scripts/` and are idempotent. Run with `npx tsx scripts/<na
 | `dedupe-fellenz.ts` | One-shot cleanup that merged the older `tom-fellenz` doc into the canonical `fellenz` doc |
 | `list-artists.ts` | Read-only inventory of the artists collection - slug, stageName, socials keys, linked event count |
 | `check-cloudinary-rule.ts` | Verifies the Cloudinary upload preset/rule used by the artist portal |
+| `update-coc7.ts` | Upserts COC #7 (WaveWarZ Takeover) and marks #6 completed |
+| `manage-battle.ts` | Show-night battle control: `create "<title>" "<A>" "<B>"` / `close` / `status` (also available in the admin Show Night panel) |
+| `send-notification.ts` | Push notification to all mini app subscribers - batched, deduped by stable id, `--dry-run` |
+| `generate-socials.ts` | 7 platform-sized post drafts in the COC voice from `--theme` / `--highlight` / `--link` |
+| `fetch-wavewarz-history.ts` | Bakes the WaveWarZ battle snapshot into `src/data/wavewarz-history.json` - rerun before shows |
+| `lib/admin-init.ts` | Shared admin credential init: FIREBASE_ADMIN_* env vars, or ADC fallback (`gcloud auth application-default login`) |
 
 The full event recap data model is in `src/lib/types.ts` as `EventRecap` (summary, highlights, videos, transcriptUrls) — render path is in `src/app/events/[number]/page.tsx`.
 
