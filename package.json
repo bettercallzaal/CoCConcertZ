@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "smoke": "bash scripts/smoke-test.sh",
     "firebase:emulator": "firebase emulators:start --only firestore,auth",
     "firebase:check": "tsx scripts/check-cloudinary-rule.ts",
     "firebase:deploy:rules": "tsx scripts/check-cloudinary-rule.ts && firebase deploy --only firestore:rules,firestore:indexes"
