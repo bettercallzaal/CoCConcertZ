@@ -106,6 +106,27 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Attendance badge claims (BadgeClaim widget). Public-create, one per
+    // browser session per event via doc id `${eventNumber}-${sessionId}`.
+    // Claim window is enforced client-side - a late forged claim is a free
+    // badge, not a security issue. Same App Check caveat as other
+    // public-write collections.
+    match /badgeClaims/{claimId} {
+      allow read: if true;
+
+      allow create: if
+        request.resource.data.keys().hasOnly(['eventNumber', 'tier', 'name', 'createdAt'])
+        && request.resource.data.eventNumber is int
+        && request.resource.data.eventNumber >= 1
+        && request.resource.data.eventNumber <= 1000
+        && request.resource.data.tier in ['visitor', 'voter']
+        && isOptionalString(request.resource.data.name, 40)
+        && timestampIsRequestTime(request.resource.data.createdAt)
+        && claimId.size() >= 10 && claimId.size() <= 70;
+
+      allow update, delete: if false;
+    }
+
     // Mini App notification tokens - written only by the /api/webhook/farcaster
     // route via Admin SDK (bypasses rules). Never client-accessible.
     match /notificationTokens/{fid} {

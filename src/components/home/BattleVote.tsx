@@ -116,6 +116,12 @@ export default function BattleVote() {
         createdAt: serverTimestamp(),
       });
       setMyVote(choice);
+      try {
+        // Unlocks the "voter" tier on the attendance badge (BadgeClaim.tsx)
+        localStorage.setItem("coc_voted", "1");
+      } catch {
+        // ignore
+      }
     } catch (err) {
       console.error("Vote failed:", err);
     } finally {
