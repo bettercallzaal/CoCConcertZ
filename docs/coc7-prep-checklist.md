@@ -72,3 +72,18 @@ Branch: `feature/coc-7-wavewarz`. Pattern follows PR #2/#6 (the COC #6 rollover)
 - [ ] Archive activation manual steps outstanding (docs/TODO-archive-activation.md): Supabase project, Arweave fund wallet, ZABAL token gate
 - [ ] Root `index.html` (83KB legacy static page) coexists with Next.js app - confirm not served, then delete
 - [ ] Firestore backup workflow: verify GCP bucket + secrets actually configured
+
+## Team asks (fired to cowork tracker 2026-07-04)
+
+The COC + WaveWarZ teams are helping. Tracker tasks live under inbox-coc7-*:
+
+- [ ] Cloudinary key fix - Zaal, due Jul 5 (URGENT - contest uploads down)
+- [ ] WaveWarZ data access: API/export + Solana program ID confirm - via Ike, due Jul 9 (scraper misses post-May battles)
+- [ ] WaveWarZ brand assets for co-branded art - via Sam, due Jul 10
+- [ ] Crew lineup confirmation - Zaal + Ike, due Jul 11 (alumni-battler pitch in docs/wavewarz-brief.md)
+- [ ] Battle format ruling: theme, count, 2-of-3 judging, prize - Zaal, due Jul 11
+- [ ] Discord superfan/trader invite list - via Ike, due Jul 14
+- [ ] Base mainnet verdict - already tracked as P1 (Sam + Arthur, due Jul 10)
+
+Also useful when anyone has it: unprocessed WaveWarZ call recordings (-> /meeting),
+Zaal voice memo with origin story + quotes from Ike/Sam (-> press copy).
