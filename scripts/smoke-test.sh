@@ -20,7 +20,7 @@ check() {
   fi
 }
 
-code() { curl -s -o /dev/null -w "%{http_code}" "$@"; }
+code() { curl -s -o /dev/null -w "%{http_code}" --max-time 30 "$@"; }
 
 echo "Smoke test: $BASE"
 echo "---"
@@ -31,21 +31,21 @@ check "/contest 200" 200 "$(code "$BASE/contest")"
 check "/brand 200" 200 "$(code "$BASE/brand")"
 
 # Homepage content
-HOME=$(curl -s "$BASE")
+HOME=$(curl -s --max-time 30 "$BASE")
 check "homepage has next-show name" 1 "$(echo "$HOME" | grep -c "WAVEWARZ TAKEOVER" | head -1 | awk '{print ($1>0)?1:0}')"
 check "homepage has JSON-LD" 1 "$(echo "$HOME" | grep -c "application/ld+json" | awk '{print ($1>0)?1:0}')"
 check "homepage has battle history section" 1 "$(echo "$HOME" | grep -c "BATTLE HISTORY" | awk '{print ($1>0)?1:0}')"
 
 # OG cards
-check "og/contest is png" "200 image/png" "$(curl -s -o /dev/null -w '%{http_code} %{content_type}' "$BASE/api/og/contest")"
-check "og/countdown is png" "200 image/png" "$(curl -s -o /dev/null -w '%{http_code} %{content_type}' "$BASE/api/og/countdown")"
+check "og/contest is png" "200 image/png" "$(curl -s -o /dev/null -w '%{http_code} %{content_type}' --max-time 30 "$BASE/api/og/contest")"
+check "og/countdown is png" "200 image/png" "$(curl -s -o /dev/null -w '%{http_code} %{content_type}' --max-time 30 "$BASE/api/og/countdown")"
 
 # SEO surfaces
-check "sitemap lists /contest" 1 "$(curl -s "$BASE/sitemap.xml" | grep -c "/contest" | awk '{print ($1>0)?1:0}')"
+check "sitemap lists /contest" 1 "$(curl -s --max-time 30 "$BASE/sitemap.xml" | grep -c "/contest" | awk '{print ($1>0)?1:0}')"
 check "robots.txt 200" 200 "$(code "$BASE/robots.txt")"
 
 # Farcaster manifest
-MANIFEST=$(curl -sL "$BASE/.well-known/farcaster.json")
+MANIFEST=$(curl -sL --max-time 30 "$BASE/.well-known/farcaster.json")
 check "manifest has webhookUrl" 1 "$(echo "$MANIFEST" | grep -c webhookUrl | awk '{print ($1>0)?1:0}')"
 check "manifest has accountAssociation" 1 "$(echo "$MANIFEST" | grep -c accountAssociation | awk '{print ($1>0)?1:0}')"
 
