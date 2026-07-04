@@ -106,6 +106,12 @@ service cloud.firestore {
       allow update, delete: if false;
     }
 
+    // Mini App notification tokens - written only by the /api/webhook/farcaster
+    // route via Admin SDK (bypasses rules). Never client-accessible.
+    match /notificationTokens/{fid} {
+      allow read, write: if false;
+    }
+
     // Live battle voting (BattleVote widget). Battle docs are admin-created;
     // votes are public-create with the browser session id as the doc id -
     // create-only + fixed id = one vote per session. Same App Check caveat
