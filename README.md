@@ -1,4 +1,4 @@
-# COC Concertz — Metaverse Concert Platform
+# COC Concertz - Metaverse Concert Platform
 
 A full-stack concert platform and Farcaster Mini App for COC Concertz, a live metaverse concert experience hosted in StiloWorld on Spatial.io. Built with Next.js, Firebase, and a cyberpunk design system.
 
@@ -13,27 +13,27 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 ### Public Site
 - Cyberpunk-themed homepage with floating logo constellation, grain overlay, scanlines, halftone backgrounds
 - Live countdown timer to next show (auto-advances through upcoming events)
-- "LIVE NOW" state — countdown becomes "JOIN NOW" button, status badge pulses
-- **Full-page live mode takeover** — when a show goes live, visitors get a dramatic full-screen overlay with blurred flyer background, pulsing "LIVE NOW" heading, and CTA buttons. The entire page border glows red/yellow. Dismissible, shows once per session
-- **Live chat** — collapsible side panel for real-time chat during shows. No login required — pick a name and go. Rate-limited, auto-scrolling, real-time via Firestore
-- **"Now Playing" bar** — fixed bottom bar showing the current song and artist with animated equalizer bars, updated live by admin during shows
-- **Post-show recap cards** — auto-generated after shows with visitor count, chat messages, artists performed. Shareable, displayed on homepage for 7 days
+- "LIVE NOW" state - countdown becomes "JOIN NOW" button, status badge pulses
+- **Full-page live mode takeover** - when a show goes live, visitors get a dramatic full-screen overlay with blurred flyer background, pulsing "LIVE NOW" heading, and CTA buttons. The entire page border glows red/yellow. Dismissible, shows once per session
+- **Live chat** - collapsible side panel for real-time chat during shows. No login required - pick a name and go. Rate-limited, auto-scrolling, real-time via Firestore
+- **"Now Playing" bar** - fixed bottom bar showing the current song and artist with animated equalizer bars, updated live by admin during shows
+- **Post-show recap cards** - auto-generated after shows with visitor count, chat messages, artists performed. Shareable, displayed on homepage for 7 days
 - Spatial.io metaverse venue embed with Twitch stream toggle
-- Artist lineup with tabbed panels per concert (ConcertZ #1-6) with staggered entrance animations and border glow effects, default tab is the upcoming show
-- All concert artist cards pull live from Firestore — artist profile edits appear on the site
+- Artist lineup with tabbed panels per concert (ConcertZ #1-7) with staggered entrance animations and border glow effects, default tab is the upcoming show
+- All concert artist cards pull live from Firestore - artist profile edits appear on the site
 - Upcoming and past shows connected to Firestore (admin-managed)
 - Live visitor count with real-time Firestore presence
 - Announcement banner system (admin-controlled, dismissible)
-- **Video highlights** — "BEST MOMENTS" grid with curated clips from past shows, click-to-play YouTube embeds
-- **Email signup** — "GET NOTIFIED" section for show announcements, saves to Firestore with duplicate detection
-- **Fan photo gallery** — fans submit photos with captions, displayed in a grid on the homepage. Cloudinary-hosted uploads
-- **Team section** — Zaal & Thy Rev cards with roles, bios, and social links
+- **Video highlights** - "BEST MOMENTS" grid with curated clips from past shows, click-to-play YouTube embeds
+- **Email signup** - "GET NOTIFIED" section for show announcements, saves to Firestore with duplicate detection
+- **Fan photo gallery** - fans submit photos with captions, displayed in a grid on the homepage. Cloudinary-hosted uploads
+- **Team section** - Zaal & Thy Rev cards with roles, bios, and social links
 - **Telegram link** in community section
 - Share section (Farcaster composeCast, X/Twitter, clipboard copy)
-- **Live battle voting** — anonymous one-vote-per-session battle widget with real-time split bar, renders while a battle is live (WaveWarZ format)
-- **Attendance badge** — free per-session claim during a live show + 7-day recap window, voter tier unlocked by battle participation
-- **WaveWarZ history section** — stat tiles + recent battles from a baked scraper snapshot
-- **Flyer contest** (`/contest`) — community submissions with countdown, entry grid, winner badge, dynamic OG card
+- **Live battle voting** - anonymous one-vote-per-session battle widget with real-time split bar, renders while a battle is live (WaveWarZ format)
+- **Attendance badge** - free per-session claim during a live show + 7-day recap window, voter tier unlocked by battle participation
+- **WaveWarZ history section** - stat tiles + recent battles from a baked scraper snapshot
+- **Flyer contest** (`/contest`) - community submissions with countdown, entry grid, winner badge, dynamic OG card
 - Scroll-reveal animations, responsive design
 - Mobile-responsive hamburger menus for admin and portal sidebars
 
@@ -44,7 +44,7 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - Bio, social links, performance history across events
 - Setlist display with song/video links
 - Upcoming performance CTA with RSVP button
-- **Auto-generated OG images** — branded social cards generated dynamically for sharing
+- **Auto-generated OG images** - branded social cards generated dynamically for sharing
 
 ### Public Event Pages (`/events/[number]`)
 - Dedicated page per concert with flyer/banner image
@@ -52,46 +52,50 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - RSVP button (upcoming) or "JOIN NOW" (live)
 - Venue links (Spatial.io + stream)
 - Dynamic SEO metadata with flyer as OG image
-- **Show recap section** for completed events — summary paragraph, highlight bullets, YouTube clip grid (linking out), and optional transcript URL list. Recap content lives in `events/{id}.recap` as a structured field, populated by `scripts/seed-past-events.ts` or hand-edited in Firestore.
+- **Show recap section** for completed events - summary paragraph, highlight bullets, YouTube clip grid (linking out), and optional transcript URL list. Recap content lives in `events/{id}.recap` as a structured field, populated by `scripts/seed-past-events.ts` or hand-edited in Firestore.
 
 ### Admin Dashboard (`/admin`)
-- **Event Management** — full CRUD for events (name, date, description, venue, RSVP link, status, flyer/banner)
-- **GO LIVE / END SHOW** — one-click toggle to flip an event to live mode, triggers full-page takeover for visitors
-- **Now Playing Controls** — tap through the setlist during a live show, updates the public "Now Playing" bar in real-time
-- **Announcement Banner** — type a message, it shows across the public site instantly
-- **Post-Show Recap Generator** — one click after END SHOW auto-counts visitors, chat messages, and artists, creates a shareable recap card
-- **Invite System** — send invites by email with role assignment (admin/artist/fan), track pending/accepted/revoked
-- **User Management** — view all users, switch roles
-- **Platform Stats** — subscriber count, events, artists, gallery photos, visitors at a glance
-- **Subscriber Management** — view recent signups, export full list as CSV
-- **Seed Artists** — one-click button to pre-populate artist profiles
-- **Show Night panel** — battle create/close with live tally, and push-notification sends with subscriber count (no terminal needed)
+- **Event Management** - full CRUD for events (name, date, description, venue, RSVP link, status, flyer/banner)
+- **GO LIVE / END SHOW** - one-click toggle to flip an event to live mode, triggers full-page takeover for visitors
+- **Now Playing Controls** - tap through the setlist during a live show, updates the public "Now Playing" bar in real-time
+- **Announcement Banner** - type a message, it shows across the public site instantly
+- **Post-Show Recap Generator** - one click after END SHOW auto-counts visitors, chat messages, and artists, creates a shareable recap card
+- **Invite System** - send invites by email with role assignment (admin/artist/fan), track pending/accepted/revoked
+- **User Management** - view all users, switch roles
+- **Platform Stats** - subscriber count, events, artists, gallery photos, visitors at a glance
+- **Subscriber Management** - view recent signups, export full list as CSV
+- **Seed Artists** - one-click button to pre-populate artist profiles
+- **Show Night panel** - battle create/close with live tally, and push-notification sends with subscriber count (no terminal needed)
 
 ### API Routes
-- `/api/auth` — passcode verification, cookie management, logout
-- `/api/artists` — artist profile create/update via Firebase Admin SDK (auth-verified)
-- `/api/upload` — Cloudinary image upload
-- `/api/og/artist` — dynamic OG image generation for artist social cards
-- `/api/og/countdown` — countdown social card generation
+- `/api/auth` - passcode verification, cookie management, logout
+- `/api/artists` - artist profile create/update via Firebase Admin SDK (auth-verified)
+- `/api/upload` - Cloudinary image upload
+- `/api/og/artist` - dynamic OG image generation for artist social cards
+- `/api/og/countdown` - countdown social card generation
+- `/api/og/contest` - flyer-contest social card with days-left countdown
+- `/api/webhook/farcaster` - Mini App events; stores notification tokens after full JFS verification (ed25519 + Optimism KeyRegistry)
+- `/api/admin/battle` - admin battle create/close/status (cookie-auth, mirrors `manage-battle.ts`)
+- `/api/admin/notify` - admin push send with subscriber count (cookie-auth, mirrors `send-notification.ts`)
 
 ### Artist Portal (`/portal`)
 - Per-artist passcode login (unique 5-letter code per artist)
-- **Profile Editor** — stage name, bio, profile photo upload (Cloudinary), social links (Twitter, Farcaster, Audius, Spotify, YouTube, website), wallet address
-- **Setlist Manager** — add songs and videos per event, with platform selection
-- **Card Customizer** — choose accent color and background color with live preview
-- **Preview Link** — "View your public profile" opens their shareable artist page
+- **Profile Editor** - stage name, bio, profile photo upload (Cloudinary), social links (Twitter, Farcaster, Audius, Spotify, YouTube, website), wallet address
+- **Setlist Manager** - add songs and videos per event, with platform selection
+- **Card Customizer** - choose accent color and background color with live preview
+- **Preview Link** - "View your public profile" opens their shareable artist page
 - Changes go live on the homepage and artist pages immediately
 
 ### Farcaster Mini App
 - `fc:miniapp` embed meta tag with `launch_frame` action
 - `/.well-known/farcaster.json` manifest with signed account association (FID 19640)
-- Mini App SDK — `sdk.actions.ready()`, context detection, native `composeCast`
+- Mini App SDK - `sdk.actions.ready()`, context detection, native `composeCast`
 - Stream fallback for Twitch inside Farcaster frames
 - Spec-compliant icons (1024x1024 PNG), splash screen, embed preview image
-- **Push notifications** — `/api/webhook/farcaster` captures tokens (full JFS verification: ed25519 signature + Optimism KeyRegistry), sends via admin panel or `scripts/send-notification.ts`
+- **Push notifications** - `/api/webhook/farcaster` captures tokens (full JFS verification: ed25519 signature + Optimism KeyRegistry), sends via admin panel or `scripts/send-notification.ts`
 
 ### iOS App (Capacitor)
-- `ios/` Xcode project wrapping the production site — TestFlight path in `docs/testflight-runbook.md`
+- `ios/` Xcode project wrapping the production site - TestFlight path in `docs/testflight-runbook.md`
 - Content updates ship via normal Vercel deploys, no resubmission
 
 ### SEO & Meta
@@ -178,28 +182,28 @@ Passcode-based authentication via httpOnly cookies:
 
 On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-slug` cookies (30-day expiry), and the AuthContext provides `role` and `artistSlug` to the app.
 
-**Data access pattern:** Client components use the Firebase client SDK (`db.ts`) for real-time reads via `onSnapshot`. Server components and API routes use the Firebase Admin SDK (`db-server.ts`) for server-side data fetching — this is required because the client SDK cannot authenticate in Vercel serverless functions. Profile saves from the artist portal go through `/api/artists` (admin SDK) rather than writing directly to Firestore.
+**Data access pattern:** Client components use the Firebase client SDK (`db.ts`) for real-time reads via `onSnapshot`. Server components and API routes use the Firebase Admin SDK (`db-server.ts`) for server-side data fetching - this is required because the client SDK cannot authenticate in Vercel serverless functions. Profile saves from the artist portal go through `/api/artists` (admin SDK) rather than writing directly to Firestore.
 
 ---
 
 ## Event Data
 
 ### Firestore Collections
-- `events` — name, number, date, venue, rsvpLink, status, flyer/banner URLs, artist assignments, announcement
-- `artists` — stageName, slug, bio, socialLinks, cardCustomization, linkedEvents
-- `sets` — songs, videos, notes per artist per event
-- `invites` — email, role, status
-- `users` — role, email, displayName
-- `subscribers` — email signups for show notifications
-- `gallery` — fan-submitted photos with captions
-- `chat/{eventId}/messages` — live chat messages per event
-- `live/nowPlaying` — current song and artist during live shows
-- `recaps/{eventId}` — auto-generated post-show recap data
-- `stats/visitors` — real-time visitor count
-- `battles/{id}` + `votes/{sessionId}` — live battle voting (one vote per browser session)
-- `badgeClaims` — attendance badge claims (`${eventNumber}-${sessionId}`, visitor/voter tiers)
-- `contestEntries` — flyer contest submissions
-- `notificationTokens/{fid}` — mini app push tokens (Admin SDK only)
+- `events` - name, number, date, venue, rsvpLink, status, flyer/banner URLs, artist assignments, announcement
+- `artists` - stageName, slug, bio, socialLinks, cardCustomization, linkedEvents
+- `sets` - songs, videos, notes per artist per event
+- `invites` - email, role, status
+- `users` - role, email, displayName
+- `subscribers` - email signups for show notifications
+- `gallery` - fan-submitted photos with captions
+- `chat/{eventId}/messages` - live chat messages per event
+- `live/nowPlaying` - current song and artist during live shows
+- `recaps/{eventId}` - auto-generated post-show recap data
+- `stats/visitors` - real-time visitor count
+- `battles/{id}` + `votes/{sessionId}` - live battle voting (one vote per browser session)
+- `badgeClaims` - attendance badge claims (`${eventNumber}-${sessionId}`, visitor/voter tiers)
+- `contestEntries` - flyer contest submissions
+- `notificationTokens/{fid}` - mini app push tokens (Admin SDK only)
 
 ### Concert History
 | # | Date | Theme | Artists | Status |
@@ -216,26 +220,36 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 
 ## Show Day Checklist
 
+Everything below runs from `cocconcertz.com/admin` (admin passcode). The
+terminal equivalents in parentheses work too, if you prefer scripts.
+
 ### Before the show
 1. Go to `cocconcertz.com/admin`
 2. Verify artists have set up their profiles in the portal
-3. Post an announcement: "ConcertZ #4 starts at 4PM EST today!"
+3. Post an announcement: "ConcertZ #7 starts at 4PM EST today!"
+4. (Optional) Send a show-day push from the **Show Night** panel - subscriber count is shown (or `npx tsx scripts/send-notification.ts --id coc7-showday --title "..." --body "..."`)
 
 ### Going live
-4. Click **GO LIVE** — visitors get the full-page live takeover
-5. Update the announcement: "ConcertZ #4 is LIVE — join now!"
-6. Use **Now Playing** controls to mark the current song as each artist performs
+5. Click **GO LIVE** - visitors get the full-page live takeover
+6. Update the announcement: "ConcertZ #7 is LIVE - join now!"
+7. Use **Now Playing** controls to mark the current song as each artist performs
+
+### Running a battle vote
+8. In the **Show Night** panel, fill Battle Title + the two sides, click **GO LIVE WITH BATTLE** - the vote widget appears on the homepage (or `npx tsx scripts/manage-battle.ts create "<title>" "<A>" "<B>"`)
+9. The crowd votes (anonymous, one per browser session); the split bar updates live
+10. Click **END BATTLE + TALLY** to close and record the winner (or `manage-battle.ts close`)
 
 ### During the show
-7. Monitor the live chat
-8. Tap through setlist songs as they play
-9. Update announcements as needed
+11. Monitor the live chat
+12. Tap through setlist songs as they play
+13. Update announcements as needed
 
 ### After the show
-10. Click **END SHOW**
-11. Click **GENERATE RECAP** — auto-creates the recap card with stats
-12. Clear the announcement
-13. The recap card appears on the homepage for 7 days
+14. Click **END SHOW**
+15. Click **GENERATE RECAP** - auto-creates the recap card with stats
+16. Clear the announcement
+17. The recap card + attendance badge stay on the homepage for 7 days (fans claim visitor/voter badges during the window)
+18. Post-show recap video + socials: `docs/recap-video-pipeline.md` + `npx tsx scripts/generate-socials.ts`
 
 ---
 
@@ -308,9 +322,14 @@ All scripts live in `scripts/` and are idempotent. Run with `npx tsx scripts/<na
 | `send-notification.ts` | Push notification to all mini app subscribers - batched, deduped by stable id, `--dry-run` |
 | `generate-socials.ts` | 7 platform-sized post drafts in the COC voice from `--theme` / `--highlight` / `--link` |
 | `fetch-wavewarz-history.ts` | Bakes the WaveWarZ battle snapshot into `src/data/wavewarz-history.json` - rerun before shows |
+| `smoke-test.sh` | 17-check production health test (`npm run smoke`, or pass a base URL) |
 | `lib/admin-init.ts` | Shared admin credential init: FIREBASE_ADMIN_* env vars, or ADC fallback (`gcloud auth application-default login`) |
 
-The full event recap data model is in `src/lib/types.ts` as `EventRecap` (summary, highlights, videos, transcriptUrls) — render path is in `src/app/events/[number]/page.tsx`.
+Fresh clones no longer need any key copying: `npx vercel link --yes --project co-c-concert-z && npx vercel env pull .env.local` hydrates all credentials. Scripts also fall back to Application Default Credentials (`gcloud auth application-default login`) via `lib/admin-init.ts` when the FIREBASE_ADMIN_* vars are absent.
+
+Two baked data snapshots power homepage sections without live calls: `src/data/wavewarz-history.json` (battle history, refreshed by `fetch-wavewarz-history.ts`) and `src/data/wavewarz-leaderboard.json` (49 main-event artists with wallets, X handles, records - scraped from the WaveWarZ Intelligence leaderboards).
+
+The full event recap data model is in `src/lib/types.ts` as `EventRecap` (summary, highlights, videos, transcriptUrls) - render path is in `src/app/events/[number]/page.tsx`.
 
 ---
 
@@ -345,7 +364,7 @@ The client SDK auto-connects to the emulator when `NEXT_PUBLIC_USE_FIREBASE_EMUL
 
 ### App Check status
 
-Skeleton in place but **not active**. The init block in `src/lib/firebase.ts` is commented out. Follow `docs/app-check-setup.md` to flip it on once a reCAPTCHA v3 site key is provisioned. Until then, the public-write collections (`chat`, `gallery`, `subscribers`) are protected by rule-level validation only.
+Wired but dormant. `src/lib/firebase.ts` activates reCAPTCHA v3 App Check automatically the moment `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` is set - no code change needed. To turn it on: register a reCAPTCHA v3 site key in the Firebase console (steps in `docs/app-check-setup.md`), add the env var in Vercel, redeploy, then flip enforcement in the console once token metrics look clean. Until then, the public-write collections (`chat`, `gallery`, `subscribers`, `contestEntries`, `battles/{id}/votes`, `badgeClaims`) are protected by rule-level validation only.
 
 ### Backups
 
@@ -353,7 +372,62 @@ Daily Firestore export to a Cloud Storage bucket via `.github/workflows/firestor
 
 ### Required env vars
 
-See `.env.local.example`. The Firebase Admin SDK throws at module load if any of `FIREBASE_ADMIN_PROJECT_ID`, `FIREBASE_ADMIN_CLIENT_EMAIL`, `FIREBASE_ADMIN_PRIVATE_KEY` is missing — set them in Vercel before the first deploy.
+See `.env.local.example`. The Firebase Admin SDK throws at module load if any of `FIREBASE_ADMIN_PROJECT_ID`, `FIREBASE_ADMIN_CLIENT_EMAIL`, `FIREBASE_ADMIN_PRIVATE_KEY` is missing - set them in Vercel before the first deploy.
+
+---
+
+## Runbooks & Documentation
+
+All operational docs live in `docs/`. Start here for anything show- or ops-related.
+
+| Doc | What it covers |
+|-----|----------------|
+| `docs/coc7-prep-checklist.md` | The live COC #7 show-prep tracker - blockers, cleanup, code changes, team asks. **Check this first for what's outstanding.** |
+| `docs/wavewarz-brief.md` | Full WaveWarZ show-prep dossier: battle mechanics, the alumni-battler lineup story (GodclouD, Stilo, Cannon), numbers, Base timing. |
+| `docs/testflight-runbook.md` | The Capacitor iOS app + the Apple-account steps to get it on TestFlight. |
+| `docs/coc-agent-roadmap.md` | Path to an autonomous COC show-ops agent (4 stages). `.claude/agents/coc-ops.md` is the agent definition usable today. |
+| `docs/recap-video-pipeline.md` | Post-show branded recap videos via the spacetovideo pipeline (Deepgram + Remotion). |
+| `docs/app-check-setup.md` | Turning on reCAPTCHA v3 App Check for the public-write collections. |
+| `docs/firebase-inventory.md` | Firestore schema + rule rationale. |
+| `docs/TODO-archive-activation.md` | Manual steps to activate the Arweave archive feature (Supabase, Arweave wallet, token gate). |
+
+### Health check
+
+`npm run smoke` runs 17 credential-free checks against production (pages,
+content markers, OG cards, SEO surfaces, Farcaster manifest, webhook signature
+rejection, admin auth walls, upload health). Run before every show and after
+every deploy; it exits non-zero on any failure. Point at any base URL with
+`npm run smoke -- https://your-preview-url`.
+
+### iOS app
+
+The `ios/` directory is a Capacitor shell that loads the production site, so
+content updates ship through normal Vercel deploys with no resubmission. Local
+loop: `npx cap sync ios && npx cap open ios`. TestFlight steps: `docs/testflight-runbook.md`.
+
+---
+
+## Current Status (2026-07-04)
+
+The site is live on COC #7 (WaveWarZ Takeover, July 18). All features below are
+deployed and verified in production.
+
+**Shipped this cycle:** COC #7 rollover, flyer contest (`/contest`), live battle
+voting, attendance badges, WaveWarZ history section, mini-app push notifications
+(webhook + full JFS verification), the admin Show Night panel, dynamic OG cards,
+the `npm run smoke` health check, the Capacitor iOS app, and the legacy static
+layer removed.
+
+**Known blocker - image uploads down:** `/api/upload` returns 500. The Cloudinary
+API key (cloud `dzzqdbo9k`) has lost its permissions, which kills both contest
+submissions and the fan gallery. Fix in the Cloudinary console (Access Keys →
+re-enable or regenerate), update `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET`
+in Vercel, redeploy. `npm run smoke` will flip that check to PASS once fixed.
+Full detail at the top of `docs/coc7-prep-checklist.md`.
+
+**Outstanding before the show** (see the checklist for the full list): create the
+Luma event, pick the contest winner (deadline July 10), confirm the WaveWarZ crew
+lineup (week of show), and add #5/#6 recap content.
 
 ---
 
@@ -369,24 +443,30 @@ See `.env.local.example`. The Firebase Admin SDK throws at module load if any of
 
 ## Future Roadmap
 
+### Shipped
+- [x] Live chat (Firestore)
+- [x] Farcaster Mini App push notifications (webhook + JFS-verified tokens + send tooling)
+- [x] Community battle voting (anonymous, no-wallet - the free layer of the WaveWarZ format)
+- [x] Attendance badges (off-chain, visitor/voter tiers - POAP version still below)
+- [x] iOS app shell (Capacitor, TestFlight-ready)
+
 ### Phase 2: Live Experience
-- [ ] Live chat (Firebase Realtime Database)
 - [ ] Emoji reactions overlay during shows
 - [ ] Song request queue with upvoting
-- [ ] Farcaster Mini App upgrades (Quick Auth, push notifications, haptics)
+- [ ] Mini App Quick Auth + haptics
 
 ### Phase 3: Web3 & Monetization
 - [ ] Wallet connection (wagmi/RainbowKit)
 - [ ] Tipping system (ETH/USDC on Base + off-chain Respect)
 - [ ] 0xSplits revenue distribution (80% artist / 10% treasury / 10% curator)
-- [ ] Attendance POAPs (ERC-1155 on Base)
+- [ ] Attendance POAPs (ERC-1155 on Base - onchain upgrade of the current badge)
+- [ ] Onchain WaveWarZ battle betting (link out to wavewarz.com; x402 agent bets on Base)
 - [ ] Coinbase Onramp for fiat users
 
 ### Phase 4: Production & Engagement
 - [ ] OBS WebSocket integration (scene switching from admin)
 - [ ] Multistream management (YouTube/Twitch/Kick)
 - [ ] Chat aggregation across platforms
-- [ ] Prediction market voting (WaveWarZ battles)
 - [ ] Reputation system and fan tier badges
 
 ### Phase 5: Advanced
