@@ -50,18 +50,20 @@ export async function POST(request: NextRequest) {
     const uploadType = uploadTypeRaw as UploadType;
     const udlLicense = udlLicenseRaw ? JSON.parse(udlLicenseRaw) : null;
 
-    // 4. Token gate check
-    const { tokenAddress, minBalance } = siteConfig.archive.tokenGate;
-    const { eligible, balance } = await checkTokenBalance(
-      walletAddress,
-      tokenAddress,
-      minBalance
-    );
-    if (!eligible) {
-      return NextResponse.json(
-        { error: "Insufficient token balance", balance, required: minBalance },
-        { status: 403 }
+    // 4. Token gate check (skip if gate is disabled)
+    if (siteConfig.archive.walletGateEnabled) {
+      const { tokenAddress, minBalance } = siteConfig.archive.tokenGate;
+      const { eligible, balance } = await checkTokenBalance(
+        walletAddress,
+        tokenAddress,
+        minBalance
       );
+      if (!eligible) {
+        return NextResponse.json(
+          { error: "Insufficient token balance", balance, required: minBalance },
+          { status: 403 }
+        );
+      }
     }
 
     // 5. Upload to Arweave

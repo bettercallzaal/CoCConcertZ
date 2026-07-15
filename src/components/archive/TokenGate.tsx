@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { injected } from "wagmi/connectors";
 
@@ -130,6 +130,16 @@ export function TokenGate({ onGatePass }: TokenGateProps) {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [gateEnabled, setGateEnabled] = useState(true);
+
+  useEffect(() => {
+    const enabled = process.env.NEXT_PUBLIC_WALLET_GATE_ENABLED !== "false";
+    setGateEnabled(enabled);
+
+    if (!enabled) {
+      onGatePass("ungated");
+    }
+  }, [onGatePass]);
 
   async function handleVerify() {
     if (!address) return;
@@ -164,6 +174,10 @@ export function TokenGate({ onGatePass }: TokenGateProps) {
     } finally {
       setLoading(false);
     }
+  }
+
+  if (!gateEnabled) {
+    return null;
   }
 
   return (

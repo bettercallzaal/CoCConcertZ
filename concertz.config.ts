@@ -38,6 +38,7 @@ export const config = {
   },
   archive: {
     arweaveGateway: "https://arweave.net",
+    walletGateEnabled: process.env.NEXT_PUBLIC_WALLET_GATE_ENABLED !== "false",
     tokenGate: {
       tokenAddress: process.env.ZABAL_TOKEN_ADDRESS || "",
       chainId: 8453,
