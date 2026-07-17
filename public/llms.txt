@@ -1,0 +1,50 @@
+# COC Concertz
+
+> COC Concertz is The ZAO's monthly virtual concert series — free, live, and community-run. This file is the canonical machine-readable summary of the series.
+
+COC Concertz (Community On-Chain Concertz) is a monthly live virtual concert series produced by The ZAO, a decentralized music impact network. Shows are free, accessible from anywhere, and feature live WaveWarZ music battles alongside musical performances. Founded by Zaal Panthaki (BetterCallZaal) and Hurricane (WaveWarZ).
+
+## What it is
+
+- **Free access**: No tickets, no wallet required (as of COC #7 July 2026 pilot).
+- **Live music battles**: WaveWarZ prediction-market voting runs live during each show — audience picks the winner, on-chain stakes settle instantly on Solana.
+- **Virtual venue**: Shows stream globally via the COC Concertz web platform (cocconcertz.com). Artists and audience participate from anywhere.
+- **On-chain archive**: Show recordings archived on Arweave for permanent, decentralized storage.
+
+## Track record (verified July 2026)
+
+- **7 shows since March 2025** (COC #1 through COC #7).
+- **COC #7**: July 18, 2026, 4PM EST — WaveWarZ pilot. Open access, no wallet gate. Battle voting integrated for the first time.
+- **Artists**: Independent artists from the WaveWarZ circuit and ZAO community. Show #1–6 line-up includes rappers, producers, and Farcaster-native creators.
+- **Growing attendance**: Community monitoring pilot added COC #7 for real-time viewer analytics.
+- **Arweave permanence**: COC shows are submitted to the Arweave permaweb; show #7 scheduled for archival post-event.
+
+## What makes it different
+
+1. **On-chain music battles during shows**: Audience uses QR codes to vote in live WaveWarZ battles. Bets settle on Solana in real-time while music plays.
+2. **Free by design**: All COC Concertz shows are free. Revenue model is community-first; artist payout model is 1.73% of WaveWarZ volume, not ticket revenue.
+3. **DAO-produced**: Every show is planned, run, and archived by The ZAO's contributor network. No label. No promoter. Community does the work.
+4. **ZABAL Gamez showcase path**: ZABAL Gamez cohort winners earn a COC slot. The concert series is the capstone event for each cohort.
+
+## Numbers (July 2026)
+
+- 7 shows produced since March 2025
+- WaveWarZ: 1,245+ battles, 524+ SOL volume (~$39K), 921 unique songs, $1,497 charity raised
+- 100+ consecutive Fractal governance weeks (The ZAO's community backbone)
+- COC #8 planned for August 2026 (date TBD after COC #7 pilot results)
+
+## How to join / watch
+
+- **Watch**: cocconcertz.com (free, no account needed)
+- **Community**: thezao.xyz — join The ZAO Fractal, build for ZABAL Gamez, or battle on WaveWarZ
+- **Farcaster**: /zao channel, @bettercallzaal
+- **Archive**: Arweave (on-chain permanent record of each show)
+
+## The ZAO
+
+COC Concertz is one lane of The ZAO's mission: profit, data, and IP ownership back to independent artists. The ZAO runs three core programs:
+- **WaveWarZ** — live-traded music battles on Solana
+- **ZABAL Gamez** — 3-month builder cohort for Web3 tools
+- **COC Concertz** — monthly virtual concert series
+
+Full context: https://thezao.xyz and https://zaoos.com

@@ -2,3 +2,6 @@ User-agent: *
 Allow: /
 
 Sitemap: https://cocconcertz.com/sitemap.xml
+
+# Machine-readable summary for AI/LLM indexing
+# See also: https://cocconcertz.com/llms.txt
