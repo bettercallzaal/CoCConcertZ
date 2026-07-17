@@ -33,6 +33,21 @@ so the archive upload page does not require 100M ZABAL.
 4. Confirm: visit https://www.cocconcertz.com/archive/upload — it should skip the
    wallet verification step and go straight to the upload form.
 
+### 3. Artist passcodes — NEEDED IF CREW JOINS
+**Status: BLOCKED on crew lineup confirmation**
+If WaveWarZ crew artists (GodclouD, dopestilo, etc.) need to upload to the archive
+during the show, they need portal passcodes.
+
+**Fix (after PR #32 is merged):**
+1. Uncomment WaveWarZ crew entries in `scripts/setup-coc7-artists.ts`
+2. Run: `npx tsx scripts/setup-coc7-artists.ts` (needs `.env.local` with Firebase admin creds)
+3. Copy the generated JSON codes from console output
+4. Vercel dashboard → `ARTIST_PASSCODES` env var → merge the new codes into the existing JSON
+5. Trigger a redeploy
+6. Share passcodes with artists and the portal URL: https://cocconcertz.com/login
+
+Note: If only DJ Zaal is uploading, this is not needed — admin access covers it.
+
 ---
 
 ## T-2 HOURS (Setup)
