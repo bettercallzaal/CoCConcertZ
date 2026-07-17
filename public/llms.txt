@@ -1,0 +1,48 @@
+# COC Concertz
+
+> Virtual concert series presented by The ZAO — live music events featuring WaveWarZ battles on Base blockchain. 7 shows since March 2025.
+
+## Overview
+
+COC Concertz is a monthly virtual concert series hosted by The ZAO, combining live music performances with onchain WaveWarZ rap battles. Each show streams live and is archived to Arweave for permanent decentralized storage. Shows are free and open to the public.
+
+## Key Facts
+
+- 7 shows produced since March 2025 (COC #1 through COC #7)
+- Monthly cadence (irregular March 2025 start; monthly from March 2026)
+- Live music + WaveWarZ battle voting per show
+- Arweave archive model: show recordings, metadata, and outcomes stored permanently onchain
+- WaveWarZ integration: real-time battle voting UI during shows; 1,245+ total WaveWarZ battles to date with 524 SOL (~$39k) volume
+- Open-access pilot: COC #7 (July 18, 2026) dropped the wallet gate — free for all viewers, no NFT required
+- Built on Base blockchain
+
+## Show History
+
+- COC #1 (March 2025) — inaugural show
+- COC #2 through COC #6 — monthly shows, NFT-gated for Respect holders
+- COC #7 (July 18, 2026, 4PM EST) — WaveWarZ Takeover; open-access pilot; Arweave archive debut
+
+## Artists
+
+Featured artists include WaveWarZ community artists from The ZAO ecosystem. Repeat performers include members of the ZAO Fractal governance community.
+
+## Technology
+
+- [Next.js](https://nextjs.org): Frontend
+- [Supabase](https://supabase.com): Database and metrics
+- [Arweave](https://arweave.org): Permanent archive storage
+- [Cloudinary](https://cloudinary.com): Media delivery
+- [Base](https://base.org): WaveWarZ battle contracts (EVM L2)
+
+## Links
+
+- Site: [cocconcertz.com](https://cocconcertz.com)
+- Archive: [cocconcertz.com/archive](https://cocconcertz.com/archive)
+- Artists: [cocconcertz.com/artists](https://cocconcertz.com/artists)
+- Events: [cocconcertz.com/events](https://cocconcertz.com/events)
+- Presented by: [The ZAO](https://thezao.xyz)
+- WaveWarZ battles: [wavewarz.io](https://wavewarz.io)
+
+## Organization
+
+COC Concertz is presented by The ZAO (thezao.xyz) — a decentralized music community on Base blockchain. The ZAO runs 100+ weekly Fractal governance sessions, has 157 unique on-chain Respect holders, and operates WaveWarZ (1,245+ battles, 524 SOL volume) as its competitive music platform.
