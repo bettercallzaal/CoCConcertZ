@@ -31,10 +31,10 @@ check "/contest 200" 200 "$(code "$BASE/contest")"
 check "/brand 200" 200 "$(code "$BASE/brand")"
 
 # Homepage content
-HOME=$(curl -s --max-time 30 "$BASE")
-check "homepage has next-show name" 1 "$(echo "$HOME" | grep -c "WAVEWARZ TAKEOVER" | head -1 | awk '{print ($1>0)?1:0}')"
-check "homepage has JSON-LD" 1 "$(echo "$HOME" | grep -c "application/ld+json" | awk '{print ($1>0)?1:0}')"
-check "homepage has battle history section" 1 "$(echo "$HOME" | grep -c "BATTLE HISTORY" | awk '{print ($1>0)?1:0}')"
+HOMEPAGE=$(curl -s --max-time 30 "$BASE")
+check "homepage has next-show name" 1 "$(echo "$HOMEPAGE" | grep -c "WAVEWARZ TAKEOVER" | head -1 | awk '{print ($1>0)?1:0}')"
+check "homepage has JSON-LD" 1 "$(echo "$HOMEPAGE" | grep -c "application/ld+json" | awk '{print ($1>0)?1:0}')"
+check "homepage has battle history section" 1 "$(echo "$HOMEPAGE" | grep -c "BATTLE HISTORY" | awk '{print ($1>0)?1:0}')"
 
 # OG cards
 check "og/contest is png" "200 image/png" "$(curl -s -o /dev/null -w '%{http_code} %{content_type}' --max-time 30 "$BASE/api/og/contest")"
