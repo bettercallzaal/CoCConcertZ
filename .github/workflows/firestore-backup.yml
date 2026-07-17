@@ -60,17 +60,35 @@ jobs:
   export:
     runs-on: ubuntu-latest
     steps:
+      - name: Check required secrets
+        id: secret-check
+        run: |
+          if [ -z "$GCP_SA_KEY" ]; then
+            echo "ready=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::GCP_SA_KEY secret is not set — Firestore backup skipped."
+            echo "To fix: GCP Console -> IAM -> Service Accounts -> create key for firestore-backup@cocconcertz.iam.gserviceaccount.com"
+            echo "Then add as GCP_SA_KEY in GitHub repo Settings -> Secrets -> Actions."
+            echo "Also ensure GCP_PROJECT_ID and BACKUP_BUCKET secrets are set."
+          else
+            echo "ready=true" >> "$GITHUB_OUTPUT"
+          fi
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
       - name: Authenticate to GCP
+        if: steps.secret-check.outputs.ready == 'true'
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Set up gcloud
+        if: steps.secret-check.outputs.ready == 'true'
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Export Firestore
+        if: steps.secret-check.outputs.ready == 'true'
         run: |
           set -euo pipefail
           STAMP=$(date -u +%Y-%m-%d-%H%M)
