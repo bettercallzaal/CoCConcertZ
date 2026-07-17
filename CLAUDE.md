@@ -25,6 +25,8 @@ PR-only. Never push main directly. One item at a time. Status one-liners to ZAAL
 
 **After a deadline-gated event closes, update OG metadata in the same PR.** Don't leave "Submissions close July 10" in `<head>` while the UI component shows "Submissions closed."
 
+**Audit FormData field names before each show.** When a component builds FormData and a separate API route reads it, names can silently diverge (snake_case vs camelCase, multi-value vs JSON string). The archive upload was 100% broken (PR #40): `wallet_address` vs `walletAddress`, `tags[]` multi-appends vs `tags` JSON string. Audit every upload path's component-sends vs API-reads before show night.
+
 ## Key Scripts
 - `scripts/smoke-test.sh` — pre-show health check (run from prod URL)
 - `scripts/setup-coc7-artists.ts` — create artist Firestore docs + generate passcodes (`npx tsx`)
