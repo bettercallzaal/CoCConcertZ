@@ -37,3 +37,7 @@ PR-only. Never push main directly. One item at a time. Status one-liners to ZAAL
 2. Set `NEXT_PUBLIC_WALLET_GATE_ENABLED=false` in Vercel Production → redeploy
 3. Merge PRs in order, run smoke-test.sh, verify gate canary passes
 4. Run `setup-coc7-artists.ts` after merge to seed Firestore artist docs
+5. At show start: admin dashboard → Events → COC #7 → Status → **Live** → Save
+   (LiveMode overlay is driven by `event.status === "live"` — not a config/live Firestore doc)
+6. Verify streamLink in event doc for "Watch on Twitch" CTA: admin → Events → COC #7 → Stream Link
+   (update-coc7.ts sets this; re-run it after merge to patch any existing event doc)
