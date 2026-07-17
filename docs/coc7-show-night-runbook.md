@@ -75,8 +75,9 @@ Note: If only DJ Zaal is uploading, this is not needed — admin access covers i
       - Send ID: leave the auto-generated value (each page load gives a fresh ID)
       - Title: `COC #7: WaveWarZ LIVE NOW`
       - Body: `Join us in Stilo World. DJ Zaal spinning. Free entry — link in bio.`
-- [ ] Check https://www.cocconcertz.com — LiveMode should be active (if not, check
-      `liveMode` flag in Firestore `config/live` doc via Firebase console)
+- [ ] Check https://www.cocconcertz.com — LiveMode overlay should be active. If not:
+      Admin dashboard → Events → COC #7 → Status → change to **Live** → Save.
+      (LiveMode is driven by `event.status === "live"` in Firestore, not a separate config doc.)
 - [ ] Monitor concurrent viewers at https://www.cocconcertz.com/api/metrics/coc7
 
 ---
