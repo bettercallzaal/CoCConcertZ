@@ -45,6 +45,10 @@ so the archive upload page does not require 100M ZABAL.
       - Send ID: leave the auto-generated value (do NOT hardcode — a reused ID is silently deduped for 24h)
       - Title: `COC #7 is LIVE Tonight`
       - Body: `WaveWarZ Takeover starts 4PM EST. DJ Zaal on the decks. Free entry.`
+- [ ] Verify COC #7 event doc in admin: https://www.cocconcertz.com/admin → Events → COC #7
+      - Confirm `number` field = 7 (required for badge claims)
+      - Confirm `venue.spatialLink` is set (required for GO LIVE overlay CTA)
+      - Confirm `venue.streamLink` is set if Twitch embed desired
 - [ ] Confirm Spatial venue is accessible: https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0
 - [ ] Confirm Twitch stream is set up: twitch.tv/bettercallzaal
 
