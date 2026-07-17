@@ -42,7 +42,7 @@ so the archive upload page does not require 100M ZABAL.
 - [ ] Check metrics baseline: https://www.cocconcertz.com/api/metrics/coc7
       - Note starting `contestSubmissions`, `fanGalleryUploads`, `archiveUploads.total`
 - [ ] Fire show-day push notification (admin dashboard → Push Notification):
-      - Send ID: `coc7-showday`
+      - Send ID: leave the auto-generated value (do NOT hardcode — a reused ID is silently deduped for 24h)
       - Title: `COC #7 is LIVE Tonight`
       - Body: `WaveWarZ Takeover starts 4PM EST. DJ Zaal on the decks. Free entry.`
 - [ ] Confirm Spatial venue is accessible: https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0
@@ -53,7 +53,7 @@ so the archive upload page does not require 100M ZABAL.
 ## T-0 SHOW START (4PM EST)
 
 - [ ] Fire go-live push notification:
-      - Send ID: `coc7-golive`
+      - Send ID: leave the auto-generated value (each page load gives a fresh ID)
       - Title: `COC #7: WaveWarZ LIVE NOW`
       - Body: `Join us in Stilo World. DJ Zaal spinning. Free entry — link in bio.`
 - [ ] Check https://www.cocconcertz.com — LiveMode should be active (if not, check
@@ -116,7 +116,7 @@ Check https://www.cocconcertz.com/api/metrics/coc7 every 30 min during the show.
 ## POST-SHOW (Same Night)
 
 - [ ] Send post-show push notification:
-      - Send ID: `coc7-postshow`
+      - Send ID: leave the auto-generated value (reload the admin page for a fresh ID)
       - Title: `COC #7 Wrapped`
       - Body: `Thanks for being there. Recap + photos dropping soon. See you at #8.`
 - [ ] Final metrics snapshot: https://www.cocconcertz.com/api/metrics/coc7 — save the JSON
