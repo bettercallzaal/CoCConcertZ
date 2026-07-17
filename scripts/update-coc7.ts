@@ -36,7 +36,7 @@ async function upsertSeven() {
     description: NEW_DESCRIPTION,
     announcement: NEW_ANNOUNCEMENT,
     rsvpLink: RSVP_LINK,
-    venue: { spatialLink: SPATIAL },
+    venue: { spatialLink: SPATIAL, streamLink: "https://www.twitch.tv/bettercallzaal" },
     status: "upcoming",
     flyerUrl: BANNER,
     bannerUrl: BANNER,
