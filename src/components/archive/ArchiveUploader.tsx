@@ -99,23 +99,23 @@ export function ArchiveUploader({
     try {
       const formData = new FormData();
       formData.append("file", file);
-      formData.append("upload_type", uploadType);
+      formData.append("uploadType", uploadType);
       formData.append("title", title.trim());
       formData.append("description", description.trim());
-      formData.append("wallet_address", walletAddress);
+      formData.append("walletAddress", walletAddress);
 
       const parsedTags = tags
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean);
-      parsedTags.forEach((tag) => formData.append("tags[]", tag));
+      formData.append("tags", JSON.stringify(parsedTags));
 
-      if (showId) formData.append("show_id", showId);
+      if (showId) formData.append("showId", showId);
 
-      selectedArtistSlugs.forEach((slug) => formData.append("artist_slugs[]", slug));
+      formData.append("artistSlugs", JSON.stringify(selectedArtistSlugs));
 
       if (uploadType === "atomic_asset" && udlPreset) {
-        formData.append("udl_preset", udlPreset);
+        formData.append("udlLicense", JSON.stringify({ preset: udlPreset }));
       }
 
       const res = await fetch("/api/archive/upload", {
