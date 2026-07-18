@@ -1,0 +1,64 @@
+# COC Concertz
+
+> Free live metaverse concerts hosted by The ZAO. No wallet required. Runs on Spatial.io with Arweave archiving and on-chain WaveWarZ music battles.
+
+## Overview
+
+COC Concertz (Concertz of Culture) is a recurring live music event where artists perform inside a metaverse venue. Attendance is free and open — no NFT, no ticket, no wallet needed. The show is streamed into a Spatial.io room accessible from any browser. Every show is archived to Arweave, making the performance permanent.
+
+COC is produced by The ZAO, a decentralized music community on Base chain. COC #7: WaveWarZ Takeover launched Jul 18 2026 as the first open-access pilot (wallet gate disabled).
+
+## What Happens at a Show
+
+- DJ Zaal plays live sets inside the Spatial.io metaverse room
+- WaveWarZ music battles run: two songs compete, crowd votes the winner on-chain
+- Attendees upload art, photos, and clips to the Arweave archive gallery
+- A contest runs for the best gallery upload each show
+- All uploads and winner data are permanently stored on Arweave
+
+## WaveWarZ Battles
+
+WaveWarZ is a live Solana music-battle prediction market incubated by The ZAO. At each COC show, two WaveWarZ artists are pitted song-vs-song. The crowd votes inside the room. The winner advances on the WaveWarZ leaderboard.
+
+Top WaveWarZ artists by SOL trading volume (2026-07-17):
+- STILOWORLD: 41.6 SOL (@wifiiswater)
+- Geek Myth: 30.9 SOL (@GeEkMyTh_ETH)
+- Lui: 30.0 SOL (@Cryptogodlui)
+- Cannon Jones: 15.5 SOL (@cannonjones973)
+
+## Stack
+
+- [Next.js 15](https://nextjs.org): App Router, TypeScript
+- [Spatial.io](https://spatial.io): Metaverse venue — browser-native, no download required
+- [Firebase / Firestore](https://firebase.google.com): Real-time visitor counts, gallery uploads, contest entries
+- [Supabase](https://supabase.com): Archive upload records, show metadata
+- [Cloudinary](https://cloudinary.com): Media transforms for gallery uploads
+- [Solana](https://solana.com): WaveWarZ battle protocol
+- [Arweave](https://arweave.org): Permanent archive of all show uploads
+- [Vercel](https://vercel.com): Hosting
+
+## Live Endpoints
+
+- `GET https://cocconcertz.com/api/metrics/coc[N]` — show-night metrics: concurrent viewers, gallery uploads, contest submissions
+- `GET https://cocconcertz.com/api/stats/visit` — current live viewer count (Firestore)
+- `POST https://cocconcertz.com/api/upload` — gallery upload (wallet optional in pilot mode)
+
+## Shows
+
+- COC #1–#6: wallet-gated, Spatial.io venue
+- COC #7: Jul 18 2026, WaveWarZ Takeover, wallet gate DISABLED (open-access pilot)
+- COC #8: target Aug 2026 (date TBD)
+
+## Links
+
+- [Ticket / Entry](https://ticket.cocconcertz.com): Single-click entry to the Spatial.io room
+- [Gallery](https://cocconcertz.com/archive): Arweave-backed show archive
+- [WaveWarZ](https://wavewarz.info): Live music battle platform
+- [The ZAO on Farcaster](https://warpcast.com/~/channel/the-zao): Community channel
+- [Source](https://github.com/bettercallzaal/CoCConcertZ): Open-source
+
+## Community
+
+- Farcaster: /cocconcertz channel
+- X: @bettercallzaal
+- Telegram: ZAO main group
