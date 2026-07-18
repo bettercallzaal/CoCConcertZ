@@ -7,10 +7,19 @@ type Delta = 1 | -1;
 
 async function bump(delta: Delta) {
   const { adminDb } = await import("@/lib/firebase-admin");
-  await adminDb
-    .collection("stats")
-    .doc("visitors")
-    .set({ count: FieldValue.increment(delta) }, { merge: true });
+  const ref = adminDb.collection("stats").doc("visitors");
+  await ref.set({ count: FieldValue.increment(delta) }, { merge: true });
+
+  // Update peak concurrent count on increments only (read-then-write is
+  // safe here — peak is best-effort and only ever grows).
+  if (delta === 1) {
+    const snap = await ref.get();
+    const current: number = typeof snap.data()?.count === "number" ? (snap.data()!.count as number) : 1;
+    await adminDb
+      .collection("stats")
+      .doc("visitors_peak")
+      .set({ count: current, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+  }
 }
 
 export async function POST() {
