@@ -36,14 +36,16 @@ if (getApps().length === 0) {
 const fs = getFirestore();
 
 async function firestoreMetrics() {
-  const [gallerySnap, visitorsDoc, contestSnap] = await Promise.all([
+  const [gallerySnap, visitorsDoc, visitorsPeakDoc, contestSnap] = await Promise.all([
     fs.collection("gallery").count().get(),
     fs.doc("stats/visitors").get(),
+    fs.doc("stats/visitors_peak").get(),
     fs.collection("contestEntries").count().get(),
   ]);
   return {
     galleryCount: gallerySnap.data().count as number,
-    visitorCount: visitorsDoc.exists ? ((visitorsDoc.data()?.count as number) ?? 0) : 0,
+    concurrentNow: visitorsDoc.exists ? ((visitorsDoc.data()?.count as number) ?? 0) : 0,
+    peakConcurrent: visitorsPeakDoc.exists ? ((visitorsPeakDoc.data()?.count as number) ?? 0) : 0,
     contestCount: contestSnap.data().count as number,
   };
 }
@@ -94,7 +96,8 @@ async function main() {
   console.log(`${sep}`);
   console.log("  FIRESTORE");
   console.log(`${sep}`);
-  console.log(`  Unique visitors  : ${fire.visitorCount}`);
+  console.log(`  Peak concurrent  : ${fire.peakConcurrent} (max simultaneous during show)`);
+  console.log(`  Current live     : ${fire.concurrentNow} (near-0 is normal post-show)`);
   console.log(`  Gallery uploads  : ${fire.galleryCount}`);
   console.log(`  Contest entries  : ${fire.contestCount}`);
 
@@ -115,13 +118,20 @@ async function main() {
     }
   }
 
+  const peakLabel = fire.peakConcurrent > 0 ? `${fire.peakConcurrent} peak concurrent` : "peak not tracked (deploy fix/track-peak-visitors before next show)";
+  console.log(`\n${"═".repeat(52)}`);
+  console.log("  SUMMARY");
+  console.log(`${"═".repeat(52)}`);
+  console.log(`  Viewers (peak)   : ${peakLabel}`);
+  console.log(`  Gallery uploads  : ${fire.galleryCount}`);
+  console.log(`  Contest entries  : ${fire.contestCount}`);
   console.log(`\n${sep}`);
   console.log("  NEXT STEPS (doc 1300 — 72h action plan)");
   console.log(`${sep}`);
   console.log("  1. Compare gallery count vs COC #6 baseline");
   console.log("  2. Post recap to FC /cocconcertz + X thread");
   console.log("  3. Close board task 23789082 with final numbers");
-  console.log("  4. Lock COC #8 date by Mon Jul 21 (doc 1275 decision checklist)");
+  console.log("  4. Lock COC #8 date by Mon Jul 21 (doc 1295 + doc 1367)");
   console.log(`${"═".repeat(52)}\n`);
 }
 
