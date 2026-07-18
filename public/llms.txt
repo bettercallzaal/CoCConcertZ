@@ -22,6 +22,16 @@ COC Concertz is a monthly virtual concert series hosted by The ZAO, combining li
 - COC #2 through COC #6 — monthly shows, NFT-gated for Respect holders
 - COC #7 (July 18, 2026, 4PM EST) — WaveWarZ Takeover; open-access pilot; Arweave archive debut
 
+## WaveWarZ Battle Format
+
+At each COC show, two WaveWarZ artists compete song-vs-song. The crowd votes inside the Spatial.io room. The winner advances on the WaveWarZ leaderboard. Results are recorded on Solana.
+
+Top WaveWarZ artists by SOL trading volume (2026-07-17):
+- STILOWORLD: 41.6 SOL (@wifiiswater)
+- Geek Myth: 30.9 SOL (@GeEkMyTh_ETH)
+- Lui: 30.0 SOL (@Cryptogodlui)
+- Cannon Jones: 15.5 SOL (@cannonjones973)
+
 ## Artists
 
 Featured artists include WaveWarZ community artists from The ZAO ecosystem. Repeat performers include members of the ZAO Fractal governance community.
@@ -34,14 +44,20 @@ Featured artists include WaveWarZ community artists from The ZAO ecosystem. Repe
 - [Cloudinary](https://cloudinary.com): Media delivery
 - [Base](https://base.org): WaveWarZ battle contracts (EVM L2)
 
+## Live API Endpoints
+
+- `GET https://cocconcertz.com/api/metrics/coc[N]` — show-night metrics: concurrent viewers, gallery uploads, contest submissions
+- `GET https://cocconcertz.com/api/stats/visit` — real-time viewer count (Firestore-backed)
+
 ## Links
 
+- Entry: [ticket.cocconcertz.com](https://ticket.cocconcertz.com) — single-click to the Spatial.io room
 - Site: [cocconcertz.com](https://cocconcertz.com)
 - Archive: [cocconcertz.com/archive](https://cocconcertz.com/archive)
 - Artists: [cocconcertz.com/artists](https://cocconcertz.com/artists)
 - Events: [cocconcertz.com/events](https://cocconcertz.com/events)
 - Presented by: [The ZAO](https://thezao.xyz)
-- WaveWarZ battles: [wavewarz.io](https://wavewarz.io)
+- WaveWarZ battles: [wavewarz.info](https://wavewarz.info)
 
 ## Organization
 
