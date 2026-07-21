@@ -27,6 +27,10 @@ function cloudinaryConfigured(): boolean {
   return Boolean(CLOUD_NAME && API_KEY && API_SECRET);
 }
 
+// Only these Cloudinary folders may be targeted - the folder used to come
+// straight from the caller, letting anyone upload anywhere in the account.
+const ALLOWED_FOLDERS = new Set(["coc-concertz", "user-uploads", "recaps", "sets"]);
+
 export async function POST(request: NextRequest) {
   // Config check first - turns a 5-day silent outage into an obvious 503 the
   // moment a credential is missing, naming exactly which var to fix.
@@ -43,6 +47,23 @@ export async function POST(request: NextRequest) {
     );
   }
 
+  // CONFLICT RESOLUTION NOTE (2026-07-27, rebasing PR #55 onto main):
+  //
+  // The original security branch added `getCookieAuth(request)` here and 401'd
+  // anonymous callers. That was written before main landed the comment above:
+  // "Fan uploads are intentionally public (no session gate) - this is a contest
+  // / fan gallery, not an internal tool."
+  //
+  // Those two intents directly contradict. Gating this route on a session would
+  // break contest submissions and the fan gallery outright - the exact feature
+  // the Cloudinary work is trying to restore. So the auth gate is deliberately
+  // NOT carried over, and that decision is called out in the PR for a human to
+  // confirm rather than being buried in a conflict resolution.
+  //
+  // The branch's OTHER upload hardening IS kept: the folder allowlist below.
+  // That closes the real hole (caller-supplied folder = write anywhere in the
+  // Cloudinary account) without blocking a single legitimate fan upload.
+
   cloudinary.config({ cloud_name: CLOUD_NAME, api_key: API_KEY, api_secret: API_SECRET });
 
   let file: File | null;
@@ -50,7 +71,10 @@ export async function POST(request: NextRequest) {
   try {
     const formData = await request.formData();
     file = formData.get("file") as File | null;
-    folder = (formData.get("folder") as string) || "coc-concertz";
+    const requestedFolder = (formData.get("folder") as string) || "coc-concertz";
+    // Was taken straight from the caller. Anything unrecognised falls back to
+    // the default bucket instead of being trusted.
+    folder = ALLOWED_FOLDERS.has(requestedFolder) ? requestedFolder : "coc-concertz";
   } catch {
     return NextResponse.json({ error: "Invalid form data." }, { status: 400 });
   }
