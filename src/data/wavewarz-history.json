@@ -1,7 +1,8 @@
 {
   "fetchedAt": "2026-07-04T15:50:20.794Z",
-  "totalBattles": 416,
-  "totalVolumeSol": 88.34,
+  "totalBattles": 958,
+  "totalVolumeSol": 484,
+  "statsNote": "Totals from wavewarz.com displayed stats (Jun 15 snapshot per docs/wavewarz-brief.md). The scraper (fetch-wavewarz-history.ts) is page-capped and undercounts — use wavewarz.com as the authoritative source and re-run the script before each show to refresh the `recent` battles list.",
   "recent": [
     {
       "battleId": 1783129812,
