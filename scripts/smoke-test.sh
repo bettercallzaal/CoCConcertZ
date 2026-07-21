@@ -66,6 +66,16 @@ UPLOAD_CODE=$(code -X POST "$BASE/api/upload" -F "file=@$TMPIMG;type=image/png" 
 rm -f "$TMPIMG"
 check "upload API healthy" 200 "$UPLOAD_CODE"
 
+# COC #7 pilot metrics endpoint
+METRICS=$(curl -s --max-time 30 "$BASE/api/metrics/coc7")
+check "metrics/coc7 200" 200 "$(code "$BASE/api/metrics/coc7")"
+check "metrics has concurrentViewers" 1 "$(echo "$METRICS" | grep -c '"concurrentViewers"' | awk '{print ($1>0)?1:0}')"
+check "metrics has archiveUploads" 1 "$(echo "$METRICS" | grep -c '"archiveUploads"' | awk '{print ($1>0)?1:0}')"
+# Pilot gate canary: NEXT_PUBLIC_WALLET_GATE_ENABLED must be false before the show.
+# This check WILL FAIL until Zaal sets the env var in Vercel + redeploys.
+GATE_ENABLED=$(echo "$METRICS" | grep -o '"walletGateEnabled":[^,}]*' | grep -o '[^:]*$' | tr -d ' ')
+check "pilot gate is OFF (walletGateEnabled=false)" "false" "$GATE_ENABLED"
+
 echo "---"
 echo "$PASS passed, $FAIL failed"
 [ "$FAIL" -eq 0 ] || exit 1
