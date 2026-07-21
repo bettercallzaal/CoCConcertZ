@@ -47,7 +47,7 @@ export function ShowNightPanel() {
   const [tokenCount, setTokenCount] = useState<number | null>(null);
   const [notifTitle, setNotifTitle] = useState("");
   const [notifBody, setNotifBody] = useState("");
-  const [notifId, setNotifId] = useState("");
+  const [notifId, setNotifId] = useState(() => `coc-${Date.now()}`);
   const [notifBusy, setNotifBusy] = useState(false);
   const [notifStatus, setNotifStatus] = useState<string | null>(null);
 
@@ -201,10 +201,10 @@ export function ShowNightPanel() {
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
           <Input
-            label="Send ID (stable - reruns dedupe for 24h)"
+            label="Send ID (auto-generated; reruns within 24h dedupe)"
             value={notifId}
             onChange={(e) => setNotifId(e.target.value)}
-            placeholder="coc7-showday"
+            placeholder="coc-1752964537000"
           />
           <Input
             label={`Title (${notifTitle.length}/32)`}
