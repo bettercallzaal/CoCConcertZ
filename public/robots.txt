@@ -2,3 +2,7 @@ User-agent: *
 Allow: /
 
 Sitemap: https://cocconcertz.com/sitemap.xml
+
+# AI/LLM discoverability
+# https://llmstxt.org
+LLMs: https://cocconcertz.com/llms.txt
