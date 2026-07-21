@@ -6,12 +6,12 @@
  * Run: `npx tsx scripts/fetch-wavewarz-history.ts` (no credentials needed).
  * Re-run before each show to refresh stats.
  */
-import { writeFileSync, mkdirSync } from "fs";
+import { writeFileSync, mkdirSync, readFileSync, existsSync } from "fs";
 import { dirname, join } from "path";
 
 const INTELLIGENCE_BASE = "https://wavewarz-intelligence.vercel.app";
 const OUT = join(process.cwd(), "src/data/wavewarz-history.json");
-const MAX_PAGES = 20;
+const MAX_PAGES = 60;
 
 export interface WaveWarzBattle {
   battleId: number;
@@ -123,17 +123,41 @@ async function main() {
     if (added === 0) break;
   }
 
-  const totalVolume = battles.reduce((sum, b) => sum + (b.totalVolumeSol ?? 0), 0);
-  const snapshot = {
+  const scrapedCount = battles.length;
+  const scrapedVolume = Math.round(battles.reduce((sum, b) => sum + (b.totalVolumeSol ?? 0), 0) * 100) / 100;
+
+  // Read existing file to preserve totals if the scraper undercount (page-cap issue).
+  // Battle counts never decrease, so the larger value is always more accurate.
+  let totalBattles = scrapedCount;
+  let totalVolumeSol = scrapedVolume;
+  let statsNote: string | undefined;
+  if (existsSync(OUT)) {
+    try {
+      const existing = JSON.parse(readFileSync(OUT, "utf8")) as Record<string, unknown>;
+      const existingBattles = typeof existing.totalBattles === "number" ? existing.totalBattles : 0;
+      const existingVolume = typeof existing.totalVolumeSol === "number" ? existing.totalVolumeSol : 0;
+      if (existingBattles > scrapedCount) {
+        console.warn(`WARN: scraper got ${scrapedCount} battles but existing file has ${existingBattles}. Keeping existing total (scraper is page-capped).`);
+        totalBattles = existingBattles;
+        totalVolumeSol = existingVolume;
+        statsNote = typeof existing.statsNote === "string" ? existing.statsNote : undefined;
+      }
+    } catch {
+      // unreadable existing file - use scraped values
+    }
+  }
+
+  const snapshot: Record<string, unknown> = {
     fetchedAt: new Date().toISOString(),
-    totalBattles: battles.length,
-    totalVolumeSol: Math.round(totalVolume * 100) / 100,
+    totalBattles,
+    totalVolumeSol,
     recent: battles.slice(0, 8),
   };
+  if (statsNote) snapshot.statsNote = statsNote;
 
   mkdirSync(dirname(OUT), { recursive: true });
   writeFileSync(OUT, JSON.stringify(snapshot, null, 2));
-  console.log(`OK: wrote ${OUT} (${battles.length} battles, ${snapshot.totalVolumeSol} SOL)`);
+  console.log(`OK: wrote ${OUT} (scraped ${scrapedCount}, displayed ${totalBattles} battles, ${totalVolumeSol} SOL)`);
 }
 
 main().catch((e) => {
