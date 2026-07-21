@@ -220,36 +220,41 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 
 ## Show Day Checklist
 
+Full show-night playbook (COC #7 pilot): **`docs/coc7-show-night-runbook.md`** — covers blockers, push timing, battle control, and the pilot metrics watch list. The steps below are the condensed version.
+
 Everything below runs from `cocconcertz.com/admin` (admin passcode). The
 terminal equivalents in parentheses work too, if you prefer scripts.
 
 ### Before the show
-1. Go to `cocconcertz.com/admin`
-2. Verify artists have set up their profiles in the portal
-3. Post an announcement: "ConcertZ #7 starts at 4PM EST today!"
-4. (Optional) Send a show-day push from the **Show Night** panel - subscriber count is shown (or `npx tsx scripts/send-notification.ts --id coc7-showday --title "..." --body "..."`)
+1. Run smoke test: `bash scripts/smoke-test.sh` — all checks must pass (upload + pilot gate canary)
+2. Go to `cocconcertz.com/admin`
+3. Verify artists have set up their profiles in the portal
+4. Post an announcement: "ConcertZ #7 starts at 4PM EST today!"
+5. Send a show-day push from the **Show Night** panel - subscriber count is shown (or `npx tsx scripts/send-notification.ts --id coc7-showday --title "..." --body "..."`)
 
 ### Going live
-5. Click **GO LIVE** - visitors get the full-page live takeover
-6. Update the announcement: "ConcertZ #7 is LIVE - join now!"
-7. Use **Now Playing** controls to mark the current song as each artist performs
+6. Click **GO LIVE** - visitors get the full-page live takeover
+7. Update the announcement: "ConcertZ #7 is LIVE - join now!"
+8. Use **Now Playing** controls to mark the current song as each artist performs
 
 ### Running a battle vote
-8. In the **Show Night** panel, fill Battle Title + the two sides, click **GO LIVE WITH BATTLE** - the vote widget appears on the homepage (or `npx tsx scripts/manage-battle.ts create "<title>" "<A>" "<B>"`)
-9. The crowd votes (anonymous, one per browser session); the split bar updates live
-10. Click **END BATTLE + TALLY** to close and record the winner (or `manage-battle.ts close`)
+9. In the **Show Night** panel, fill Battle Title + the two sides, click **GO LIVE WITH BATTLE** - the vote widget appears on the homepage (or `npx tsx scripts/manage-battle.ts create "<title>" "<A>" "<B>"`)
+10. The crowd votes (anonymous, one per browser session); the split bar updates live
+11. Click **END BATTLE + TALLY** to close and record the winner (or `manage-battle.ts close`)
 
 ### During the show
-11. Monitor the live chat
-12. Tap through setlist songs as they play
-13. Update announcements as needed
+12. Monitor the live chat
+13. Tap through setlist songs as they play
+14. Check pilot metrics every 30 min: `https://cocconcertz.com/api/metrics/coc7` — note peak `concurrentViewers`, `fanGalleryUploads`, `archiveUploads`
+15. Update announcements as needed
 
 ### After the show
-14. Click **END SHOW**
-15. Click **GENERATE RECAP** - auto-creates the recap card with stats
-16. Clear the announcement
-17. The recap card + attendance badge stay on the homepage for 7 days (fans claim visitor/voter badges during the window)
-18. Post-show recap video + socials: `docs/recap-video-pipeline.md` + `npx tsx scripts/generate-socials.ts`
+16. Click **END SHOW**
+17. Click **GENERATE RECAP** - auto-creates the recap card with stats
+18. Final metrics snapshot: `curl https://cocconcertz.com/api/metrics/coc7` — save the JSON
+19. Clear the announcement
+20. The recap card + attendance badge stay on the homepage for 7 days (fans claim visitor/voter badges during the window)
+21. Post-show: `docs/coc7-post-show-capture.md` (pilot report template) + `docs/recap-video-pipeline.md` + `npx tsx scripts/generate-socials.ts`
 
 ---
 
