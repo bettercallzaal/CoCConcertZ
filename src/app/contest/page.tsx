@@ -5,11 +5,11 @@ import ThumbnailContest from "@/components/contest/ThumbnailContest";
 export const metadata: Metadata = {
   title: "Flyer Contest - COC Concertz #7: WaveWarZ Takeover",
   description:
-    "Design the official flyer for COC Concertz #7: WaveWarZ Takeover (July 18). Submissions close July 10. Winner becomes the flyer on the site, the Luma page, and every social post, with full credit.",
+    "Community flyer contest for COC Concertz #7: WaveWarZ Takeover (July 18). Submissions closed July 10. Winner announced at the show — winner gets full credit everywhere the flyer runs.",
   openGraph: {
     title: "Flyer Contest - COC Concertz #7: WaveWarZ Takeover",
     description:
-      "Design the official flyer for COC Concertz #7. Submissions close July 10. Winner gets full credit everywhere the flyer runs.",
+      "Community flyer contest for COC Concertz #7. Submissions closed. Winner announced at the show July 18.",
     url: "https://cocconcertz.com/contest",
     siteName: "COC Concertz",
     images: [{ url: "/api/og/contest", width: 1200, height: 630 }],
@@ -19,7 +19,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Flyer Contest - COC Concertz #7: WaveWarZ Takeover",
     description:
-      "Design the official flyer for COC Concertz #7. Submissions close July 10.",
+      "Community flyer contest for COC Concertz #7. Submissions closed. Winner announced at the show July 18.",
     images: ["/api/og/contest"],
   },
 };
