@@ -32,17 +32,16 @@ import WaveWarzHistory from "@/components/home/WaveWarzHistory";
 const eventJsonLd = {
   "@context": "https://schema.org",
   "@type": "MusicEvent",
-  name: "COC Concertz #7: WaveWarZ Takeover",
-  startDate: "2026-07-18T16:00:00-04:00",
+  name: "COC Concertz #8: Coming Soon",
   eventStatus: "https://schema.org/EventScheduled",
   eventAttendanceMode: "https://schema.org/OnlineEventAttendanceMode",
   location: {
     "@type": "VirtualLocation",
     url: "https://www.spatial.io/s/Dope-Stilo-Music-Club-66ed19e8c23d0d0c2a3d51c0",
   },
-  image: ["https://cocconcertz.com/images/wavewarz-battle.jpeg"],
+  image: ["https://cocconcertz.com/images/coc-banner-dark.jpeg"],
   description:
-    "The WaveWarZ crew takes over Stilo World. DJ Zaal on the decks with WaveWarZ artists live inside the metaverse. Free entry.",
+    "COC Concertz #8 — live virtual music + WaveWarZ battles. Free entry, no wallet required. Date announcement coming soon.",
   organizer: {
     "@type": "Organization",
     name: "COC Concertz",
@@ -55,7 +54,7 @@ const eventJsonLd = {
     url: "https://ticket.cocconcertz.com",
     price: "0",
     priceCurrency: "USD",
-    availability: "https://schema.org/InStock",
+    availability: "https://schema.org/PreOrder",
   },
 };
 
@@ -171,8 +170,8 @@ export default function Home() {
                   farcasterBtn.addEventListener('click', function(e) {
                     e.preventDefault();
                     sdk.actions.composeCast({
-                      text: "COC Concertz #7: WaveWarZ Takeover. DJ Zaal + WaveWarZ artists live in Stilo World. Sat Jul 18, 4PM EST. Free RSVP:",
-                      embeds: ['https://ticket.cocconcertz.com', 'https://cocconcertz.com/images/wavewarz-battle.jpeg'],
+                      text: "COC Concertz #8 is coming. Live music + WaveWarZ battles. Free entry, no wallet needed:",
+                      embeds: ['https://ticket.cocconcertz.com'],
                       channelKey: 'cocconcertz'
                     });
                   });
