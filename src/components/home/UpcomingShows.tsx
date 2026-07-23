@@ -6,11 +6,11 @@ import type { Event } from "@/lib/types";
 
 const HARDCODED_EVENTS = [
   {
-    id: "hc-7",
-    tag: "Next Up",
-    name: "+COC CONCERTZ #7: WAVEWARZ TAKEOVER",
-    desc: "DJ Zaal + WaveWarZ artists take over Stilo World. Full lineup announced the week of the show.",
-    date: "JUL 18, 2026 @ 4PM EST",
+    id: "hc-8",
+    tag: "Coming Soon",
+    name: "+COC CONCERTZ #8",
+    desc: "The next chapter. Date and artists TBA — sign up at ticket.cocconcertz.com to be notified.",
+    date: "AUG 2026 · DATE TBA",
     isNextUp: true,
     rsvpLink: "https://ticket.cocconcertz.com",
   },
