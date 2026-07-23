@@ -32,7 +32,7 @@ check "/brand 200" 200 "$(code "$BASE/brand")"
 
 # Homepage content
 HOMEPAGE=$(curl -s --max-time 30 "$BASE")
-check "homepage has next-show name" 1 "$(echo "$HOMEPAGE" | grep -c "WAVEWARZ TAKEOVER" | head -1 | awk '{print ($1>0)?1:0}')"
+check "homepage has COC Concertz branding" 1 "$(echo "$HOMEPAGE" | grep -c "COC Concertz" | awk '{print ($1>0)?1:0}')"
 check "homepage has JSON-LD" 1 "$(echo "$HOMEPAGE" | grep -c "application/ld+json" | awk '{print ($1>0)?1:0}')"
 check "homepage has battle history section" 1 "$(echo "$HOMEPAGE" | grep -c "BATTLE HISTORY" | awk '{print ($1>0)?1:0}')"
 
@@ -66,15 +66,19 @@ UPLOAD_CODE=$(code -X POST "$BASE/api/upload" -F "file=@$TMPIMG;type=image/png" 
 rm -f "$TMPIMG"
 check "upload API healthy" 200 "$UPLOAD_CODE"
 
-# COC #7 pilot metrics endpoint
-METRICS=$(curl -s --max-time 30 "$BASE/api/metrics/coc7")
+# COC #7 historical metrics endpoint (stays live post-show)
 check "metrics/coc7 200" 200 "$(code "$BASE/api/metrics/coc7")"
-check "metrics has concurrentViewers" 1 "$(echo "$METRICS" | grep -c '"concurrentViewers"' | awk '{print ($1>0)?1:0}')"
-check "metrics has archiveUploads" 1 "$(echo "$METRICS" | grep -c '"archiveUploads"' | awk '{print ($1>0)?1:0}')"
-# Pilot gate canary: NEXT_PUBLIC_WALLET_GATE_ENABLED must be false before the show.
+
+# COC #8 metrics endpoint (added in PR #59 — checks existence + shape)
+METRICS8=$(curl -s --max-time 30 "$BASE/api/metrics/coc8")
+check "metrics/coc8 200" 200 "$(code "$BASE/api/metrics/coc8")"
+check "metrics/coc8 has concurrentViewers" 1 "$(echo "$METRICS8" | grep -c '"concurrentViewers"' | awk '{print ($1>0)?1:0}')"
+check "metrics/coc8 has archiveUploads" 1 "$(echo "$METRICS8" | grep -c '"archiveUploads"' | awk '{print ($1>0)?1:0}')"
+check "metrics/coc8 has peakViewers" 1 "$(echo "$METRICS8" | grep -c '"peakViewers"' | awk '{print ($1>0)?1:0}')"
+# Pilot gate canary for COC #8: NEXT_PUBLIC_WALLET_GATE_ENABLED must be false before the show.
 # This check WILL FAIL until Zaal sets the env var in Vercel + redeploys.
-GATE_ENABLED=$(echo "$METRICS" | grep -o '"walletGateEnabled":[^,}]*' | grep -o '[^:]*$' | tr -d ' ')
-check "pilot gate is OFF (walletGateEnabled=false)" "false" "$GATE_ENABLED"
+GATE8=$(echo "$METRICS8" | grep -o '"walletGateEnabled":[^,}]*' | grep -o '[^:]*$' | tr -d ' ')
+check "pilot gate is OFF for COC #8 (walletGateEnabled=false)" "false" "$GATE8"
 
 echo "---"
 echo "$PASS passed, $FAIL failed"
