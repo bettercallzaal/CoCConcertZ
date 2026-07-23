@@ -10,7 +10,9 @@
     "smoke": "bash scripts/smoke-test.sh",
     "firebase:emulator": "firebase emulators:start --only firestore,auth",
     "firebase:check": "tsx scripts/check-cloudinary-rule.ts",
-    "firebase:deploy:rules": "tsx scripts/check-cloudinary-rule.ts && firebase deploy --only firestore:rules,firestore:indexes"
+    "firebase:deploy:rules": "tsx scripts/check-cloudinary-rule.ts && firebase deploy --only firestore:rules,firestore:indexes",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@ardrive/turbo-sdk": "^1.41.0",
@@ -40,6 +42,7 @@
     "eslint-config-next": "16.2.2",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "vitest": "^4.1.10"
   }
 }
