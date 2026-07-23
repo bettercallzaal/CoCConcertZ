@@ -6,6 +6,22 @@ import type { Event } from "@/lib/types";
 
 const HARDCODED_EVENTS = [
   {
+    id: "hc-7",
+    name: "+COC CONCERTZ #7",
+    desc: "WaveWarZ Takeover — DJ Zaal + WaveWarZ artists. First live audience BattleVote.",
+    date: "JULY 18, 2026",
+    flyerUrl: "/images/wavewarz-battle.jpeg",
+    flyerAlt: "COC ConcertZ #7 Flyer",
+  },
+  {
+    id: "hc-6",
+    name: "+COC CONCERTZ #6",
+    desc: "The African Experience — ZAO-Africa themed lineup",
+    date: "JUNE 13, 2026",
+    flyerUrl: "/images/coc6-flyer.png",
+    flyerAlt: "COC ConcertZ #6 Flyer",
+  },
+  {
     id: "hc-5",
     name: "+COC CONCERTZ #5",
     desc: "GodCloud headlines — A Day in the Life. Live in Stilo World.",
