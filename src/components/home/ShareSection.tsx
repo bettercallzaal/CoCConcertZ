@@ -7,7 +7,7 @@ const SHARE = {
   rsvp: "https://ticket.cocconcertz.com",
   flyer: "https://cocconcertz.com/images/wavewarz-battle.jpeg",
   text:
-    "COC Concertz #7: WaveWarZ Takeover. DJ Zaal + WaveWarZ artists live in Stilo World.\n\nSat Jul 18, 4PM EST. Free RSVP:",
+    "COC Concertz #8 is coming. Live music + WaveWarZ battles. Free entry, no wallet needed.\n\nStay tuned:",
   channelKey: "cocconcertz",
 };
 
@@ -48,8 +48,8 @@ export default function ShareSection() {
   return (
     <section className="share-section reveal" aria-label="Share">
       <span className="section-label">Spread the Word</span>
-      <h2>SHARE THE SHOW</h2>
-      <p>Help us pack Stilo World for the WaveWarZ Takeover. One click, share everywhere.</p>
+      <h2>SPREAD THE WORD</h2>
+      <p>COC #8 is coming. Help us build the crowd before the date drops.</p>
 
       <pre
         style={{

@@ -6,6 +6,9 @@ const upcomingShows = [
   { name: "+COC CONCERTZ #7: WAVEWARZ TAKEOVER", date: "2026-07-18T20:00:00Z", display: "July 18, 2026 \u00b7 4:00 PM EST", rsvp: "https://ticket.cocconcertz.com" },
 ];
 
+// How many ms after the show start before the site exits "LIVE NOW" mode.
+const LIVE_WINDOW_MS = 4 * 60 * 60 * 1000;
+
 function getNextShow() {
   const now = new Date();
   for (const show of upcomingShows) {
@@ -17,7 +20,7 @@ function getNextShow() {
 export default function Countdown() {
   const [nextShow] = useState(getNextShow);
   const [timeLeft, setTimeLeft] = useState({ d: "--", h: "--", m: "--", s: "--" });
-  const [status, setStatus] = useState<"next" | "today" | "live">("next");
+  const [status, setStatus] = useState<"next" | "today" | "live" | "ended">("next");
   const [isLive, setIsLive] = useState(false);
 
   useEffect(() => {
@@ -28,6 +31,10 @@ export default function Countdown() {
       const diff = eventDate.getTime() - now.getTime();
       const diffHours = diff / (1000 * 60 * 60);
 
+      if (diff <= -LIVE_WINDOW_MS) {
+        setStatus("ended");
+        return;
+      }
       if (diff <= 0) {
         setIsLive(true);
         setStatus("live");
@@ -235,43 +242,57 @@ export default function Countdown() {
         }
       `}</style>
 
-      {status === "live" || status === "today" ? (
+      {status === "ended" ? (
+        <div className="next-show-label">NEXT SHOW</div>
+      ) : status === "live" || status === "today" ? (
         <div className="next-show-live">{status === "live" ? "LIVE NOW" : "TODAY"}</div>
       ) : (
         <div className="next-show-label">NEXT SHOW</div>
       )}
 
-      <h2>{nextShow.name}</h2>
-      <p className="show-date" dangerouslySetInnerHTML={{ __html: nextShow.display }} />
-
-      {isLive ? (
-        <a className="live-cta" href="#venue">JOIN LIVE NOW</a>
+      {status === "ended" ? (
+        <>
+          <h2>+COC CONCERTZ #8</h2>
+          <p className="show-date">ANNOUNCEMENT COMING SOON</p>
+          <a className="rsvp-btn" href="https://ticket.cocconcertz.com" target="_blank" rel="noopener">
+            GET NOTIFIED — FREE
+          </a>
+        </>
       ) : (
         <>
-          <div className="countdown">
-            <div className="countdown-item">
-              <span className="number">{timeLeft.d}</span>
-              <span className="label">Days</span>
-            </div>
-            <span className="countdown-separator">:</span>
-            <div className="countdown-item">
-              <span className="number">{timeLeft.h}</span>
-              <span className="label">Hours</span>
-            </div>
-            <span className="countdown-separator">:</span>
-            <div className="countdown-item">
-              <span className="number">{timeLeft.m}</span>
-              <span className="label">Min</span>
-            </div>
-            <span className="countdown-separator">:</span>
-            <div className="countdown-item">
-              <span className="number">{timeLeft.s}</span>
-              <span className="label">Sec</span>
-            </div>
-          </div>
-          <a className="rsvp-btn" href={nextShow.rsvp ?? "https://ticket.cocconcertz.com"} target="_blank" rel="noopener">
-            RSVP NOW — FREE
-          </a>
+          <h2>{nextShow.name}</h2>
+          <p className="show-date" dangerouslySetInnerHTML={{ __html: nextShow.display }} />
+
+          {isLive ? (
+            <a className="live-cta" href="#venue">JOIN LIVE NOW</a>
+          ) : (
+            <>
+              <div className="countdown">
+                <div className="countdown-item">
+                  <span className="number">{timeLeft.d}</span>
+                  <span className="label">Days</span>
+                </div>
+                <span className="countdown-separator">:</span>
+                <div className="countdown-item">
+                  <span className="number">{timeLeft.h}</span>
+                  <span className="label">Hours</span>
+                </div>
+                <span className="countdown-separator">:</span>
+                <div className="countdown-item">
+                  <span className="number">{timeLeft.m}</span>
+                  <span className="label">Min</span>
+                </div>
+                <span className="countdown-separator">:</span>
+                <div className="countdown-item">
+                  <span className="number">{timeLeft.s}</span>
+                  <span className="label">Sec</span>
+                </div>
+              </div>
+              <a className="rsvp-btn" href={nextShow.rsvp ?? "https://ticket.cocconcertz.com"} target="_blank" rel="noopener">
+                RSVP NOW — FREE
+              </a>
+            </>
+          )}
         </>
       )}
     </section>
