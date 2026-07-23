@@ -46,7 +46,7 @@ export async function GET() {
             textAlign: "center",
           }}
         >
-          DESIGN THE COC #7 FLYER
+          {open ? "DESIGN THE COC #7 FLYER" : "COC #7 FLYER CONTEST"}
         </div>
         <div
           style={{
@@ -69,7 +69,7 @@ export async function GET() {
             ? diffDays > 0
               ? `${diffDays} DAY${diffDays !== 1 ? "S" : ""} LEFT TO SUBMIT`
               : "FINAL HOURS TO SUBMIT"
-            : "SUBMISSIONS CLOSED"}
+            : "COMPLETE · WINNER ANNOUNCED"}
         </div>
         <div
           style={{
