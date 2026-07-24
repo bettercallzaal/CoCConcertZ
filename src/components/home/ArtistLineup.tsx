@@ -33,6 +33,16 @@ interface Concert {
   bannerImage?: string;
 }
 
+// ConcertZ #8 - date + subtitle TBD; replace when lineup is confirmed
+const CONCERT8_FALLBACK_ARTISTS: Artist[] = [
+  {
+    name: "DJ ZAAL",
+    role: "DJ · Host",
+    bio: "BetterCallZaal returns. COC Concertz #8 lineup announcement coming soon. Follow @bettercallzaal for updates.",
+    link: { url: "https://warpcast.com/bettercallzaal", label: "BetterCallZaal on Farcaster" },
+  },
+];
+
 // ConcertZ #7 - WaveWarZ Takeover (full crew announced week of show)
 const CONCERT7_FALLBACK_ARTISTS: Artist[] = [
   {
@@ -399,7 +409,7 @@ function ArtistCard({ artist, cardIndex = 0 }: { artist: Artist; cardIndex?: num
 }
 
 export default function ArtistLineup() {
-  const [activeTab, setActiveTab] = useState("concert7");
+  const [activeTab, setActiveTab] = useState("concert8");
   const [animationKey, setAnimationKey] = useState(0);
   const [concert4Artists, setConcert4Artists] = useState<Artist[]>(CONCERT4_FALLBACK_ARTISTS);
   const [concert5Artists, setConcert5Artists] = useState<Artist[]>(CONCERT5_FALLBACK_ARTISTS);
@@ -461,6 +471,11 @@ export default function ArtistLineup() {
       label: "CONCERTZ #7",
       bannerImage: "/images/wavewarz-battle.jpeg",
       artists: CONCERT7_FALLBACK_ARTISTS,
+    },
+    {
+      id: "concert8",
+      label: "CONCERTZ #8",
+      artists: CONCERT8_FALLBACK_ARTISTS,
     },
   ];
 
