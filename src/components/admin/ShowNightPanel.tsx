@@ -210,7 +210,7 @@ export function ShowNightPanel() {
             label={`Title (${notifTitle.length}/32)`}
             value={notifTitle}
             onChange={(e) => setNotifTitle(e.target.value)}
-            placeholder="COC #7 is LIVE"
+            placeholder="COC #8 is LIVE"
           />
           <Input
             label={`Message (${notifBody.length}/128)`}
