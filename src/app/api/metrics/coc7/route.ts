@@ -7,10 +7,11 @@ export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    // Firebase: visitor count (live concurrent), contest entries, gallery uploads
-    const [gallerySnap, visitorsSnap, contestSnap] = await Promise.all([
+    // Firebase: visitor count (live concurrent + peak), contest entries, gallery uploads
+    const [gallerySnap, visitorsSnap, peakSnap, contestSnap] = await Promise.all([
       getCountFromServer(collection(db, "gallery")),
       getDoc(doc(db, "stats", "visitors")),
+      getDoc(doc(db, "stats", "visitors_peak")),
       getCountFromServer(collection(db, "contestEntries")),
     ]);
 
@@ -18,6 +19,11 @@ export async function GET() {
     const concurrentViewers = visitorsSnap.exists()
       ? typeof visitorsSnap.data().count === "number"
         ? visitorsSnap.data().count
+        : 0
+      : 0;
+    const peakViewers = peakSnap.exists()
+      ? typeof peakSnap.data().count === "number"
+        ? peakSnap.data().count
         : 0
       : 0;
     const contestCount = contestSnap.data().count;
@@ -32,7 +38,8 @@ export async function GET() {
       const supabase = createServerSupabase();
       const { data, error } = await supabase
         .from("archive_uploads")
-        .select("uploaded_by_wallet");
+        .select("uploaded_by_wallet")
+        .like("show_id", "coc7%");
 
       if (error) {
         supabaseError = error.message;
@@ -49,11 +56,11 @@ export async function GET() {
       event: "COC Concertz #7: WaveWarZ Takeover",
       date: "2026-07-18",
       metrics: {
-        // Live concurrent viewers at time of snapshot (increments on page load, decrements on unload)
-        concurrentViewers: Math.max(1, concurrentViewers),
+        // Peak concurrent viewers during the show (auto-tracked via stats/visitors_peak)
+        peakViewers,
+        // Live concurrent viewers at time of snapshot (post-show this will be near 0)
+        concurrentViewers: Math.max(0, concurrentViewers),
         contestSubmissions: contestCount,
-        // Fan gallery photos via Cloudinary -> Firestore. NOTE: Cloudinary key is DOWN until
-        // Zaal rotates the key in Vercel (CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET).
         fanGalleryUploads: galleryCount,
         archiveUploads: {
           total: archiveTotal,
@@ -64,9 +71,6 @@ export async function GET() {
       },
       pilotStatus: {
         walletGateEnabled: process.env.NEXT_PUBLIC_WALLET_GATE_ENABLED !== "false",
-        // Set NEXT_PUBLIC_WALLET_GATE_ENABLED=false in Vercel + redeploy before show.
-        // When false: archive upload page is open to anyone with an artist/admin cookie,
-        // and uploaded_by_wallet is stored as "ungated" in Supabase.
       },
       capturedAt: new Date().toISOString(),
     });
