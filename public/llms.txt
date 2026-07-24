@@ -8,7 +8,7 @@ COC Concertz is a monthly virtual concert series hosted by The ZAO, combining li
 
 ## Key Facts
 
-- 7 shows produced since March 2025 (COC #1 through COC #7)
+- 7 shows completed since March 2025 (COC #1 through COC #7); COC #8 in planning
 - Monthly cadence (irregular March 2025 start; monthly from March 2026)
 - Live music + WaveWarZ battle voting per show
 - Arweave archive model: show recordings, metadata, and outcomes stored permanently onchain
@@ -20,7 +20,8 @@ COC Concertz is a monthly virtual concert series hosted by The ZAO, combining li
 
 - COC #1 (March 2025) — inaugural show
 - COC #2 through COC #6 — monthly shows, NFT-gated for Respect holders
-- COC #7 (July 18, 2026, 4PM EST) — WaveWarZ Takeover; open-access pilot; Arweave archive debut
+- COC #7 (July 18, 2026) — WaveWarZ Takeover; open-access pilot (no wallet gate); Arweave archive debut — completed
+- COC #8 — date TBD 2026; planning in progress
 
 ## WaveWarZ Battle Format
 
