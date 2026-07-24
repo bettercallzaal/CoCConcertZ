@@ -40,7 +40,8 @@ export async function GET() {
       const supabase = createServerSupabase();
       const { data, error } = await supabase
         .from("archive_uploads")
-        .select("uploaded_by_wallet");
+        .select("uploaded_by_wallet")
+        .like("show_id", "coc8%");
 
       if (error) {
         supabaseError = error.message;
