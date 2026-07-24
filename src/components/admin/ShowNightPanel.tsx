@@ -216,7 +216,7 @@ export function ShowNightPanel() {
             label={`Message (${notifBody.length}/128)`}
             value={notifBody}
             onChange={(e) => setNotifBody(e.target.value)}
-            placeholder="WaveWarZ Takeover starts now. DJ Zaal on the decks."
+            placeholder="COC #8 starts now. DJ Zaal on the decks."
           />
           <Button
             variant="primary"
