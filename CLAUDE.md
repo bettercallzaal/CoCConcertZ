@@ -27,8 +27,15 @@ PR-only. Never push main directly. One item at a time. Status one-liners to ZAAL
 
 **Audit FormData field names before each show.** When a component builds FormData and a separate API route reads it, names can silently diverge (snake_case vs camelCase, multi-value vs JSON string). The archive upload was 100% broken (PR #40): `wallet_address` vs `walletAddress`, `tags[]` multi-appends vs `tags` JSON string. Audit every upload path's component-sends vs API-reads before show night.
 
+**Post-show UI rollover is a rollover task, not a Zaal-gated task.** Countdown, FinalCTA, ShareSection, JSON-LD, OG countdown, and UpcomingShows HARDCODED_EVENTS all reference the current show. PR the rollover immediately after show night — not Saturday morning. Add next show to the array or add a LIVE_WINDOW_MS grace check.
+
+**Metrics endpoints must filter archive_uploads by show_id.** `archive_uploads` in Supabase accumulates across shows. Without `.like("show_id", "cocN%")`, the endpoint shows all-time totals — mixing COC #7 and COC #8 uploads. Always filter by `show_id` prefix in per-show metric routes. The pilot report script already does this; the API routes needed the same fix (PR #63).
+
+**peakViewers vs concurrentViewers — both must be in metrics.** `stats/visitors` is the live concurrent count (resets between shows). `stats/visitors_peak` is the auto-tracked peak (persists). The metrics endpoint must expose both: `concurrentViewers` (post-show near 0) and `peakViewers` (the historical show peak for the pilot report).
+
 ## Key Scripts
 - `scripts/smoke-test.sh` — pre-show health check (run from prod URL)
+- `scripts/generate-pilot-report.ts` — post-show pilot report (`npx tsx scripts/generate-pilot-report.ts 8` for COC #8)
 - `scripts/setup-coc7-artists.ts` — create artist Firestore docs + generate passcodes (`npx tsx`)
 - `scripts/fetch-wavewarz-history.ts` — refresh `src/data/wavewarz-history.json` (page-capped, totals will undercount)
 
