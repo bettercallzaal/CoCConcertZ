@@ -19,6 +19,20 @@ export default function Footer() {
         </a>
         <span style={{ color: "var(--text-dim)", margin: "0 14px", fontFamily: "var(--font-mono)", fontSize: "0.7rem" }}>·</span>
         <a
+          href="/artists"
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "0.7rem",
+            letterSpacing: "3px",
+            textTransform: "uppercase",
+            color: "var(--cyan)",
+            textDecoration: "none",
+          }}
+        >
+          Artists
+        </a>
+        <span style={{ color: "var(--text-dim)", margin: "0 14px", fontFamily: "var(--font-mono)", fontSize: "0.7rem" }}>·</span>
+        <a
           href="/brand"
           style={{
             fontFamily: "var(--font-mono)",
