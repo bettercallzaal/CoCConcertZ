@@ -29,6 +29,7 @@ echo "---"
 check "homepage 200" 200 "$(code "$BASE")"
 check "/contest 200" 200 "$(code "$BASE/contest")"
 check "/brand 200" 200 "$(code "$BASE/brand")"
+check "/artists 200" 200 "$(code "$BASE/artists")"
 
 # Homepage content
 HOMEPAGE=$(curl -s --max-time 30 "$BASE")
