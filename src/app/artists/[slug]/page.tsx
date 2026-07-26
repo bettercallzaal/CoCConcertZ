@@ -232,6 +232,21 @@ export default async function ArtistProfilePage({ params }: Props) {
             COC Concertz
           </a>
           <span style={{ color: "var(--border)", fontFamily: "var(--font-mono)", fontSize: "0.7rem" }}>/</span>
+          <a
+            href="/artists"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.7rem",
+              letterSpacing: "3px",
+              textTransform: "uppercase",
+              color: "var(--text-dim)",
+              textDecoration: "none",
+              transition: "color 0.15s",
+            }}
+          >
+            Artists
+          </a>
+          <span style={{ color: "var(--border)", fontFamily: "var(--font-mono)", fontSize: "0.7rem" }}>/</span>
           <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", letterSpacing: "2px", textTransform: "uppercase", color: accent }}>
             {artist.stageName}
           </span>
