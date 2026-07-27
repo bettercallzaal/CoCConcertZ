@@ -17,8 +17,12 @@ async function bump(delta: Delta) {
     const current: number = typeof snap.data()?.count === "number" ? (snap.data()!.count as number) : 1;
     const peakRef = adminDb.collection("stats").doc("visitors_peak");
     const peakSnap = await peakRef.get();
+    // `exists` is a PROPERTY on the Admin SDK's DocumentSnapshot, not a method
+    // - only the client SDK exposes exists(). Calling it failed the build with
+    // TS2349 "Type 'Boolean' has no call signatures", which is why this PR's
+    // Vercel deploy went red.
     const storedPeak: number =
-      peakSnap.exists() && typeof peakSnap.data()?.count === "number"
+      peakSnap.exists && typeof peakSnap.data()?.count === "number"
         ? (peakSnap.data()!.count as number)
         : 0;
     if (current > storedPeak) {
