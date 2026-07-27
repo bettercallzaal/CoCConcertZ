@@ -19,7 +19,7 @@ A full-stack concert platform and Farcaster Mini App for COC Concertz, a live me
 - **"Now Playing" bar** - fixed bottom bar showing the current song and artist with animated equalizer bars, updated live by admin during shows
 - **Post-show recap cards** - auto-generated after shows with visitor count, chat messages, artists performed. Shareable, displayed on homepage for 7 days
 - Spatial.io metaverse venue embed with Twitch stream toggle
-- Artist lineup with tabbed panels per concert (ConcertZ #1-7) with staggered entrance animations and border glow effects, default tab is the upcoming show
+- Artist lineup with tabbed panels per concert (ConcertZ #1-8) with staggered entrance animations and border glow effects, default tab is the upcoming show
 - All concert artist cards pull live from Firestore - artist profile edits appear on the site
 - Upcoming and past shows connected to Firestore (admin-managed)
 - Live visitor count with real-time Firestore presence
@@ -214,7 +214,8 @@ On login, the API route verifies the passcode, sets `coc-role` and `coc-artist-s
 | 4 | April 11, 2026 | The rebrand show | Joseph Goats, Tom Fellenz, Stilo World | completed |
 | 5 | May 9, 2026 | A Day in the Life | GodCloud | completed (recap pending) |
 | 6 | June 13, 2026 | The African Experience | Iman Afrikah, Santana | completed (recap pending) |
-| 7 | July 18, 2026 | WaveWarZ Takeover | DJ Zaal + WaveWarZ artists (TBA week of show) | upcoming |
+| 7 | July 18, 2026 | WaveWarZ Takeover | DJ Zaal + WaveWarZ artists | completed |
+| 8 | TBD 2026 | TBD | TBD | upcoming |
 
 ---
 
@@ -412,27 +413,24 @@ loop: `npx cap sync ios && npx cap open ios`. TestFlight steps: `docs/testflight
 
 ---
 
-## Current Status (2026-07-04)
+## Current Status (2026-07-24)
 
-The site is live on COC #7 (WaveWarZ Takeover, July 18). All features below are
-deployed and verified in production.
+COC #7 (WaveWarZ Takeover) completed July 18, 2026. Site is in post-show mode,
+transitioning to COC #8.
 
-**Shipped this cycle:** COC #7 rollover, flyer contest (`/contest`), live battle
-voting, attendance badges, WaveWarZ history section, mini-app push notifications
-(webhook + full JFS verification), the admin Show Night panel, dynamic OG cards,
-the `npm run smoke` health check, the Capacitor iOS app, and the legacy static
-layer removed.
+**Shipped this cycle (COC #7):** COC #7 rollover, flyer contest (`/contest`), live
+battle voting, attendance badges, WaveWarZ history section, mini-app push
+notifications (webhook + full JFS verification), the admin Show Night panel,
+dynamic OG cards, the `npm run smoke` health check, the Capacitor iOS app, and
+the legacy static layer removed. Pilot ran with `NEXT_PUBLIC_WALLET_GATE_ENABLED=false`
+(no wallet required for archive uploads — gateless trial).
 
-**Known blocker - image uploads down:** `/api/upload` returns 500. The Cloudinary
-API key (cloud `dzzqdbo9k`) has lost its permissions, which kills both contest
-submissions and the fan gallery. Fix in the Cloudinary console (Access Keys →
-re-enable or regenerate), update `CLOUDINARY_API_KEY` / `CLOUDINARY_API_SECRET`
-in Vercel, redeploy. `npm run smoke` will flip that check to PASS once fixed.
-Full detail at the top of `docs/coc7-prep-checklist.md`.
+**Post-show PRs in queue (waiting merge):** UI cleanup (#56), metrics (#59, #63),
+smoke-test update (#60), COC #8 scripts (#61), contest text (#62), CLAUDE.md (#64),
+artist lineup placeholder (#65), stale strings (#66), OG countdown (#58).
 
-**Outstanding before the show** (see the checklist for the full list): create the
-Luma event, pick the contest winner (deadline July 10), confirm the WaveWarZ crew
-lineup (week of show), and add #5/#6 recap content.
+**COC #8:** Date TBD — update `scripts/update-coc8.ts` constants and re-run once
+confirmed. Lineup outreach in progress.
 
 ---
 
