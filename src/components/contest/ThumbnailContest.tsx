@@ -176,7 +176,7 @@ export default function ThumbnailContest() {
           }}
         >
           {countdown.closed
-            ? "Submissions closed - winner announcement soon"
+            ? "Submissions closed — winner announced at COC #7 (Jul 18, 2026)"
             : "Submissions close Fri July 10, 11:59 PM EST"}
         </span>
         {!countdown.closed && (

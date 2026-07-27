@@ -50,8 +50,8 @@ export default function WaveWarzHistory() {
       <h2>WAVEWARZ BATTLE HISTORY</h2>
       <p style={{ maxWidth: 640, marginBottom: "32px" }}>
         WaveWarZ runs live music battles where the crowd decides the winner -
-        production-proven on Solana with hundreds of battles behind it. COC #7
-        brings that format into Stilo World.
+        production-proven on Solana with hundreds of battles behind it. COC
+        Concertz brings that format to Stilo World.
       </p>
 
       {/* Stat tiles - wwtracker pattern */}
