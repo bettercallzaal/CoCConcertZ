@@ -210,6 +210,29 @@ export default async function EventPage({ params }: Props) {
           >
             /
           </span>
+          <a
+            href="/events"
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.7rem",
+              letterSpacing: "3px",
+              textTransform: "uppercase",
+              color: "var(--text-dim)",
+              textDecoration: "none",
+              transition: "color 0.15s",
+            }}
+          >
+            Events
+          </a>
+          <span
+            style={{
+              color: "var(--border)",
+              fontFamily: "var(--font-mono)",
+              fontSize: "0.7rem",
+            }}
+          >
+            /
+          </span>
           <span
             style={{
               fontFamily: "var(--font-mono)",
