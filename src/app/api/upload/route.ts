@@ -31,6 +31,10 @@ function cloudinaryConfigured(): boolean {
 // straight from the caller, letting anyone upload anywhere in the account.
 const ALLOWED_FOLDERS = new Set(["coc-concertz", "user-uploads", "recaps", "sets"]);
 
+// Only these Cloudinary folders may be targeted - the folder used to come
+// straight from the caller, letting anyone upload anywhere in the account.
+const ALLOWED_FOLDERS = new Set(["coc-concertz", "user-uploads", "recaps", "sets"]);
+
 export async function POST(request: NextRequest) {
   // Config check first - turns a 5-day silent outage into an obvious 503 the
   // moment a credential is missing, naming exactly which var to fix.
