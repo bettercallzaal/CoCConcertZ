@@ -35,6 +35,7 @@ PR-only. Never push main directly. One item at a time. Status one-liners to ZAAL
 
 ## Key Scripts
 - `scripts/smoke-test.sh` — pre-show health check (run from prod URL)
+- `scripts/check-cloudinary-perms.ts` — asserts the Cloudinary key can READ + CREATE. Run before any show that takes uploads. `api.ping()` is NOT a permissions check — it stayed green through a 24-day upload outage.
 - `scripts/generate-pilot-report.ts` — post-show pilot report (`npx tsx scripts/generate-pilot-report.ts 8` for COC #8)
 - `scripts/setup-coc7-artists.ts` — create artist Firestore docs + generate passcodes (`npx tsx`)
 - `scripts/update-coc8.ts` — upsert Firestore event #8 doc + flip #7 → completed (fill TBD constants first)
