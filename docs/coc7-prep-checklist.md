@@ -10,7 +10,9 @@ fixed. Contest deadline is July 10, so this is urgent.
 Fix (Cloudinary console, ~2 min): Settings -> Access Keys - re-enable
 permissions on this key or generate a new unrestricted key pair, then update
 CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET in Vercel env and redeploy.
-Verify after: `curl -X POST https://www.cocconcertz.com/api/upload -F "file=@<img>" -F "folder=coc-concertz/gallery"` should return a URL, not 500.
+Verify after: `npx tsx scripts/check-cloudinary-perms.ts` (exits 0 and prints "OK: Cloudinary key can read and upload." once fixed), then `curl -X POST https://www.cocconcertz.com/api/upload -F "file=@<img>" -F "folder=coc-concertz/gallery"` should return a URL, not 500.
+
+STATUS 2026-07-27: still broken. Re-verified live — `ping` OK, but `read` and `create` both 403 (`missing permissions`). Root cause UNKNOWN: a key does not strip its own scopes, so either someone edited it or a plan/trial change reset it on 2026-07-03. Re-enabling the permissions is a patch until that is known.
 
 Branch: `feature/coc-7-wavewarz`. Pattern follows PR #2/#6 (the COC #6 rollover).
 
