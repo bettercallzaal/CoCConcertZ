@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCookieAuth } from "@/lib/api-auth";
 import { config as siteConfig } from "../../../../../concertz.config";
 
 const TEMPLATES: Record<string, string> = {
@@ -159,8 +160,11 @@ function parseJsonFromResponse(raw: string): PlatformPosts {
 }
 
 export async function POST(request: NextRequest) {
-  const role = request.cookies.get("coc-role")?.value;
-  if (role !== "admin" && role !== "artist") {
+  // Signed session only. This route previously trusted the raw `coc-role`
+  // cookie, whose value was the literal string "admin" - forgeable with a
+  // single curl header.
+  const auth = getCookieAuth(request);
+  if (!auth) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
