@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isAdmin } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -8,10 +9,6 @@ export const dynamic = "force-dynamic";
 async function getAdminDb() {
   const { adminDb } = await import("@/lib/firebase-admin");
   return adminDb;
-}
-
-function isAdmin(request: NextRequest): boolean {
-  return request.cookies.get("coc-role")?.value === "admin";
 }
 
 async function tally(votesSnap: FirebaseFirestore.QuerySnapshot) {

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCookieAuth } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
 
@@ -7,10 +8,12 @@ async function getAdminDb() {
   return adminDb;
 }
 
+// Both `coc-role` and `coc-artist-slug` were plain unsigned cookies, so a
+// forged request could not only claim admin but also claim to BE any artist and
+// edit their profile. Both now come from the one HMAC-signed session token.
 function getAuth(request: NextRequest) {
-  const role = request.cookies.get("coc-role")?.value;
-  const artistSlug = request.cookies.get("coc-artist-slug")?.value;
-  return { role, artistSlug };
+  const auth = getCookieAuth(request);
+  return { role: auth?.role, artistSlug: auth?.artistSlug ?? undefined };
 }
 
 export async function PUT(request: NextRequest) {

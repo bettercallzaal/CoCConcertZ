@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { getCookieAuth } from "@/lib/api-auth";
 import { config as siteConfig } from "../../../../../concertz.config";
 import { uploadToArweave } from "@/lib/arweave";
 import { checkTokenBalance } from "@/lib/tokenGate";
@@ -13,9 +14,11 @@ function detectFileType(contentType: string): ArchiveFileType {
 }
 
 export async function POST(request: NextRequest) {
-  // 1. Auth: check coc-role cookie
-  const role = request.cookies.get("coc-role")?.value;
-  if (role !== "admin" && role !== "artist") {
+  // Signed session only. This route previously trusted the raw `coc-role`
+  // cookie, whose value was the literal string "admin" - forgeable with a
+  // single curl header.
+  const auth = getCookieAuth(request);
+  if (!auth) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -40,15 +43,27 @@ export async function POST(request: NextRequest) {
     if (!walletAddress) {
       return NextResponse.json({ error: "walletAddress is required" }, { status: 400 });
     }
+    // Validate wallet format so an upload cannot be attributed to a garbage or
+    // spoofed value in a free-text field (0x + 40 hex).
+    if (!/^0x[a-fA-F0-9]{40}$/.test(walletAddress)) {
+      return NextResponse.json({ error: "walletAddress must be a valid 0x address" }, { status: 400 });
+    }
     if (!title) {
       return NextResponse.json({ error: "title is required" }, { status: 400 });
     }
 
-    // Parse JSON fields
-    const tags: string[] = tagsRaw ? JSON.parse(tagsRaw) : [];
-    const artistSlugs: string[] = artistSlugsRaw ? JSON.parse(artistSlugsRaw) : [];
+    // Parse JSON fields - return 400 on malformed input rather than a 500.
+    let tags: string[] = [];
+    let artistSlugs: string[] = [];
+    let udlLicense: unknown = null;
+    try {
+      tags = tagsRaw ? JSON.parse(tagsRaw) : [];
+      artistSlugs = artistSlugsRaw ? JSON.parse(artistSlugsRaw) : [];
+      udlLicense = udlLicenseRaw ? JSON.parse(udlLicenseRaw) : null;
+    } catch {
+      return NextResponse.json({ error: "Invalid JSON in tags/artistSlugs/udlLicense" }, { status: 400 });
+    }
     const uploadType = uploadTypeRaw as UploadType;
-    const udlLicense = udlLicenseRaw ? JSON.parse(udlLicenseRaw) : null;
 
     // 4. Token gate check (skip if gate is disabled)
     if (siteConfig.archive.walletGateEnabled) {
