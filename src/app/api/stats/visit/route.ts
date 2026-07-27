@@ -10,15 +10,24 @@ async function bump(delta: Delta) {
   const ref = adminDb.collection("stats").doc("visitors");
   await ref.set({ count: FieldValue.increment(delta) }, { merge: true });
 
-  // Update peak concurrent count on increments only (read-then-write is
-  // safe here — peak is best-effort and only ever grows).
+  // Update peak concurrent count only when current exceeds the stored peak
+  // (read-then-write is acceptable here — peak is best-effort).
   if (delta === 1) {
     const snap = await ref.get();
     const current: number = typeof snap.data()?.count === "number" ? (snap.data()!.count as number) : 1;
-    await adminDb
-      .collection("stats")
-      .doc("visitors_peak")
-      .set({ count: current, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+    const peakRef = adminDb.collection("stats").doc("visitors_peak");
+    const peakSnap = await peakRef.get();
+    // `exists` is a PROPERTY on the Admin SDK's DocumentSnapshot, not a method
+    // - only the client SDK exposes exists(). Calling it failed the build with
+    // TS2349 "Type 'Boolean' has no call signatures", which is why this PR's
+    // Vercel deploy went red.
+    const storedPeak: number =
+      peakSnap.exists && typeof peakSnap.data()?.count === "number"
+        ? (peakSnap.data()!.count as number)
+        : 0;
+    if (current > storedPeak) {
+      await peakRef.set({ count: current, updatedAt: FieldValue.serverTimestamp() }, { merge: true });
+    }
   }
 }
 
