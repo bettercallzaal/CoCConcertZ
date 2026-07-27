@@ -1,11 +1,12 @@
 /**
- * COC #7 Pilot Report Generator
+ * COC Pilot Report Generator
  *
- * Reads Firestore (gallery count, visitor count, contest entries) and Supabase
- * (archive_uploads for coc7 show) and prints a formatted show-night summary.
+ * Reads Firestore (gallery count, visitor stats, contest entries, battle results) and
+ * Supabase (archive_uploads filtered by show_id) and prints a formatted pilot report.
  *
- * Run Saturday morning after the show:
- *   npx tsx scripts/generate-pilot-report.ts
+ * Run Saturday morning after each show:
+ *   npx tsx scripts/generate-pilot-report.ts          # defaults to show 7
+ *   npx tsx scripts/generate-pilot-report.ts 8        # COC #8
  *
  * Requires in .env.local:
  *   FIREBASE_ADMIN_PROJECT_ID, FIREBASE_ADMIN_CLIENT_EMAIL, FIREBASE_ADMIN_PRIVATE_KEY
@@ -50,7 +51,7 @@ async function firestoreMetrics() {
   };
 }
 
-async function supabaseMetrics() {
+async function supabaseMetrics(showId: string) {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const key = process.env.SUPABASE_SERVICE_ROLE_KEY ?? process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
   if (!url || !key) {
@@ -61,7 +62,7 @@ async function supabaseMetrics() {
   const { data: uploads, error } = await sb
     .from("archive_uploads")
     .select("id, file_type, upload_type, uploaded_by_wallet, created_at")
-    .or("show_id.eq.coc7-showday,show_id.ilike.coc7%");
+    .like("show_id", `${showId}%`);
 
   if (error) return { skipped: true as const, reason: error.message };
 
@@ -83,15 +84,22 @@ async function supabaseMetrics() {
 }
 
 async function main() {
+  const showArg = process.argv[2];
+  const showNum = showArg ? parseInt(showArg, 10) : 7;
+  if (isNaN(showNum) || showNum < 1) {
+    console.error("Usage: npx tsx scripts/generate-pilot-report.ts [show-number]");
+    process.exit(1);
+  }
+  const showId = `coc${showNum}`;
+
   const sep = "─".repeat(52);
   console.log(`\n${"═".repeat(52)}`);
-  console.log("  COC Concertz #7: WaveWarZ Takeover — Pilot Report");
+  console.log(`  COC Concertz #${showNum} — Pilot Report`);
   console.log(`${"═".repeat(52)}`);
   console.log(`  Generated : ${new Date().toISOString()}`);
-  console.log(`  Show date : 2026-07-18 4:00 PM EST`);
-  console.log(`  Pilot mode: wallet gate DISABLED (open uploads)\n`);
+  console.log(`  Show ID   : ${showId}\n`);
 
-  const [fire, sb] = await Promise.all([firestoreMetrics(), supabaseMetrics()]);
+  const [fire, sb] = await Promise.all([firestoreMetrics(), supabaseMetrics(showId)]);
 
   console.log(`${sep}`);
   console.log("  FIRESTORE");
@@ -102,7 +110,7 @@ async function main() {
   console.log(`  Contest entries  : ${fire.contestCount}`);
 
   console.log(`\n${sep}`);
-  console.log("  SUPABASE (archive_uploads, show_id=coc7*)");
+  console.log(`  SUPABASE (archive_uploads, show_id LIKE '${showId}%')`);
   console.log(`${sep}`);
   if (sb.skipped) {
     console.log(`  SKIPPED — ${sb.reason}`);
@@ -126,12 +134,12 @@ async function main() {
   console.log(`  Gallery uploads  : ${fire.galleryCount}`);
   console.log(`  Contest entries  : ${fire.contestCount}`);
   console.log(`\n${sep}`);
-  console.log("  NEXT STEPS (doc 1300 — 72h action plan)");
+  console.log("  NEXT STEPS");
   console.log(`${sep}`);
-  console.log("  1. Compare gallery count vs COC #6 baseline");
+  console.log("  1. Compare gallery + viewer count vs prior show baseline");
   console.log("  2. Post recap to FC /cocconcertz + X thread");
-  console.log("  3. Close board task 23789082 with final numbers");
-  console.log("  4. Lock COC #8 date by Mon Jul 21 (doc 1295 + doc 1367)");
+  console.log(`  3. Fire bonfire episode: coc${showNum}-retro (what/decision/link)`);
+  console.log(`  4. Update board: close show-night tasks, note final numbers`);
   console.log(`${"═".repeat(52)}\n`);
 }
 
