@@ -1,95 +1,95 @@
 {
-  "fetchedAt": "2026-07-24T23:19:01.357Z",
-  "totalBattles": 1269,
-  "totalVolumeSol": 873.84,
+  "fetchedAt": "2026-07-28T06:16:50.788Z",
+  "totalBattles": 1278,
+  "totalVolumeSol": 874.86,
   "recent": [
     {
-      "battleId": 1784865481,
-      "date": "Jul 24, 2026",
-      "song1Title": "Phoenix",
-      "song2Title": "Storm breaker- Taji Kamikaze glitter jones",
-      "song1Handle": "Stormbourne",
+      "battleId": 1785206166,
+      "date": "Jul 28, 2026",
+      "song1Title": "LMNOPQRZ",
+      "song2Title": "circles",
+      "song1Handle": "hoodrats",
+      "song2Handle": "_0xQuan",
+      "winnerTitle": "circles",
+      "totalVolumeSol": 0.0818,
+      "marginPct": 20
+    },
+    {
+      "battleId": 1785204503,
+      "date": "Jul 28, 2026",
+      "song1Title": "Fuck yo feelingZ ",
+      "song2Title": "$$PSYOPWavez x Hurric4n3Ike",
+      "song1Handle": "GodclouD",
+      "song2Handle": "Hurric4n3Ike",
+      "winnerTitle": "Fuck yo feelingZ ",
+      "totalVolumeSol": 0.5528,
+      "marginPct": 98
+    },
+    {
+      "battleId": 1785203695,
+      "date": "Jul 28, 2026",
+      "song1Title": "Kora Vain",
+      "song2Title": "What Do YOU Want from me?",
+      "song1Handle": "jaifeezy",
+      "song2Handle": "Stormbourne",
+      "winnerTitle": "What Do YOU Want from me?",
+      "totalVolumeSol": 0.0542,
+      "marginPct": 82
+    },
+    {
+      "battleId": 1785202775,
+      "date": "Jul 28, 2026",
+      "song1Title": "HURRICANE YOU KEMBO by NEMESIS",
+      "song2Title": "4 Relms By Shikulu Bantu",
+      "song1Handle": "WaveWarzAfrica",
+      "song2Handle": "WaveWarzAfrica",
+      "winnerTitle": "4 Relms By Shikulu Bantu",
+      "totalVolumeSol": 0.0113,
+      "marginPct": 74
+    },
+    {
+      "battleId": 1785201994,
+      "date": "Jul 28, 2026",
+      "song1Title": "guardian at the gate2 by Kiyomi",
+      "song2Title": "Ba Last By Shikulu Bantu",
+      "song1Handle": "WaveWarzAfrica",
+      "song2Handle": "WaveWarzAfrica",
+      "winnerTitle": "guardian at the gate2 by Kiyomi",
+      "totalVolumeSol": 0.0542,
+      "marginPct": 82
+    },
+    {
+      "battleId": 1785201490,
+      "date": "Jul 28, 2026",
+      "song1Title": "Block is Hot",
+      "song2Title": "Gr3Y",
+      "song1Handle": "NemesisLadyRyn",
+      "song2Handle": "NemesisLadyRyn",
+      "winnerTitle": "Block is Hot",
+      "totalVolumeSol": 0.0591,
+      "marginPct": 67
+    },
+    {
+      "battleId": 1785200778,
+      "date": "Jul 28, 2026",
+      "song1Title": "Full Capacity ft. Nessy ",
+      "song2Title": "50 kal kash feat Cannon Jones973 X Bucketts- Soul Food ",
+      "song1Handle": "RoCkY2GriMeY",
       "song2Handle": "CannonJones973",
-      "winnerTitle": "Storm breaker- Taji Kamikaze glitter jones",
-      "totalVolumeSol": 0.0161,
-      "marginPct": 39
+      "winnerTitle": "50 kal kash feat Cannon Jones973 X Bucketts- Soul Food ",
+      "totalVolumeSol": 0.0591,
+      "marginPct": 67
     },
     {
-      "battleId": 1784863860,
-      "date": "Jul 24, 2026",
-      "song1Title": "TuneZayy - Too Much Clout Ft. Cannon Jones",
-      "song2Title": "Tomorrow Aint Promised feat Psycho Sarah",
-      "song1Handle": "CannonJones973",
-      "song2Handle": "shawnsporter",
-      "winnerTitle": "Tomorrow Aint Promised feat Psycho Sarah",
-      "totalVolumeSol": 0.0249,
-      "marginPct": 21
-    },
-    {
-      "battleId": 1784863084,
-      "date": "Jul 24, 2026",
-      "song1Title": "No Justice or Peace",
-      "song2Title": "Prettiest Monsters",
-      "song1Handle": "shawnsporter",
-      "song2Handle": "AporkALYPSE78",
-      "winnerTitle": "Prettiest Monsters",
-      "totalVolumeSol": 0.0219,
-      "marginPct": 8
-    },
-    {
-      "battleId": 1784862533,
-      "date": "Jul 24, 2026",
-      "song1Title": "Nate Levine V5 x LUI x WZRD ",
-      "song2Title": "La La Smoking V1 x WZRD",
-      "song1Handle": "luiwrites",
-      "song2Handle": "luiwrites",
-      "winnerTitle": "La La Smoking V1 x WZRD",
-      "totalVolumeSol": 0.0404,
-      "marginPct": 22
-    },
-    {
-      "battleId": 1784777514,
-      "date": "Jul 23, 2026",
-      "song1Title": "Charge Admission",
-      "song2Title": "Black air force energies-Psycho Sarah",
-      "song1Handle": "BennyJ504WaveWarz",
-      "song2Handle": "CannonJones973",
-      "winnerTitle": "Charge Admission",
-      "totalVolumeSol": 0.11,
-      "marginPct": 0
-    },
-    {
-      "battleId": 1784776413,
-      "date": "Jul 23, 2026",
-      "song1Title": "Saturday in LA Featuring DopeStilo",
-      "song2Title": "Together",
-      "song1Handle": "BennyJ504WaveWarz",
-      "song2Handle": "dopestilo",
-      "winnerTitle": "Together",
-      "totalVolumeSol": 0.4587,
-      "marginPct": 51
-    },
-    {
-      "battleId": 1784775405,
-      "date": "Jul 23, 2026",
-      "song1Title": "Signals",
-      "song2Title": "Sunflower Seedz",
-      "song1Handle": "srchappell",
-      "song2Handle": "luiwrites",
-      "winnerTitle": "Sunflower Seedz",
-      "totalVolumeSol": 1.208,
-      "marginPct": 75
-    },
-    {
-      "battleId": 1784773723,
-      "date": "Jul 23, 2026",
-      "song1Title": "Ball 2 (Prod By Milky) - Dope Stilo ",
-      "song2Title": "The Brick",
-      "song1Handle": "stilothelabel",
-      "song2Handle": "AporkALYPSE78",
-      "winnerTitle": "Ball 2 (Prod By Milky) - Dope Stilo ",
-      "totalVolumeSol": 0.05,
-      "marginPct": 100
+      "battleId": 1784949376,
+      "date": "Jul 25, 2026",
+      "song1Title": "Sun",
+      "song2Title": "TerrorWavez x Hurric4n3Ike (Prod. x Hurric4n3Ike)",
+      "song1Handle": "GodclouD",
+      "song2Handle": "Hurric4n3Ike",
+      "winnerTitle": "Sun",
+      "totalVolumeSol": 0.4482,
+      "marginPct": 98
     }
   ]
 }
