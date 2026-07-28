@@ -12,6 +12,14 @@ permissions on this key or generate a new unrestricted key pair, then update
 CLOUDINARY_API_KEY / CLOUDINARY_API_SECRET in Vercel env and redeploy.
 Verify after: `npx tsx scripts/check-cloudinary-perms.ts` (exits 0 and prints "OK: Cloudinary key can read and upload." once fixed), then `curl -X POST https://www.cocconcertz.com/api/upload -F "file=@<img>" -F "folder=coc-concertz/gallery"` should return a URL, not 500.
 
+STATUS 2026-07-28: UPLOADS DISABLED BY FLAG. Rather than keep a broken
+button on the site, photo uploads are now behind NEXT_PUBLIC_UPLOADS_ENABLED
+(default off). Existing photos are unaffected - they are public CDN URLs.
+Root cause identified: the app used a NON-ROOT Cloudinary key, and free-tier
+non-root keys have no editable permission set - the scopes were almost
+certainly stripped by a plan/trial change, not a person. The account's Root
+key (829645836778628) works. Full re-enable steps in src/lib/features.ts.
+
 STATUS 2026-07-27: still broken. Re-verified live — `ping` OK, but `read` and `create` both 403 (`missing permissions`). Root cause UNKNOWN: a key does not strip its own scopes, so either someone edited it or a plan/trial change reset it on 2026-07-03. Re-enabling the permissions is a patch until that is known.
 
 Branch: `feature/coc-7-wavewarz`. Pattern follows PR #2/#6 (the COC #6 rollover).
