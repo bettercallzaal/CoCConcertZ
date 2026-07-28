@@ -51,6 +51,14 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Invalid passcode" }, { status: 401 });
   }
 
+  if (!process.env.SESSION_SECRET) {
+    console.error("SESSION_SECRET not configured — admin auth disabled");
+    return NextResponse.json(
+      { error: "Admin auth not configured. Set SESSION_SECRET in Vercel env." },
+      { status: 503 },
+    );
+  }
+
   const adminCode = process.env.ADMIN_PASSCODE;
   if (adminCode && passcode === adminCode) {
     const response = NextResponse.json({ role: "admin" });
