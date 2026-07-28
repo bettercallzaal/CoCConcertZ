@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { FileUpload, Button, Input } from "@/components/ui";
+import { uploadsEnabled } from "@/lib/features";
 
 interface ContestEntry {
   id: string;
@@ -179,7 +180,10 @@ export default function ThumbnailContest() {
             ? "Submissions closed — winner announced at COC #7 (Jul 18, 2026)"
             : "Submissions close Fri July 10, 11:59 PM EST"}
         </span>
-        {!countdown.closed && (
+        {/* Also gated on uploads being enabled - see src/lib/features.ts.
+            The countdown already hides this after the deadline; this covers the
+            case where submissions are open but storage is unplugged. */}
+        {!countdown.closed && uploadsEnabled() && (
           <span
             style={{
               fontFamily: "var(--font-mono)",

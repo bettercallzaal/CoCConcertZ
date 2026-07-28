@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import { Modal, FileUpload, Button, Input } from "@/components/ui";
+import { uploadsEnabled, UPLOADS_PAUSED_NOTE } from "@/lib/features";
 
 interface GalleryPhoto {
   id: string;
@@ -158,6 +159,23 @@ export default function FanGallery() {
           <h2>FAN PHOTOS</h2>
         </div>
 
+        {!uploadsEnabled() ? (
+          // Uploads unplugged - see src/lib/features.ts for why and how to
+          // restore. A disabled-looking button that 502s is worse than an
+          // honest note, so the entry point is removed entirely rather than
+          // left to fail on click.
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: "11px",
+              letterSpacing: "0.1em",
+              color: "var(--text-dim)",
+              flexShrink: 0,
+            }}
+          >
+            {UPLOADS_PAUSED_NOTE}
+          </span>
+        ) : (
         <button
           onClick={openModal}
           className="clip-corner"
@@ -188,6 +206,7 @@ export default function FanGallery() {
         >
           + Share a Photo
         </button>
+        )}
       </div>
 
       {/* Grid */}
