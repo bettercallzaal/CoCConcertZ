@@ -27,7 +27,10 @@ async function authorizeArtist(
 }
 
 export async function POST(req: NextRequest) {
-  const data = await req.json();
+  const data = await req.json().catch(() => null);
+  if (!data || typeof data !== "object") {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
   if (!data.artistId) {
     return NextResponse.json({ error: "artistId required" }, { status: 400 });
   }
