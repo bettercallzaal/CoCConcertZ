@@ -61,12 +61,19 @@ check "admin/battle unauth 401" 401 "$(code "$BASE/api/admin/battle")"
 check "admin/notify unauth 401" 401 "$(code -X POST "$BASE/api/admin/notify" -H 'Content-Type: application/json' -d '{}')"
 
 # Upload path (the 2026-07-03 outage: Cloudinary key permissions)
+# 503 = uploads paused via NEXT_PUBLIC_UPLOADS_ENABLED flag (intentional, not broken)
+# 200 = uploads live and working
+# anything else (502, 500) = broken - fail
 TMPIMG=$(mktemp /tmp/coc-smoke-XXXXXX.png)
 # 1x1 transparent png
 printf '\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x00\x01\x00\x00\x00\x01\x08\x06\x00\x00\x00\x1f\x15\xc4\x89\x00\x00\x00\rIDATx\x9cc\xf8\xff\xff?\x00\x05\xfe\x02\xfe\xa75\x81\x84\x00\x00\x00\x00IEND\xaeB\x60\x82' > "$TMPIMG"
 UPLOAD_CODE=$(code -X POST "$BASE/api/upload" -F "file=@$TMPIMG;type=image/png" -F "folder=coc-concertz/smoke-test")
 rm -f "$TMPIMG"
-check "upload API healthy" 200 "$UPLOAD_CODE"
+if [ "$UPLOAD_CODE" = "200" ] || [ "$UPLOAD_CODE" = "503" ]; then
+  check "upload API responding (200=ok, 503=paused)" "pass" "pass"
+else
+  check "upload API responding (200=ok, 503=paused)" "pass" "fail ($UPLOAD_CODE)"
+fi
 
 # COC #7 historical metrics endpoint (stays live post-show)
 check "metrics/coc7 200" 200 "$(code "$BASE/api/metrics/coc7")"
