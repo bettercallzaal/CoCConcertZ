@@ -41,16 +41,18 @@ PR-only. Never push main directly. One item at a time. Status one-liners to ZAAL
 - `scripts/update-coc8.ts` — upsert Firestore event #8 doc + flip #7 → completed (fill TBD constants first)
 - `scripts/setup-coc8-artists.ts` — create artist Firestore docs + generate passcodes for COC #8 (`npx tsx`)
 - `scripts/fetch-wavewarz-history.ts` — refresh `src/data/wavewarz-history.json` (page-capped, totals will undercount)
+- `scripts/reset-visitor-stats.ts` — zero out `stats/visitors` + `stats/visitors_peak` in Firestore (~1h before show)
 
 ## Pre-Show Checklist (quick ref)
-1. Rotate Cloudinary key if fan uploads return 500
+1. Re-enable uploads (if flag is off): Vercel → set `CLOUDINARY_API_KEY=829645836778628`, `CLOUDINARY_API_SECRET=<Root secret>`, `NEXT_PUBLIC_UPLOADS_ENABLED=true` → redeploy → verify: `npx tsx scripts/check-cloudinary-perms.ts`
 2. Set `NEXT_PUBLIC_WALLET_GATE_ENABLED=false` in Vercel Production → redeploy
 3. Merge PRs in order, run smoke-test.sh, verify gate canary passes (metrics/coc8 gate check)
 4. Fill TBD constants in `update-coc8.ts` → run `npx tsx scripts/update-coc8.ts`
 5. Once lineup confirmed: uncomment artists in `setup-coc8-artists.ts` → run `npx tsx scripts/setup-coc8-artists.ts`
 6. Add printed passcodes to `ARTIST_PASSCODES` env var in Vercel → redeploy
-7. At show start: admin dashboard → Events → COC #8 → Status → **Live** → Save
+7. ~1h before show: `npx tsx scripts/reset-visitor-stats.ts` (zeros Firestore stats/visitors + stats/visitors_peak so COC #8 pilot report gets a fresh peak, not COC #7's 394)
+8. At show start: admin dashboard → Events → COC #8 → Status → **Live** → Save
    (LiveMode overlay is driven by `event.status === "live"` — not a config/live Firestore doc)
-8. Verify streamLink in event doc for "Watch on Twitch" CTA: admin → Events → COC #8 → Stream Link
+9. Verify streamLink in event doc for "Watch on Twitch" CTA: admin → Events → COC #8 → Stream Link
    (update-coc8.ts sets this; re-run it after merge to patch any existing event doc)
-9. Verify `src/data/wavewarz-history.json` totals against wavewarz.com before show (scraper undercounts)
+10. Verify `src/data/wavewarz-history.json` totals against wavewarz.com before show (scraper undercounts)
