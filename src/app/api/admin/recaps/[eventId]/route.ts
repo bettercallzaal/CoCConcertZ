@@ -11,7 +11,10 @@ export async function PUT(
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
   const { eventId } = await params;
-  const data = await req.json();
+  const data = await req.json().catch(() => null);
+  if (!data || typeof data !== "object") {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
   const { adminDb } = await import("@/lib/firebase-admin");
   await adminDb.collection("recaps").doc(eventId).set(data);
   return NextResponse.json({ ok: true });
