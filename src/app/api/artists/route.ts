@@ -23,8 +23,11 @@ export async function PUT(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const body = await request.json();
-  const { artistId, ...data } = body;
+  const body = await request.json().catch(() => null);
+  if (!body || typeof body !== "object") {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
+  const { artistId, ...data } = body as { artistId: string; [key: string]: unknown };
 
   if (!artistId) {
     return NextResponse.json({ error: "artistId required" }, { status: 400 });
@@ -54,7 +57,10 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const data = await request.json();
+  const data = await request.json().catch(() => null);
+  if (!data || typeof data !== "object") {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
 
   // Artists can only create their own profile
   if (role === "artist" && data.slug !== artistSlug) {
