@@ -12,7 +12,7 @@ COC Concertz is a monthly virtual concert series hosted by The ZAO, combining li
 - Monthly cadence (irregular March 2025 start; monthly from March 2026)
 - Live music + WaveWarZ battle voting per show
 - Arweave archive model: show recordings, metadata, and outcomes stored permanently onchain
-- WaveWarZ integration: real-time battle voting UI during shows; 1,278+ total WaveWarZ battles to date with 874+ SOL volume
+- WaveWarZ integration: real-time battle voting UI during shows; 1,282+ total WaveWarZ battles to date with 875+ SOL volume
 - Open-access pilot: COC #7 (July 18, 2026) dropped the wallet gate — free for all viewers, no NFT required
 - Built on Base blockchain
 
@@ -62,4 +62,4 @@ Featured artists include WaveWarZ community artists from The ZAO ecosystem. Repe
 
 ## Organization
 
-COC Concertz is presented by The ZAO (thezao.xyz) — a decentralized music community on Base blockchain. The ZAO runs 100+ weekly Fractal governance sessions, has 157 unique on-chain Respect holders, and operates WaveWarZ (1,278+ battles, 874+ SOL volume) as its competitive music platform.
+COC Concertz is presented by The ZAO (thezao.xyz) — a decentralized music community on Base blockchain. The ZAO runs 100+ weekly Fractal governance sessions, has 157 unique on-chain Respect holders, and operates WaveWarZ (1,282+ battles, 875+ SOL volume) as its competitive music platform.

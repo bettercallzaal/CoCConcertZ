@@ -1,8 +1,52 @@
 {
-  "fetchedAt": "2026-07-28T06:16:50.788Z",
-  "totalBattles": 1278,
-  "totalVolumeSol": 874.86,
+  "fetchedAt": "2026-07-29T07:18:44.405Z",
+  "totalBattles": 1282,
+  "totalVolumeSol": 875.13,
   "recent": [
+    {
+      "battleId": 1785291978,
+      "date": "Jul 29, 2026",
+      "song1Title": "Kryptonite ",
+      "song2Title": "Cipher Confession (LUI/STILO Diss track PT. 1)",
+      "song1Handle": "Kata7yst",
+      "song2Handle": "hoodrats",
+      "winnerTitle": "Kryptonite ",
+      "totalVolumeSol": 0.0128,
+      "marginPct": 23
+    },
+    {
+      "battleId": 1785289748,
+      "date": "Jul 29, 2026",
+      "song1Title": "Inferno",
+      "song2Title": "Phoenix",
+      "song1Handle": "Stormbourne",
+      "song2Handle": "Stormbourne",
+      "winnerTitle": "Phoenix",
+      "totalVolumeSol": 0.0246,
+      "marginPct": 20
+    },
+    {
+      "battleId": 1785288741,
+      "date": "Jul 29, 2026",
+      "song1Title": "GESD1 ",
+      "song2Title": "WYFL Freestyle ",
+      "song1Handle": "GESD1",
+      "song2Handle": "RoCkY2GriMeY",
+      "winnerTitle": "GESD1 ",
+      "totalVolumeSol": 0.1212,
+      "marginPct": 84
+    },
+    {
+      "battleId": 1785288034,
+      "date": "Jul 29, 2026",
+      "song1Title": "Life Happens x JayStreetz x LUI",
+      "song2Title": "For my PeopleZ",
+      "song1Handle": "luiwrites",
+      "song2Handle": "luiwrites",
+      "winnerTitle": "For my PeopleZ",
+      "totalVolumeSol": 0.1143,
+      "marginPct": 3
+    },
     {
       "battleId": 1785206166,
       "date": "Jul 28, 2026",
@@ -46,50 +90,6 @@
       "winnerTitle": "4 Relms By Shikulu Bantu",
       "totalVolumeSol": 0.0113,
       "marginPct": 74
-    },
-    {
-      "battleId": 1785201994,
-      "date": "Jul 28, 2026",
-      "song1Title": "guardian at the gate2 by Kiyomi",
-      "song2Title": "Ba Last By Shikulu Bantu",
-      "song1Handle": "WaveWarzAfrica",
-      "song2Handle": "WaveWarzAfrica",
-      "winnerTitle": "guardian at the gate2 by Kiyomi",
-      "totalVolumeSol": 0.0542,
-      "marginPct": 82
-    },
-    {
-      "battleId": 1785201490,
-      "date": "Jul 28, 2026",
-      "song1Title": "Block is Hot",
-      "song2Title": "Gr3Y",
-      "song1Handle": "NemesisLadyRyn",
-      "song2Handle": "NemesisLadyRyn",
-      "winnerTitle": "Block is Hot",
-      "totalVolumeSol": 0.0591,
-      "marginPct": 67
-    },
-    {
-      "battleId": 1785200778,
-      "date": "Jul 28, 2026",
-      "song1Title": "Full Capacity ft. Nessy ",
-      "song2Title": "50 kal kash feat Cannon Jones973 X Bucketts- Soul Food ",
-      "song1Handle": "RoCkY2GriMeY",
-      "song2Handle": "CannonJones973",
-      "winnerTitle": "50 kal kash feat Cannon Jones973 X Bucketts- Soul Food ",
-      "totalVolumeSol": 0.0591,
-      "marginPct": 67
-    },
-    {
-      "battleId": 1784949376,
-      "date": "Jul 25, 2026",
-      "song1Title": "Sun",
-      "song2Title": "TerrorWavez x Hurric4n3Ike (Prod. x Hurric4n3Ike)",
-      "song1Handle": "GodclouD",
-      "song2Handle": "Hurric4n3Ike",
-      "winnerTitle": "Sun",
-      "totalVolumeSol": 0.4482,
-      "marginPct": 98
     }
   ]
 }
