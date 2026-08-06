@@ -16,6 +16,12 @@ const CLOUD_NAME = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
 const API_KEY = process.env.CLOUDINARY_API_KEY;
 const API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
+// Feature flag mirror: the UI reads NEXT_PUBLIC_UPLOADS_ENABLED too, but the
+// API must also gate so a direct POST can't bypass the paused state.
+function uploadsEnabled(): boolean {
+  return process.env.NEXT_PUBLIC_UPLOADS_ENABLED === "true";
+}
+
 // Fan uploads are intentionally public (no session gate) - this is a contest /
 // fan gallery, not an internal tool. Guard against abuse instead of blocking:
 // cap size and restrict to images so /api/upload can't be turned into free
@@ -32,6 +38,13 @@ function cloudinaryConfigured(): boolean {
 const ALLOWED_FOLDERS = new Set(["coc-concertz", "user-uploads", "recaps", "sets"]);
 
 export async function POST(request: NextRequest) {
+  if (!uploadsEnabled()) {
+    return NextResponse.json(
+      { error: "Uploads are currently paused. Check back soon." },
+      { status: 503 },
+    );
+  }
+
   // Config check first - turns a 5-day silent outage into an obvious 503 the
   // moment a credential is missing, naming exactly which var to fix.
   if (!cloudinaryConfigured()) {
