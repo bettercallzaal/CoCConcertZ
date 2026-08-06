@@ -37,7 +37,10 @@ export async function PATCH(
   const denied = await authorizeForSet(req, id);
   if (denied) return denied;
 
-  const data = await req.json();
+  const data = await req.json().catch(() => null);
+  if (!data || typeof data !== "object") {
+    return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
+  }
   const { adminDb } = await import("@/lib/firebase-admin");
   await adminDb.collection("sets").doc(id).update(data);
   return NextResponse.json({ ok: true });
