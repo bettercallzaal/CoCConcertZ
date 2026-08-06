@@ -58,7 +58,7 @@ export async function GET() {
       event: COC8_EVENT_NAME,
       date: COC8_DATE,
       metrics: {
-        concurrentViewers: Math.max(1, concurrentViewers),
+        concurrentViewers: Math.max(0, concurrentViewers),
         peakViewers,
         fanGalleryUploads: galleryCount,
         archiveUploads: {
