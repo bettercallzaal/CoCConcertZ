@@ -1,11 +1,11 @@
 # COC Concertz #8 Prep Checklist
 
-## Locked prerequisites (merge PR queue first)
+## Status (as of Aug 22, 2026)
 
-Before any COC #8 setup can run, the 16 open PRs must land on main.
-**Merge order:** #56 → #59/#60/#61/#62/#63/#64/#65/#66/#67/#68/#69 (any order) → #58 → #55 (after SESSION_SECRET set in Vercel) → #57.
+All prior PRs (#1–#91) merged. TS clean. 30 tests pass. **COC #8 date TBD** — Phases 1–4 below are blocked on Zaal confirming the date. Vercel blockers still open:
 
-Conflict heads-up: PRs #61 and #66 both touch `ShowNightPanel.tsx` — trivial to resolve on merge.
+- [ ] `SESSION_SECRET` — not yet set in Vercel (required for admin auth)
+- [ ] Cloudinary Root key — `CLOUDINARY_API_KEY=829645836778628`, `CLOUDINARY_API_SECRET=<Root secret>`, `NEXT_PUBLIC_UPLOADS_ENABLED=true` (uploads currently paused/503)
 
 ---
 
@@ -22,11 +22,11 @@ Conflict heads-up: PRs #61 and #66 both touch `ShowNightPanel.tsx` — trivial t
 
 ## Phase 2: Vercel env setup
 
-- [ ] `SESSION_SECRET` set in Vercel (required before PR #55 can deploy)
+- [ ] `SESSION_SECRET` set in Vercel (admin auth is 503 until this is done)
   - Generate: `openssl rand -hex 32`
   - Add to Vercel → cocconcertz → Settings → Environment Variables → Production + Preview
+- [ ] Re-enable uploads: `CLOUDINARY_API_KEY=829645836778628`, `CLOUDINARY_API_SECRET=<Root secret>`, `NEXT_PUBLIC_UPLOADS_ENABLED=true` → Vercel → redeploy → verify: `npx tsx scripts/check-cloudinary-perms.ts`
 - [ ] Verify `NEXT_PUBLIC_WALLET_GATE_ENABLED` is set to `"false"` for show night (flip to `"true"` post-show to gate the archive)
-- [ ] Verify Cloudinary key is working: `curl -s https://www.cocconcertz.com/api/upload` should not 401/500
 
 ## Phase 3: Firestore event doc
 
@@ -90,7 +90,7 @@ npx tsx scripts/generate-socials.ts --theme "[SUBTITLE]" --highlight "DJ Zaal on
 
 ## Show night
 
-Follow `docs/coc8-show-night-runbook.md` (in PR #61).
+Follow `docs/coc8-show-night-runbook.md`.
 
 ## Post-show (Saturday morning)
 
