@@ -5,6 +5,7 @@ import { createEvent, updateEvent } from "@/lib/db";
 import { uploadFile } from "@/lib/storage";
 import type { Event } from "@/lib/types";
 import { Button, Input, Textarea, FileUpload } from "@/components/ui";
+import { toDatetimeLocal } from "@/lib/format-date";
 
 interface EventFormProps {
   event?: Event | null;
@@ -25,12 +26,6 @@ interface FormState {
   status: Status;
 }
 
-function toDatetimeLocal(date: Date): string {
-  const pad = (n: number) => String(n).padStart(2, "0");
-  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-    date.getDate()
-  )}T${pad(date.getHours())}:${pad(date.getMinutes())}`;
-}
 
 const fieldLabel: React.CSSProperties = {
   fontFamily: "var(--font-mono)",
