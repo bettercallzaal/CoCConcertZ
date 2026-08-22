@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { isAdmin } from "@/lib/api-auth";
+import { tally } from "@/lib/tally";
 
 export const dynamic = "force-dynamic";
 
@@ -9,16 +10,6 @@ export const dynamic = "force-dynamic";
 async function getAdminDb() {
   const { adminDb } = await import("@/lib/firebase-admin");
   return adminDb;
-}
-
-async function tally(votesSnap: FirebaseFirestore.QuerySnapshot) {
-  let a = 0;
-  let b = 0;
-  votesSnap.forEach((v) => {
-    if (v.data().choice === "a") a += 1;
-    else if (v.data().choice === "b") b += 1;
-  });
-  return { a, b };
 }
 
 export async function GET(request: NextRequest) {
