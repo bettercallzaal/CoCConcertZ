@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSessionToken, SESSION_COOKIE } from "@/lib/api-auth";
+import { clientIp, createRateLimiter } from "@/lib/rate-limit";
 
 const COOKIE_OPTS = {
   httpOnly: true,
@@ -12,25 +13,7 @@ const COOKIE_OPTS = {
 // In-memory per-IP rate limit on passcode attempts (best-effort; resets on cold
 // start, which is fine for slowing brute force). Without this, an attacker could
 // fire thousands of guesses/sec at ADMIN_PASSCODE / ARTIST_PASSCODES.
-const MAX_ATTEMPTS = 5;
-const WINDOW_MS = 60_000;
-const attempts = new Map<string, { count: number; resetAt: number }>();
-
-function clientIp(request: NextRequest): string {
-  const fwd = request.headers.get("x-forwarded-for");
-  return (fwd ? fwd.split(",")[0] : "") .trim() || request.headers.get("x-real-ip") || "unknown";
-}
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const rec = attempts.get(ip);
-  if (!rec || now > rec.resetAt) {
-    attempts.set(ip, { count: 1, resetAt: now + WINDOW_MS });
-    return false;
-  }
-  rec.count += 1;
-  return rec.count > MAX_ATTEMPTS;
-}
+const isRateLimited = createRateLimiter();
 
 export async function POST(request: NextRequest) {
   const ip = clientIp(request);
