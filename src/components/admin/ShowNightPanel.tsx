@@ -111,7 +111,7 @@ export function ShowNightPanel() {
       const r = data.results?.[0];
       setBattleStatus(
         r
-          ? `Closed: ${r.votesA} - ${r.votesB}. Winner: ${r.winnerName}`
+          ? `Closed "${r.title}": ${r.votesA} - ${r.votesB}. Winner: ${r.winnerName}`
           : "No live battle to close."
       );
       await refreshBattle();
