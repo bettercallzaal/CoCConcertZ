@@ -43,6 +43,7 @@ async function run() {
     );
   }
   console.log("\nNOTE: videos[] and transcriptUrls[] are empty — fill in once footage is uploaded.");
+  console.log("For #7 there is a script for exactly that: scripts/patch-coc7-recap.ts <youtubeId>.");
 }
 
 run().catch((err) => {
