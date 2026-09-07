@@ -1,5 +1,5 @@
 # COC #7 Post-Show Capture Plan
-## Saturday July 19, 2026 — Pilot Report Template
+## Saturday July 18, 2026 — Pilot Report Template
 
 This doc tells you exactly where to get each number and has the retro shell ready to fill.
 Run through Section 1 first (30 min data pull), then fill Section 2 (the actual report).
@@ -60,7 +60,7 @@ Fill this in Saturday morning. Paste it into Bonfire / Discord / Farcaster as th
 ---
 
 ### COC #7 Pilot Report — WaveWarZ Takeover
-**Date:** Friday July 18, 2026
+**Date:** Saturday July 18, 2026
 **Format:** Gateless (no wallet required for archive uploads)
 
 #### Attendance
