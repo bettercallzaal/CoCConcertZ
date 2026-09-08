@@ -6,6 +6,35 @@ Run through Section 1 first (30 min data pull), then fill Section 2 (the actual 
 
 ---
 
+## The recording: there is not one, as of 2026-09-08
+
+Anyone reaching for this doc to write the recap should know first: **no recording
+of COC #7 has been found.**
+
+`coc-concertz-7-space.m4a` has been treated as the show audio in several places.
+It is not. Transcribed locally on 2026-09-08, it opens *"Welcome to the community
+communities... Web3 Space"* and runs as a *"day in the life of Zaal"* power hour
+hosted by Rev. It is an **X Space hosted by The Community of Communities** - the
+same acronym collision that put three of their logos on this repo's brand page.
+
+Searched: every media file dated 15-25 July 2026 on this machine, `mdfind`
+machine-wide for `coc7` and `wavewarz takeover`, `~/Movies`, `~/Music` and an
+external volume. Four files fall in the date window and none is the show.
+
+Two places might still hold it:
+
+1. **A Twitch Highlight.** The show streamed to `twitch.tv/bettercallzaal`. Plain
+   VODs expire in 14-60 days and the show was seven weeks ago, so only a Highlight
+   or Export would have survived.
+2. **Firestore `battles`.** `manage-battle.ts` writes `sideA`, `sideB` and
+   `winnerName` per battle. That fills the "WaveWarZ MAIN battle" line below
+   **without any recording at all**, which is the cheapest way to finish this doc.
+
+If a video does turn up, `scripts/patch-coc7-recap.ts <youtubeId>` puts it on
+`/events/7` in one command.
+
+Full search record: `zao-vault/projects/coc7-recording-search-2026-09-08.md`.
+
 ## Section 1 — Where the Numbers Live
 
 ### 1a. Metrics API (primary source)
