@@ -28,12 +28,12 @@ const COLORS = [
 ];
 
 const LOGOS = [
-  { file: "coc-concertz-logo.jpeg", name: "Primary Logo", desc: "Full wordmark. Use on dark backgrounds. Default choice for headers + share cards.", w: 800 },
-  { file: "coc-logo-circle.jpeg", name: "Circle Badge", desc: "Square avatar mark. Use for social profiles, Farcaster, X.", w: 400 },
-  { file: "coc-icon-1024.png", name: "App Icon", desc: "1024x1024 PNG. Use for Farcaster Mini App icon + favicon source.", w: 400 },
-  { file: "coc-banner-dark.jpeg", name: "Banner (Dark)", desc: "1098px hero banner. Default for OG images and dark backgrounds.", w: 800 },
-  { file: "coc-banner-light.jpeg", name: "Banner (Light)", desc: "Light variant for embeds and partners with light themes.", w: 800 },
-  { file: "coc-splash-200.jpeg", name: "Splash Tile", desc: "200px Farcaster Mini App splash image.", w: 240 },
+  { file: "coc-concertz-logo.jpeg", name: "Primary Logo", desc: "Full wordmark. Use on dark backgrounds. Default choice for headers + share cards.", w: 800, partner: false },
+  { file: "coc-icon-1024.png", name: "App Icon", desc: "1024x1024 PNG. Same artwork as the primary logo, lossless. Use for Farcaster Mini App icon + favicon source.", w: 400, partner: false },
+  { file: "coc-splash-200.jpeg", name: "Splash Tile", desc: "200px Farcaster Mini App splash image.", w: 240, partner: false },
+  { file: "coc-logo-circle.jpeg", name: "Community of Communities Badge", desc: "Belongs to The Community of Communities, not to us. Use it only to credit them. It is not a COC Concertz avatar.", w: 400, partner: true },
+  { file: "coc-banner-dark.jpeg", name: "Community of Communities Banner (Dark)", desc: "Reads THE COMMUNITY OF COMMUNITIES EST 2020. Theirs, not ours. Do not use it as an OG image for this site.", w: 800, partner: true },
+  { file: "coc-banner-light.jpeg", name: "Community of Communities Banner (Light)", desc: "Light variant of the same partner banner. Same rule.", w: 800, partner: true },
 ];
 
 const FLYERS = [
@@ -265,6 +265,22 @@ export default function BrandPage() {
               >
                 {l.name}
               </div>
+              {l.partner && (
+                <div
+                  style={{
+                    display: "inline-block",
+                    fontSize: "0.7rem",
+                    letterSpacing: "1.5px",
+                    textTransform: "uppercase",
+                    color: "#0A0A0A",
+                    background: "var(--yellow)",
+                    padding: "2px 8px",
+                    marginBottom: 8,
+                  }}
+                >
+                  Partner mark - not ours
+                </div>
+              )}
               <p
                 style={{
                   color: "var(--text-dim)",
