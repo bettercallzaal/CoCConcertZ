@@ -1,5 +1,5 @@
 # COC #7 Show-Night Runbook - WaveWarZ Takeover
-## Friday July 18, 2026 | 4PM EST
+## Saturday July 18, 2026 | 4PM EST
 
 Pilot event: wallet gate dropped. Everything is self-serve from the admin dashboard
 at https://www.cocconcertz.com/admin — no terminal needed on the night.

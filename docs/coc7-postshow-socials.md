@@ -1,6 +1,6 @@
 # COC #7 Post-Show Social Drafts
 
-Use these after the show ends (Saturday July 19, 2026).
+Use these after the show ends (Saturday July 18, 2026).
 Fill in the [BRACKET] values from the pilot report (Saturday morning).
 All posting is Zaal-gated — copy-paste each where needed.
 
