@@ -7,6 +7,7 @@
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import * as dotenv from "dotenv";
+import { PAST_SHOW_VIDEOS } from "./lib/past-show-videos";
 
 dotenv.config({ path: ".env.local" });
 
@@ -33,7 +34,7 @@ const RECAP = {
     "Hosted by ThyRevolution and BetterCallZaal, co-presented by The ZAO and Community of Communities",
     "First COC show to lean fully into the conversation-with-the-artist format vs straight live set",
   ],
-  videos: [],
+  videos: PAST_SHOW_VIDEOS[5],
   transcriptUrls: [],
 };
 

@@ -2,12 +2,13 @@
  * Patch event #6 with recap for COC Concertz #6: The African Experience.
  * June 13, 2026 — Iman Afrikah + Santana in Stilo World.
  *
- * Fill in `videos` and `transcriptUrls` once the YouTube clips and
- * recording links are available.
+ * Videos come from scripts/lib/past-show-videos.ts. Fill in `transcriptUrls`
+ * once transcript links are available.
  *
  * Idempotent. Run: `npx tsx scripts/patch-coc6-recap.ts`.
  */
 import { adminDb } from "./lib/admin-init";
+import { PAST_SHOW_VIDEOS } from "./lib/past-show-videos";
 
 const db = adminDb();
 
@@ -22,10 +23,7 @@ const RECAP = {
     "Reinforced the COC model: global artists, free virtual venue, zero geography barrier",
     "First COC show to spotlight an artist building Web3 music on Base from Africa",
   ],
-  // Fill these in once footage is available:
-  // videos: [{ youtubeId: "...", title: "COC #6 Full Set — Iman Afrikah" }],
-  // transcriptUrls: ["..."],
-  videos: [],
+  videos: PAST_SHOW_VIDEOS[6],
   transcriptUrls: [],
 };
 
@@ -42,7 +40,7 @@ async function run() {
         `summary=${RECAP.summary.length} chars, highlights=${RECAP.highlights.length}`
     );
   }
-  console.log("\nNOTE: videos[] and transcriptUrls[] are empty — fill in once footage is uploaded.");
+  console.log("\nNOTE: transcriptUrls[] is empty - fill in once transcripts are linked.");
   console.log("For #7 there is a script for exactly that: scripts/patch-coc7-recap.ts <youtubeId>.");
 }
 

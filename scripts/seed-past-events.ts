@@ -14,6 +14,7 @@
 import { initializeApp, getApps, cert } from "firebase-admin/app";
 import { getFirestore } from "firebase-admin/firestore";
 import * as dotenv from "dotenv";
+import { PAST_SHOW_VIDEOS } from "./lib/past-show-videos";
 
 dotenv.config({ path: ".env.local" });
 
@@ -68,11 +69,7 @@ const EVENTS: EventSeed[] = [
         "Clejan's trap violin - the signature 'Trap Violin' style live on chain",
         "Established the format that #2 through #6 iterate on",
       ],
-      videos: [
-        { title: "Attabotty Flyin", youtubeId: "-ggYAdu4KRE", artist: "AttaBotty" },
-        { title: "Altered Pathways", youtubeId: "E0xE65RRKI0", artist: "AttaBotty" },
-        { title: "Clejan Intro", youtubeId: "rFKN-WobG9Y", artist: "Clejan" },
-      ],
+      videos: PAST_SHOW_VIDEOS[1],
     },
   },
   {
@@ -94,11 +91,7 @@ const EVENTS: EventSeed[] = [
         "Stilo World's extended Web3-DJ set",
         "AttaBotty's closing audiovisual performance",
       ],
-      videos: [
-        { title: "Live Set", youtubeId: "0MIJ0YSVe5s", artist: "Tom Fellenz" },
-        { title: "WaveWarZ Battle", youtubeId: "zYm3g_YUYjE", artist: "Stilo World" },
-        { title: "Closing Set", youtubeId: "-nx9gZtK8ug", artist: "AttaBotty" },
-      ],
+      videos: PAST_SHOW_VIDEOS[2],
     },
   },
   {
@@ -119,9 +112,7 @@ const EVENTS: EventSeed[] = [
         "Joseph Goats live set (still going by Jose at the time)",
         "Stilo World's English vs Spanish WaveWarZ Community Battle",
       ],
-      videos: [
-        { title: "Outro", youtubeId: "gGAQ_tkBMpQ", artist: "COC Concertz #3" },
-      ],
+      videos: PAST_SHOW_VIDEOS[3],
     },
   },
   {
@@ -144,12 +135,7 @@ const EVENTS: EventSeed[] = [
         "Hosts pitched community-voting on next concert lineup via a custom tool",
         "First COC show held in the Dope Stilo Music Club (the same venue #5 and #6 use)",
       ],
-      videos: [
-        { title: "Intro", youtubeId: "LF7qcZnF7XY", artist: "COC Concertz #4" },
-        { title: "Live Performance", youtubeId: "-SOwQ5xR714", artist: "Joseph Goats" },
-        { title: "Live Performance", youtubeId: "uvURHoFXoVs", artist: "Tom Fellenz" },
-        { title: "Live Performance", youtubeId: "iwkDtZHuQPE", artist: "Stilo World" },
-      ],
+      videos: PAST_SHOW_VIDEOS[4],
     },
   },
 ];
