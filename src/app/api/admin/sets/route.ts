@@ -6,13 +6,9 @@ export const dynamic = "force-dynamic";
 // Sets are written by both admins and the artist who owns the set.
 // For artist callers we verify the artistId on the body matches their cookie.
 async function authorizeArtist(
-  req: NextRequest,
+  auth: NonNullable<ReturnType<typeof getCookieAuth>>,
   artistId: string
 ): Promise<NextResponse | null> {
-  const auth = getCookieAuth(req);
-  if (!auth) {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-  }
   if (auth.role === "admin") return null;
 
   const { adminDb } = await import("@/lib/firebase-admin");
@@ -27,6 +23,13 @@ async function authorizeArtist(
 }
 
 export async function POST(req: NextRequest) {
+  // Auth before body: an anonymous request should get 401, not a 400 that
+  // reveals what a valid body looks like before we even know who is asking.
+  const auth = getCookieAuth(req);
+  if (!auth) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const data = await req.json().catch(() => null);
   if (!data || typeof data !== "object") {
     return NextResponse.json({ error: "Invalid JSON body" }, { status: 400 });
@@ -34,7 +37,7 @@ export async function POST(req: NextRequest) {
   if (!data.artistId) {
     return NextResponse.json({ error: "artistId required" }, { status: 400 });
   }
-  const denied = await authorizeArtist(req, data.artistId);
+  const denied = await authorizeArtist(auth, data.artistId);
   if (denied) return denied;
 
   const { adminDb } = await import("@/lib/firebase-admin");
