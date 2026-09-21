@@ -1,0 +1,34 @@
+name: CI
+
+# Runs on every PR and on main, so a red merge is visible on main too.
+# Not run here, on purpose: `next build` needs Firebase Admin credentials to
+# collect page data for /api/webhook/farcaster, and eslint has 44 errors on
+# main today. Both are separate changes; this gates what can pass now.
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    name: typecheck and tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - name: typecheck
+        run: npx tsc --noEmit
+      - name: tests
+        run: npm test
