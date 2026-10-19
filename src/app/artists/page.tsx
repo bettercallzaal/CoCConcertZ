@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { getArtistsServer } from "@/lib/db-server";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache, re-rendered at most every 5 minutes. Was
+// force-dynamic (a Firestore read and render per request), which is server CPU
+// on the Vercel Hobby cap.
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Artists — COC Concertz",

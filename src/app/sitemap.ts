@@ -1,7 +1,9 @@
 import type { MetadataRoute } from "next";
 import { getArtistsServer, getEventsServer } from "@/lib/db-server";
 
-export const dynamic = "force-dynamic";
+// Same 5-minute ISR window as the pages it lists (was force-dynamic: a
+// Firestore read per crawler hit, server CPU on the Vercel Hobby cap).
+export const revalidate = 300;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [artists, events] = await Promise.all([

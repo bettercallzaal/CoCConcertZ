@@ -3,7 +3,16 @@ import type { Metadata } from "next";
 import { getArtistBySlugServer, getEventsServer, getSetsForArtistServer } from "@/lib/db-server";
 import type { Artist, Event, SetItem } from "@/lib/types";
 
-export const dynamic = "force-dynamic";
+// ISR: served from cache, re-rendered at most every 5 minutes. Was
+// force-dynamic (a Firestore read and render per request), which is server CPU
+// on the Vercel Hobby cap.
+export const revalidate = 300;
+
+// Empty list = nothing prerendered at build; each page renders on first visit
+// and is then cached like the list pages.
+export async function generateStaticParams() {
+  return [];
+}
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
