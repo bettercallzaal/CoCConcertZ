@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCookieAuth } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
@@ -43,6 +44,7 @@ export async function PATCH(
   }
   const { adminDb } = await import("@/lib/firebase-admin");
   await adminDb.collection("sets").doc(id).update(data);
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }
 
@@ -56,5 +58,6 @@ export async function DELETE(
 
   const { adminDb } = await import("@/lib/firebase-admin");
   await adminDb.collection("sets").doc(id).delete();
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }

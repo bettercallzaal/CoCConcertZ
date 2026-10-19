@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCookieAuth } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
@@ -43,6 +44,7 @@ export async function POST(req: NextRequest) {
   const { adminDb } = await import("@/lib/firebase-admin");
   const ref = adminDb.collection("sets").doc();
   await ref.set(data);
+  revalidatePath("/", "layout");
   const snap = await ref.get();
   return NextResponse.json({ ...snap.data(), id: snap.id });
 }

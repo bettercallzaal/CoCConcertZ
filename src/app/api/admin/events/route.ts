@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { isAdmin } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
@@ -22,6 +23,7 @@ export async function POST(req: NextRequest) {
     createdAt: now,
     updatedAt: now,
   });
+  revalidatePath("/", "layout");
 
   const snap = await ref.get();
   const out = snap.data();

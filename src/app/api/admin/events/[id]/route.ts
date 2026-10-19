@@ -1,7 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { isAdmin } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
+
+// Event, artist and set pages are ISR (revalidate = 300). Purge them on every
+// write so an admin edit, including a show-night status flip to "live", is on
+// the next request instead of after the window.
 
 export async function PATCH(
   req: NextRequest,
@@ -26,6 +31,7 @@ export async function PATCH(
   }
 
   await adminDb.collection("events").doc(id).update(updateData);
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }
 
@@ -39,5 +45,6 @@ export async function DELETE(
   const { id } = await params;
   const { adminDb } = await import("@/lib/firebase-admin");
   await adminDb.collection("events").doc(id).delete();
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }

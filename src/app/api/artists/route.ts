@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { revalidatePath } from "next/cache";
 import { getCookieAuth } from "@/lib/api-auth";
 
 export const dynamic = "force-dynamic";
@@ -47,6 +48,7 @@ export async function PUT(request: NextRequest) {
   }
 
   await adminDb.collection("artists").doc(artistId).update(data);
+  revalidatePath("/", "layout");
   return NextResponse.json({ ok: true });
 }
 
@@ -73,6 +75,7 @@ export async function POST(request: NextRequest) {
     ...data,
     createdAt: new Date(),
   });
+  revalidatePath("/", "layout");
 
   const created = await ref.get();
   return NextResponse.json({
