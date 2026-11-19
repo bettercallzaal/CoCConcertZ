@@ -17,6 +17,7 @@ export type CookieAuth = {
 };
 
 export const SESSION_COOKIE = "coc-session";
+export const SESSION_MAX_AGE_SECONDS = 60 * 60 * 24 * 30;
 
 function secret(): string | null {
   return process.env.SESSION_SECRET || null;
@@ -32,12 +33,15 @@ function sign(payload: string, key: string): string {
 export function createSessionToken(auth: CookieAuth): string {
   const key = secret();
   if (!key) throw new Error("SESSION_SECRET not configured");
-  const body = Buffer.from(JSON.stringify(auth)).toString("base64url");
+  const iat = Math.floor(Date.now() / 1000);
+  const body = Buffer.from(JSON.stringify({
+    ...auth, iat, exp: iat + SESSION_MAX_AGE_SECONDS,
+  })).toString("base64url");
   return `${body}.${sign(body, key)}`;
 }
 
 /** Verify a session token. Returns the auth payload only if the signature is
- * valid; null on any tampering, missing secret, or malformed token. */
+ * valid and unexpired; null on tampering, expiry, missing claims or malformed input. */
 export function verifySessionToken(token: string | undefined): CookieAuth | null {
   const key = secret();
   if (!token || !key) return null;
@@ -50,9 +54,20 @@ export function verifySessionToken(token: string | undefined): CookieAuth | null
   const expBuf = Buffer.from(expected);
   if (sigBuf.length !== expBuf.length || !timingSafeEqual(sigBuf, expBuf)) return null;
   try {
-    const parsed = JSON.parse(Buffer.from(body, "base64url").toString("utf8")) as CookieAuth;
-    if (parsed.role !== "admin" && parsed.role !== "artist") return null;
-    return { role: parsed.role, artistSlug: parsed.artistSlug ?? null };
+    const parsed: unknown = JSON.parse(Buffer.from(body, "base64url").toString("utf8"));
+    if (!parsed || typeof parsed !== "object") return null;
+    const { role, artistSlug, iat, exp } = parsed as Record<string, unknown>;
+    const now = Math.floor(Date.now() / 1000);
+    // Legacy tokens lack a bounded lifetime and must be replaced at login.
+    if (typeof iat !== "number" || typeof exp !== "number"
+      || !Number.isSafeInteger(iat) || !Number.isSafeInteger(exp)
+      || iat > now || exp <= now || exp <= iat
+      || exp - iat > SESSION_MAX_AGE_SECONDS) return null;
+    if (role === "admin" && artistSlug === null) return { role, artistSlug };
+    if (role === "artist" && typeof artistSlug === "string" && artistSlug.trim()) {
+      return { role, artistSlug };
+    }
+    return null;
   } catch {
     return null;
   }
