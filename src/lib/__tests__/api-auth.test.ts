@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach } from "vitest";
+import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import {
   createSessionToken,
   verifySessionToken,
@@ -8,7 +8,14 @@ import {
 const VALID_SECRET = "test-secret-at-least-32-chars-long!";
 
 beforeEach(() => {
-  process.env.SESSION_SECRET = VALID_SECRET;
+  vi.useFakeTimers();
+  vi.setSystemTime(new Date("2026-01-01T00:00:00Z"));
+  vi.stubEnv("SESSION_SECRET", VALID_SECRET);
+});
+
+afterEach(() => {
+  vi.unstubAllEnvs();
+  vi.useRealTimers();
 });
 
 // ── createSessionToken ────────────────────────────────────────────────────────

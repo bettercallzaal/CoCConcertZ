@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createSessionToken, SESSION_COOKIE } from "@/lib/api-auth";
+import { createSessionToken, SESSION_COOKIE, SESSION_MAX_AGE_SECONDS } from "@/lib/api-auth";
 import { clientIp, createRateLimiter } from "@/lib/rate-limit";
 
 const COOKIE_OPTS = {
   httpOnly: true,
   secure: process.env.NODE_ENV === "production",
   sameSite: "lax" as const,
-  maxAge: 60 * 60 * 24 * 30, // 30 days
+  maxAge: SESSION_MAX_AGE_SECONDS,
   path: "/",
 };
 
@@ -54,9 +54,12 @@ export async function POST(request: NextRequest) {
   const rawPasscodes = process.env.ARTIST_PASSCODES;
   if (rawPasscodes) {
     try {
-      const passcodeMap: Record<string, string> = JSON.parse(rawPasscodes);
-      const artistSlug = passcodeMap[passcode];
-      if (artistSlug) {
+      const passcodeMap: unknown = JSON.parse(rawPasscodes);
+      const artistSlug = passcodeMap && typeof passcodeMap === "object"
+        && !Array.isArray(passcodeMap)
+        && Object.prototype.hasOwnProperty.call(passcodeMap, passcode)
+        ? (passcodeMap as Record<string, unknown>)[passcode] : undefined;
+      if (typeof artistSlug === "string" && artistSlug.trim()) {
         const response = NextResponse.json({ role: "artist", artistSlug });
         response.cookies.set(SESSION_COOKIE, createSessionToken({ role: "artist", artistSlug }), COOKIE_OPTS);
         clearLegacyCookies(response);
